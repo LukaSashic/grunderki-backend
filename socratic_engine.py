@@ -155,7 +155,7 @@ WICHTIG:
 
             response = self.client.messages.create(
                 # ✅ FIXED: Correct model name
-                model="claude-3-5-sonnet-20240620",  # Current stable version
+                model="claude-3-opus-20240229",  # Current stable version
                 max_tokens=1500,
                 temperature=0.7,
                 system=self.SYSTEM_PROMPT.format(

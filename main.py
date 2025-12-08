@@ -113,7 +113,7 @@ async def health_check():
     }
 
 
-@app.post("/api/admin/create-tables")
+@app.get("/api/admin/create-tables")
 async def create_tables_endpoint():
     """
     Admin endpoint to create database tables

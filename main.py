@@ -113,6 +113,33 @@ async def health_check():
     }
 
 
+@app.post("/api/admin/create-tables")
+async def create_tables_endpoint():
+    """
+    Admin endpoint to create database tables
+    WARNING: Remove this in production!
+    """
+    try:
+        from database import Base, engine
+
+        Base.metadata.create_all(bind=engine)
+
+        return {
+            "success": True,
+            "message": "Tables created successfully",
+            "tables": [
+                "users",
+                "user_intakes",
+                "assessment_sessions",
+                "item_responses",
+                "personality_scores",
+                "irt_item_bank",
+            ],
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+
+
 # Root endpoint
 @app.get("/")
 async def root():

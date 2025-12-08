@@ -2,17 +2,10 @@
 
 [build]
 builder = "NIXPACKS"
-buildCommand = "pip install -r requirements.txt"
 
 [deploy]
-startCommand = "uvicorn main:app --host 0.0.0.0 --port $PORT"
+startCommand = "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
-
-[env]
-# These will be set in Railway dashboard
-# PORT = automatically set by Railway
-# DATABASE_URL = set in Railway
-# REDIS_URL = set in Railway
-# ALLOWED_ORIGINS = "https://gruenderai.vercel.app,https://www.gruenderai.com"
-# SECRET_KEY = generate secure key
+healthcheckPath = "/api/health"
+healthcheckTimeout = 100

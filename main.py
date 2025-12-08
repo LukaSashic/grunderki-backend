@@ -2,6 +2,7 @@
 GründerAI Backend - FastAPI Application with IRT-CAT Engine
 """
 
+from socratic_api import router as socratic_router
 from fastapi import FastAPI, HTTPException, Body, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -39,6 +40,7 @@ app = FastAPI(
     description="IRT-CAT Personality Assessment for German Entrepreneurs",
     version="1.0.0",
 )
+app.include_router(socratic_router)
 
 # CORS Configuration
 allowed_origins_str = os.getenv(

@@ -11,6 +11,26 @@ import logging
 import os
 from datetime import datetime
 import uuid
+from database import engine, Base
+from models import (
+    User,
+    AssessmentSession,
+    UserIntake,
+    ItemResponse,
+    PersonalityScore,
+    IRTItemBank,
+)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Create tables on startup if they don't exist"""
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("✅ Database tables ready")
+    except Exception as e:
+        logger.error(f"❌ Database error: {e}")
+
 
 # Import IRT Engine
 from irt_engine import IRTCATEngine

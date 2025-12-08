@@ -33,6 +33,43 @@ class User(Base):
     sessions = relationship("AssessmentSession", back_populates="user")
 
 
+class UserIntake(Base):
+    """User intake data from progressive profiling"""
+
+    __tablename__ = "user_intakes"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    session_id = Column(
+        String, ForeignKey("assessment_sessions.id"), nullable=False, unique=True
+    )
+
+    # Phase 1: Basic Info
+    name = Column(String, nullable=False)
+    email = Column(String, nullable=False, index=True)
+    business_idea = Column(Text, nullable=False)
+
+    # Phase 2: Business Context (5 Questions)
+    business_type = Column(
+        String, nullable=True
+    )  # consulting, ecommerce, services, creative
+    experience_level = Column(
+        String, nullable=True
+    )  # first_time, some_experience, corporate_transition, serial
+    timeline = Column(
+        String, nullable=True
+    )  # immediate, 3_6_months, 6_12_months, exploring
+    gz_interest = Column(
+        String, nullable=True
+    )  # alg1_ready, alg1_soon, interested, not_applicable
+    growth_vision = Column(String, nullable=True)  # lifestyle, stable, scale, flexible
+
+    # Metadata
+    completed_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    # Relationships
+    session = relationship("AssessmentSession", back_populates="user_intake")
+
+
 class AssessmentSession(Base):
     """Assessment Session - tracks one complete assessment"""
 
@@ -66,6 +103,7 @@ class AssessmentSession(Base):
     user = relationship("User", back_populates="sessions")
     responses = relationship("ItemResponse", back_populates="session")
     personality_scores = relationship("PersonalityScore", back_populates="session")
+    user_intake = relationship("UserIntake", back_populates="session", uselist=False)
 
 
 class ItemResponse(Base):

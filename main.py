@@ -81,7 +81,7 @@ async def startup_event():
 # Pydantic Models
 class IntakeRequest(BaseModel):
     name: str = Field(..., min_length=2, max_length=100)
-    email: str = Field(..., regex=r"^[^@]+@[^@]+\.[^@]+$")
+    email: str = Field(..., pattern=r"^[^@]+@[^@]+\.[^@]+$")
     business_idea: str = Field(..., min_length=10, max_length=1000)
     business_type: str
     experience_level: str

@@ -2,6 +2,7 @@
 """
 Socratic Dialogue Engine for Business Idea Discovery
 Uses Claude to conduct intelligent conversations and extract business context
+UPDATED: Incremental extraction for real-time research, GZ-specific fields
 """
 
 import json
@@ -14,83 +15,118 @@ from anthropic import Anthropic
 class SocraticEngine:
     """
     Manages Socratic dialogue for business idea extraction
+    ✨ NEW: Extracts context INCREMENTALLY for real-time research sidebar
     """
 
     # Required business context fields
     REQUIRED_FIELDS = ["what", "who", "problem"]
-    GOOD_FIELDS = ["what", "who", "problem", "why_you"]
-    EXCELLENT_FIELDS = ["what", "who", "problem", "why_you", "how"]
 
-    SYSTEM_PROMPT = """You are an expert business consultant conducting a Socratic dialogue to understand a founder's business idea.
+    # ✨ UPDATED: Added GZ-specific fields
+    GOOD_FIELDS = ["what", "who", "problem", "why_you", "revenue_source"]
+    EXCELLENT_FIELDS = [
+        "what",
+        "who",
+        "problem",
+        "why_you",
+        "revenue_source",
+        "how",
+        "capital_needs",
+    ]
 
-YOUR MISSION:
-Extract sufficient context through natural conversation to understand:
-1. WHAT they offer (service/product)
-2. WHO their customers are (target segment)
-3. WHAT PROBLEM they solve
-4. WHY they're qualified (unique advantage) 
-5. HOW they deliver (optional)
+    # ✨ UPDATED: Professional but accessible tone, incremental extraction
+    SYSTEM_PROMPT = """Du bist ein erfahrener Gründungsberater, der im Socratic Dialogue eine Geschäftsidee versteht.
 
-CONVERSATION RULES:
-- Ask ONE focused question at a time
-- Keep questions SHORT (max 15 words in German)
-- Use casual, encouraging tone
-- Build on previous answers
-- Validate understanding periodically
-- Use German language naturally
-- Stop when you have sufficient context
+DEINE MISSION:
+Extrahiere durch natürliche Konversation ausreichend Kontext:
+1. WAS wird angeboten (Service/Produkt)
+2. WER sind die Kunden (Zielgruppe)
+3. WELCHES PROBLEM wird gelöst
+4. WARUM du/der Gründer (Einzigartiger Vorteil)
+5. WIE wird es geliefert (optional)
+6. ERTRAGSMECHANIK - wer zahlt wie viel (für Gründungszuschuss wichtig)
+7. KAPITALBEDARF - grobe Schätzung (optional)
 
-CURRENT CONTEXT STATUS:
+GESPRÄCHSREGELN:
+- Stelle EINE fokussierte Frage zur Zeit
+- Halte Fragen KURZ (max 15 Wörter auf Deutsch)
+- Ton: Professionell aber zugänglich (nicht zu casual, nicht zu formell)
+- Baue auf vorherigen Antworten auf
+- Validiere Verständnis regelmäßig
+- Natürliches Deutsch
+- Stoppe wenn du ausreichend Kontext hast
+
+AKTUELLER KONTEXT STATUS:
 {context_json}
 
-CONVERSATION HISTORY:
+GESPRÄCHSVERLAUF:
 {conversation_history}
 
-TASK:
-Based on the conversation, determine if you need more information or if you have enough to summarize.
+AUFGABE:
+Basierend auf der Konversation, entscheide ob du mehr Informationen brauchst oder genug hast für eine Zusammenfassung.
 
-OUTPUT FORMAT (JSON only, no other text):
+OUTPUT FORMAT (NUR JSON, kein anderer Text):
 
-If more info needed:
+Wenn mehr Info benötigt:
 {{
   "type": "question",
   "question": "Deine nächste Frage hier",
+  "current_extraction": {{
+    "what": "Extrahiertes Service/Produkt (oder null wenn noch nicht erwähnt)",
+    "who": "Extrahierte Zielgruppe (oder null)",
+    "problem": "Extrahiertes Problem (oder null)",
+    "why_you": "Einzigartiger Vorteil (oder null)",
+    "revenue_source": "Wer zahlt wieviel (oder null)",
+    "how": "Liefermethode (oder null)",
+    "capital_needs": "Kapitalbedarf Schätzung (oder null)"
+  }},
   "reasoning": "Warum du diese Frage stellst",
   "confidence": 0-100
 }}
 
-If sufficient context gathered:
+Wenn ausreichend Kontext gesammelt:
 {{
   "type": "summary",
   "summary": "Klare Zusammenfassung der Business Idee in 2-3 Sätzen",
   "context": {{
-    "what": "extracted service/product",
-    "who": "extracted target customer",
-    "problem": "extracted problem being solved",
-    "why_you": "extracted unique advantage (if mentioned)",
-    "how": "extracted delivery method (if mentioned)"
+    "what": "extrahiertes Service/Produkt",
+    "who": "extrahierte Zielgruppe",
+    "problem": "extrahiertes Problem",
+    "why_you": "einzigartiger Vorteil",
+    "revenue_source": "Ertragsmechanik",
+    "how": "Liefermethode (optional)",
+    "capital_needs": "Kapitalbedarf (optional)"
   }},
   "confidence": 0-100
 }}
 
-REMEMBER: 
-- Output ONLY valid JSON
-- No markdown formatting
-- No backticks
-- No explanatory text outside JSON"""
+WICHTIG:
+- Output NUR valides JSON
+- Kein Markdown
+- Keine Backticks
+- Kein Text außerhalb JSON
+- EXTRAHIERE Kontext INCREMENTELL in jedem Turn (current_extraction)"""
 
     def __init__(self):
-        # Initialize Anthropic client
+        # ✅ FIXED: Proper API key initialization with validation
         api_key = os.getenv("ANTHROPIC_API_KEY")
         if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY environment variable not set")
+            raise ValueError("ANTHROPIC_API_KEY environment variable not set!")
+
+        # Validate API key format
+        if not api_key.startswith("sk-ant-"):
+            raise ValueError(
+                "Invalid ANTHROPIC_API_KEY format - should start with 'sk-ant-'"
+            )
+
         self.client = Anthropic(api_key=api_key)
+        print(f"✅ Anthropic client initialized (key: {api_key[:15]}...)")
 
     async def process_message(
         self, user_message: str, conversation_history: List[Dict], current_context: Dict
     ) -> Dict:
         """
         Process user message and generate next question or summary
+        ✨ NEW: Extracts context INCREMENTALLY for real-time research
 
         Args:
             user_message: Latest message from user
@@ -115,9 +151,12 @@ REMEMBER:
 
         # Call Claude
         try:
+            print(f"🔄 Calling Claude API...")
+
             response = self.client.messages.create(
-                model="claude-sonnet-4-20250514",
-                max_tokens=1000,
+                # ✅ FIXED: Correct model name
+                model="claude-3-5-sonnet-20241022",  # Current stable version
+                max_tokens=1500,
                 temperature=0.7,
                 system=self.SYSTEM_PROMPT.format(
                     context_json=json.dumps(
@@ -130,6 +169,8 @@ REMEMBER:
                 messages=messages,
             )
 
+            print(f"✅ Claude API response received")
+
             # Extract response text
             response_text = response.content[0].text.strip()
 
@@ -138,10 +179,23 @@ REMEMBER:
                 response_text.replace("```json", "").replace("```", "").strip()
             )
 
+            print(f"📝 Claude raw response: {response_text[:200]}...")
+
             # Parse JSON response
             result = json.loads(response_text)
 
             if result["type"] == "question":
+                # ✨ CRITICAL FIX: Extract context INCREMENTALLY
+                # This enables real-time research sidebar!
+                extracted_data = result.get("current_extraction", {})
+
+                # Update current_context with newly extracted fields
+                for key, value in extracted_data.items():
+                    if value and value != "null":  # Only update if value exists
+                        current_context[key] = value
+
+                print(f"📊 Updated context: {current_context}")
+
                 # Add assistant question to history
                 conversation_history.append(
                     {
@@ -151,17 +205,18 @@ REMEMBER:
                     }
                 )
 
-                # Update context based on conversation
-                updated_context = self._extract_context_from_history(
-                    conversation_history, current_context
+                # Calculate confidence based on filled fields
+                filled_count = sum(
+                    1 for field in self.GOOD_FIELDS if current_context.get(field)
                 )
+                confidence = min(100, int((filled_count / len(self.GOOD_FIELDS)) * 100))
 
                 return {
                     "type": "question",
                     "question": result["question"],
-                    "context": updated_context,
+                    "context": current_context,  # ✅ Now contains incremental data!
                     "sufficient": False,
-                    "confidence": result.get("confidence", 0),
+                    "confidence": confidence,
                 }
 
             else:  # summary
@@ -177,18 +232,21 @@ REMEMBER:
                     }
                 )
 
+                # Use extracted context from summary
+                final_context = result.get("context", current_context)
+
                 return {
                     "type": "summary",
                     "question": confirmation,
                     "summary": result["summary"],
-                    "context": result["context"],
+                    "context": final_context,
                     "sufficient": True,
                     "confidence": result.get("confidence", 100),
                 }
 
         except json.JSONDecodeError as e:
             # Fallback if Claude doesn't return valid JSON
-            print(f"JSON decode error: {e}")
+            print(f"❌ JSON decode error: {e}")
             print(f"Response text: {response_text}")
 
             # Return a safe fallback question
@@ -210,7 +268,7 @@ REMEMBER:
             }
 
         except Exception as e:
-            print(f"Error in Socratic engine: {e}")
+            print(f"❌ Error in Socratic engine: {e}")
             import traceback
 
             traceback.print_exc()
@@ -229,29 +287,6 @@ REMEMBER:
             )
 
         return messages
-
-    def _extract_context_from_history(
-        self, conversation_history: List[Dict], current_context: Dict
-    ) -> Dict:
-        """
-        Extract business context from conversation history
-        This is a simple heuristic - Claude does the heavy lifting
-        """
-
-        # Calculate confidence based on filled fields
-        filled_fields = sum(
-            [1 for field in self.GOOD_FIELDS if current_context.get(field)]
-        )
-
-        confidence = min(100, (filled_fields / len(self.GOOD_FIELDS)) * 100)
-
-        return {
-            **current_context,
-            "confidence": confidence,
-            "message_count": len(
-                [m for m in conversation_history if m["role"] == "user"]
-            ),
-        }
 
     def check_sufficiency(self, context: Dict) -> Tuple[bool, str]:
         """

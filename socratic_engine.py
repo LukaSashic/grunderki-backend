@@ -11,6 +11,7 @@ import os
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 from anthropic import Anthropic
+from cache_service import cache
 
 
 class SocraticEngine:
@@ -180,6 +181,7 @@ Wenn der Nutzer sagt:
 - Lokale Services: €5000-15000 (Werkzeug, Fahrzeug, Lizenzen)
         """.strip()
 
+    @cache.cache_ai_response(ttl=7200)
     async def process_message(
         self, user_message: str, conversation_history: List[Dict], current_context: Dict
     ) -> Dict:
@@ -212,12 +214,11 @@ Wenn der Nutzer sagt:
 
         messages = self._build_messages(conversation_history)
 
-        # Try multiple models with fallback
+        # ✅ OPTIMIZED: Cost-effective model tier strategy
         models = [
-            "claude-3-opus-20240229",
-            "claude-3-sonnet-20240229",
-            "claude-3-haiku-20240307",
-            "claude-2.1",
+            "claude-3-5-haiku-20241022",  # 🎯 PRIMARY: 95% cheaper!
+            "claude-3-5-sonnet-20241022",  # Fallback for complex
+            "claude-3-opus-20240229",  # Emergency only
         ]
 
         response = None

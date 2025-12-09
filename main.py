@@ -3,6 +3,8 @@ GründerAI Backend - FastAPI Application with IRT-CAT Engine
 """
 
 from socratic_api import router as socratic_router
+from vision_discovery_api import router as vision_router
+from businessplan_api import router as businessplan_router
 from fastapi import FastAPI, HTTPException, Body, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -10,6 +12,10 @@ from pydantic import BaseModel, Field
 from typing import Dict, List, Optional
 import logging
 import os
+from dotenv import load_dotenv
+
+# Load environment variables FIRST!
+load_dotenv()
 from datetime import datetime
 import uuid
 
@@ -41,6 +47,8 @@ app = FastAPI(
     version="1.0.0",
 )
 app.include_router(socratic_router)
+app.include_router(vision_router)
+app.include_router(businessplan_router)
 
 # CORS Configuration
 allowed_origins_str = os.getenv(
@@ -113,6 +121,15 @@ async def health_check():
         "version": "1.0.0",
         "timestamp": datetime.now().isoformat(),
     }
+
+
+@app.get("/api/cache-stats")
+async def cache_stats():
+    """Get cache statistics"""
+    from cache_service import cache
+
+    stats = cache.get_stats()
+    return {"cache": stats, "redis_connected": cache.client is not None}
 
 
 @app.get("/api/admin/create-tables")

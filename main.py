@@ -1,6 +1,7 @@
 """
 GründerAI Backend - Complete with Legal Citations System
-ENHANCED VERSION - Now includes Business Context Capture Phase
+ENHANCED VERSION - Business Context + Personality Scenarios
+Version: 2.0.0
 """
 
 from fastapi import FastAPI, HTTPException
@@ -22,11 +23,15 @@ logger = logging.getLogger(__name__)
 # Create FastAPI app
 app = FastAPI(
     title="GründerAI Backend API",
-    version="1.1.0",
-    description="Backend with Business Context Capture, Legal Citations System for GZ-compliant Businessplans",
+    version="2.0.0",
+    description="Backend with Business Context Capture, Personality Scenarios, Legal Citations System for GZ-compliant Businessplans",
 )
 
-# Import and include business context router
+# ============================================================================
+# IMPORT AND INCLUDE ROUTERS
+# ============================================================================
+
+# Day 1: Business Context Router
 try:
     from business_context_routes import router as business_context_router
     app.include_router(business_context_router)
@@ -34,7 +39,17 @@ try:
 except ImportError as e:
     logger.warning(f"⚠️ Business Context routes not loaded: {e}")
 
+# Day 2: Personality Scenarios Router (NEW!)
+try:
+    from scenario_routes import router as scenario_router
+    app.include_router(scenario_router)
+    logger.info("✅ Personality Scenario routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ Personality Scenario routes not loaded: {e}")
+
+# ============================================================================
 # CORS - Allow frontend origins
+# ============================================================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -99,10 +114,11 @@ async def root():
     """Root endpoint - Service info"""
     return {
         "service": "GründerAI Backend API",
-        "version": "1.1.0",
+        "version": "2.0.0",
         "status": "running",
         "features": [
-            "Business Context Capture (NEW)",
+            "Business Context Capture (Day 1)",
+            "Personality Scenarios (Day 2 - NEW!)",
             "Legal Citations (18+ official sources)",
             "GZ Compliance Checking",
             "Enhanced Businessplan Generator",
@@ -114,6 +130,13 @@ async def root():
                 "answer": "POST /api/v1/assessment/business-context/answer",
                 "progress": "GET /api/v1/assessment/business-context/progress/{session_id}",
                 "complete": "POST /api/v1/assessment/business-context/complete",
+            },
+            "personality_scenarios": {
+                "start": "POST /api/v1/assessment/start",
+                "respond": "POST /api/v1/assessment/{session_id}/respond",
+                "scenario": "GET /api/v1/assessment/{session_id}/scenario",
+                "results": "GET /api/v1/assessment/{session_id}/results",
+                "status": "GET /api/v1/assessment/{session_id}/status",
             },
             "businessplan": "POST /api/businessplan/enhanced",
             "citations": "GET /api/citations",
@@ -128,8 +151,14 @@ async def health():
     api_key_set = bool(os.getenv("ANTHROPIC_API_KEY"))
     return {
         "status": "ok",
+        "version": "2.0.0",
         "api_key_set": api_key_set,
         "timestamp": datetime.utcnow().isoformat(),
+        "components": {
+            "business_context": "operational",
+            "personality_scenarios": "operational",
+            "legal_citations": "operational",
+        }
     }
 
 
@@ -338,21 +367,30 @@ async def startup_event():
     logger.info("🚀 GründerAI Backend Starting...")
     logger.info("")
     logger.info("📋 Business Context Capture: Available")
+    logger.info("🧠 Personality Scenarios: Available (NEW!)")
     logger.info("📝 Enhanced Generator: Available")
     logger.info("🏛️  Legal Citations: 18+ official sources")
     logger.info("✅ Input Validations: Enabled")
     logger.info(
-        f"🔐 API Key: {'✓ Set' if os.getenv('ANTHROPIC_API_KEY') else '✗ NOT SET'}"
+        f"🔑 API Key: {'✓ Set' if os.getenv('ANTHROPIC_API_KEY') else '✗ NOT SET'}"
     )
     logger.info("")
-    logger.info("Endpoints:")
+    logger.info("Day 1 Endpoints (Business Context):")
     logger.info("  POST /api/v1/assessment/business-context/start")
     logger.info("  POST /api/v1/assessment/business-context/answer")
     logger.info("  GET  /api/v1/assessment/business-context/progress/{id}")
     logger.info("  POST /api/v1/assessment/business-context/complete")
+    logger.info("")
+    logger.info("Day 2 Endpoints (Personality Scenarios):")
+    logger.info("  POST /api/v1/assessment/start")
+    logger.info("  POST /api/v1/assessment/{id}/business-context")
+    logger.info("  GET  /api/v1/assessment/{id}/scenario")
+    logger.info("  POST /api/v1/assessment/{id}/respond")
+    logger.info("  GET  /api/v1/assessment/{id}/results")
+    logger.info("")
+    logger.info("Other Endpoints:")
     logger.info("  POST /api/businessplan/enhanced")
     logger.info("  GET  /api/citations")
-    logger.info("  GET  /api/citations/{key}")
     logger.info("  GET  /api/health")
     logger.info("=" * 70)
 

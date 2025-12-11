@@ -1,0 +1,1353 @@
+{
+  "version": "1.0.0",
+  "description": "Business scenarios for invisible personality assessment - Howard's 7 dimensions",
+  "created": "2025-12-11",
+  "total_scenarios": 35,
+  "dimensions": [
+    "innovativeness",
+    "risk_taking",
+    "achievement_orientation",
+    "autonomy_orientation",
+    "proactiveness",
+    "locus_of_control",
+    "self_efficacy"
+  ],
+  "personalization_keys": {
+    "business_type": {
+      "restaurant": {
+        "business_label": "Restaurant",
+        "product_term": "Speisekarte",
+        "customer_term": "Gäste",
+        "revenue_term": "Umsatz",
+        "expansion_term": "zweiten Standort",
+        "competitor_term": "andere Restaurants",
+        "industry_term": "Gastronomie"
+      },
+      "saas": {
+        "business_label": "Software-Unternehmen",
+        "product_term": "Produkt",
+        "customer_term": "Nutzer",
+        "revenue_term": "MRR",
+        "expansion_term": "neuen Markt",
+        "competitor_term": "andere SaaS-Anbieter",
+        "industry_term": "Tech-Branche"
+      },
+      "consulting": {
+        "business_label": "Beratung",
+        "product_term": "Dienstleistung",
+        "customer_term": "Kunden",
+        "revenue_term": "Honorar",
+        "expansion_term": "neuen Geschäftsbereich",
+        "competitor_term": "andere Berater",
+        "industry_term": "Beratungsbranche"
+      },
+      "ecommerce": {
+        "business_label": "Online-Shop",
+        "product_term": "Sortiment",
+        "customer_term": "Käufer",
+        "revenue_term": "Umsatz",
+        "expansion_term": "internationale Märkte",
+        "competitor_term": "andere Online-Händler",
+        "industry_term": "E-Commerce"
+      },
+      "services": {
+        "business_label": "Dienstleistungsunternehmen",
+        "product_term": "Service",
+        "customer_term": "Kunden",
+        "revenue_term": "Einnahmen",
+        "expansion_term": "neuen Servicebereich",
+        "competitor_term": "Mitbewerber",
+        "industry_term": "Dienstleistungssektor"
+      },
+      "creative": {
+        "business_label": "Kreativagentur",
+        "product_term": "Kreativleistung",
+        "customer_term": "Auftraggeber",
+        "revenue_term": "Projekthonorar",
+        "expansion_term": "neuen Kreativbereich",
+        "competitor_term": "andere Agenturen",
+        "industry_term": "Kreativwirtschaft"
+      },
+      "health": {
+        "business_label": "Gesundheitsunternehmen",
+        "product_term": "Behandlung",
+        "customer_term": "Patienten",
+        "revenue_term": "Einnahmen",
+        "expansion_term": "neuen Standort",
+        "competitor_term": "andere Praxen",
+        "industry_term": "Gesundheitssektor"
+      },
+      "other": {
+        "business_label": "Unternehmen",
+        "product_term": "Angebot",
+        "customer_term": "Kunden",
+        "revenue_term": "Umsatz",
+        "expansion_term": "neuen Bereich",
+        "competitor_term": "Wettbewerber",
+        "industry_term": "Branche"
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "INNOV_001",
+      "dimension": "innovativeness",
+      "difficulty": -1.0,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Dein {{business_label}} startet in einem Markt mit etablierten {{competitor_term}}. Du musst dein {{product_term}} positionieren.",
+        "question": "Wie gehst du vor?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich kopiere das bewährte Konzept der Marktführer - warum das Rad neu erfinden?",
+            "theta_value": -1.8,
+            "psychological_mapping": "Sehr niedrige Innovativität - Imitation"
+          },
+          {
+            "id": "B",
+            "text": "Ich mache das Gleiche wie andere, aber günstiger oder in besserer Qualität.",
+            "theta_value": -0.5,
+            "psychological_mapping": "Niedrige Innovativität - Optimierung"
+          },
+          {
+            "id": "C",
+            "text": "Ich kombiniere bewährte Elemente neu und füge eigene Ideen hinzu.",
+            "theta_value": 0.7,
+            "psychological_mapping": "Moderate Innovativität - Rekombination"
+          },
+          {
+            "id": "D",
+            "text": "Ich entwickle etwas völlig Neues, das es so noch nicht gibt.",
+            "theta_value": 1.9,
+            "psychological_mapping": "Hohe Innovativität - Disruption"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "INNOV_002",
+      "dimension": "innovativeness",
+      "difficulty": 0.0,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Ein {{customer_term}} beschwert sich über ein Problem mit deinem {{product_term}}, das alle {{competitor_term}} auch haben.",
+        "question": "Wie reagierst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Das ist halt so in der {{industry_term}} - damit müssen {{customer_term}} leben.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Sehr niedrige Innovativität - Akzeptanz des Status quo"
+          },
+          {
+            "id": "B",
+            "text": "Ich schaue, ob es eine bekannte Lösung gibt, die ich übernehmen kann.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Niedrige Innovativität - Suche nach existierenden Lösungen"
+          },
+          {
+            "id": "C",
+            "text": "Ich entwickle eine kreative Lösung, die uns von anderen unterscheidet.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Moderate Innovativität - Differenzierung"
+          },
+          {
+            "id": "D",
+            "text": "Perfekt! Das ist eine Chance, das ganze Problem-Feld neu zu denken.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Hohe Innovativität - Problem als Chance"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "INNOV_003",
+      "dimension": "innovativeness",
+      "difficulty": 0.5,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Du hast die Wahl: Eine bewährte Technologie nutzen oder eine neue, unerprobte Technologie ausprobieren, die Vorteile verspricht.",
+        "question": "Was wählst du für dein {{business_label}}?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Die bewährte Technologie - Stabilität ist wichtiger als Experimente.",
+            "theta_value": -1.4,
+            "psychological_mapping": "Niedrige Innovativität - Sicherheitsorientierung"
+          },
+          {
+            "id": "B",
+            "text": "Die bewährte Technologie, aber ich beobachte die neue genau.",
+            "theta_value": 0.0,
+            "psychological_mapping": "Moderate Innovativität - Vorsichtige Beobachtung"
+          },
+          {
+            "id": "C",
+            "text": "Ich teste die neue Technologie in einem kleinen Bereich.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Gute Innovativität - Kontrolliertes Experimentieren"
+          },
+          {
+            "id": "D",
+            "text": "Die neue Technologie - Early Adopter haben Wettbewerbsvorteile.",
+            "theta_value": 2.0,
+            "psychological_mapping": "Hohe Innovativität - Pioniergeist"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "INNOV_004",
+      "dimension": "innovativeness",
+      "difficulty": -0.5,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Dein Team schlägt eine ungewöhnliche Marketingidee vor, die noch niemand in der {{industry_term}} ausprobiert hat.",
+        "question": "Wie reagierst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Zu riskant - wir machen lieber bewährtes Marketing.",
+            "theta_value": -1.7,
+            "psychological_mapping": "Sehr niedrige Innovativität - Ablehnung des Neuen"
+          },
+          {
+            "id": "B",
+            "text": "Interessant, aber lasst uns erst schauen, was andere machen.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Niedrige Innovativität - Abwarten"
+          },
+          {
+            "id": "C",
+            "text": "Gute Idee! Lasst uns einen kleinen Test machen.",
+            "theta_value": 0.8,
+            "psychological_mapping": "Moderate Innovativität - Offenheit für Tests"
+          },
+          {
+            "id": "D",
+            "text": "Genau das brauchen wir - lasst uns Vorreiter sein!",
+            "theta_value": 1.8,
+            "psychological_mapping": "Hohe Innovativität - Begeisterung für Neues"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "INNOV_005",
+      "dimension": "innovativeness",
+      "difficulty": 1.0,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Dein erfolgreiches {{product_term}} könnte durch eine radikale Neugestaltung noch besser werden - aber es funktioniert ja gut.",
+        "question": "Was machst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Never change a running system - es läuft doch.",
+            "theta_value": -1.5,
+            "psychological_mapping": "Niedrige Innovativität - Bewahrung"
+          },
+          {
+            "id": "B",
+            "text": "Kleine Verbesserungen ja, aber keine radikalen Änderungen.",
+            "theta_value": -0.2,
+            "psychological_mapping": "Leicht niedrige Innovativität - Inkrementell"
+          },
+          {
+            "id": "C",
+            "text": "Ich entwickle eine neue Version parallel zum bestehenden Angebot.",
+            "theta_value": 1.1,
+            "psychological_mapping": "Gute Innovativität - Parallele Innovation"
+          },
+          {
+            "id": "D",
+            "text": "Zeit für eine Revolution - Stillstand ist Rückschritt.",
+            "theta_value": 2.2,
+            "psychological_mapping": "Sehr hohe Innovativität - Disruptive Erneuerung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "RISK_001",
+      "dimension": "risk_taking",
+      "difficulty": -0.5,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Du hast €15.000 für dein {{business_label}} gespart. Du könntest sofort starten oder 6 Monate warten und €30.000 sparen.",
+        "question": "Was entscheidest du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich warte und spare mehr - finanzielle Sicherheit ist entscheidend.",
+            "theta_value": -1.7,
+            "psychological_mapping": "Niedrige Risikobereitschaft - Sicherheitsorientierung"
+          },
+          {
+            "id": "B",
+            "text": "Ich starte mit €15k, behalte aber meinen Nebenjob als Sicherheit.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Leicht niedrige Risikobereitschaft - Absicherung"
+          },
+          {
+            "id": "C",
+            "text": "Ich starte jetzt mit €15k - Zeit ist wichtiger als mehr Kapital.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Moderate Risikobereitschaft - Kalkuliertes Risiko"
+          },
+          {
+            "id": "D",
+            "text": "Ich starte sofort und nehme zusätzlich einen Kredit auf.",
+            "theta_value": 2.3,
+            "psychological_mapping": "Hohe Risikobereitschaft - Aggressiver Start"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "RISK_002",
+      "dimension": "risk_taking",
+      "difficulty": 0.3,
+      "discrimination": 1.9,
+      "template": {
+        "situation": "Ein Großkunde bietet dir einen lukrativen Auftrag, der 60% deiner Kapazität binden würde.",
+        "question": "Wie entscheidest du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Zu riskant - Abhängigkeit von einem Kunden ist gefährlich.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Niedrige Risikobereitschaft - Diversifikation"
+          },
+          {
+            "id": "B",
+            "text": "Nur wenn ich Garantien und lange Vertragslaufzeit bekomme.",
+            "theta_value": -0.2,
+            "psychological_mapping": "Leicht niedrige Risikobereitschaft - Absicherung"
+          },
+          {
+            "id": "C",
+            "text": "Ich nehme an - große Chancen erfordern Einsatz.",
+            "theta_value": 1.2,
+            "psychological_mapping": "Moderate Risikobereitschaft - Chancenorientierung"
+          },
+          {
+            "id": "D",
+            "text": "Sofort zusagen und weitere Mitarbeiter einstellen, um zu wachsen.",
+            "theta_value": 2.2,
+            "psychological_mapping": "Hohe Risikobereitschaft - Aggressive Expansion"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "RISK_003",
+      "dimension": "risk_taking",
+      "difficulty": 0.8,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Du könntest in einen {{expansion_term}} expandieren. Das würde deine gesamten Rücklagen erfordern.",
+        "question": "Was tust du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Auf keinen Fall - ohne Rücklagen schlafe ich nicht mehr.",
+            "theta_value": -1.8,
+            "psychological_mapping": "Sehr niedrige Risikobereitschaft - Sicherheit"
+          },
+          {
+            "id": "B",
+            "text": "Nur wenn ich externe Investoren finde, die das Risiko teilen.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Niedrige Risikobereitschaft - Risikoteilung"
+          },
+          {
+            "id": "C",
+            "text": "Wenn die Analyse positiv ist, wage ich es.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Moderate Risikobereitschaft - Datenbasiert"
+          },
+          {
+            "id": "D",
+            "text": "All-in - wer nicht wagt, der nicht gewinnt.",
+            "theta_value": 2.4,
+            "psychological_mapping": "Sehr hohe Risikobereitschaft - Maximale Exposition"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "RISK_004",
+      "dimension": "risk_taking",
+      "difficulty": -1.0,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Du hast die Wahl zwischen einem sicheren Vertrag (€3.000/Monat) und einem erfolgsabhängigen (€0-10.000/Monat).",
+        "question": "Was wählst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Der sichere Vertrag - Planbarkeit ist mir wichtig.",
+            "theta_value": -1.5,
+            "psychological_mapping": "Niedrige Risikobereitschaft - Planungssicherheit"
+          },
+          {
+            "id": "B",
+            "text": "Ein Mix: 70% sicher, 30% erfolgsabhängig.",
+            "theta_value": 0.0,
+            "psychological_mapping": "Moderate Risikobereitschaft - Ausgewogen"
+          },
+          {
+            "id": "C",
+            "text": "Mehr erfolgsabhängig - ich glaube an meinen Erfolg.",
+            "theta_value": 1.3,
+            "psychological_mapping": "Gute Risikobereitschaft - Selbstvertrauen"
+          },
+          {
+            "id": "D",
+            "text": "100% erfolgsabhängig - ich will das volle Upside.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Hohe Risikobereitschaft - Maximale Chance"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "RISK_005",
+      "dimension": "risk_taking",
+      "difficulty": 0.5,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Ein Investor bietet €50.000 für 25% deines {{business_label}}. Ohne Investment wächst du langsamer, aber behältst alles.",
+        "question": "Wie entscheidest du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Kein Deal - ich will niemanden reinlassen und behalte 100%.",
+            "theta_value": -1.4,
+            "psychological_mapping": "Niedrige Risikobereitschaft - Kontrolle bewahren"
+          },
+          {
+            "id": "B",
+            "text": "Ich verhandle auf 15% runter und sichere mir mehr Kontrolle.",
+            "theta_value": 0.2,
+            "psychological_mapping": "Moderate Risikobereitschaft - Vorsichtige Öffnung"
+          },
+          {
+            "id": "C",
+            "text": "Deal! Mit dem Geld kann ich schneller wachsen.",
+            "theta_value": 1.4,
+            "psychological_mapping": "Gute Risikobereitschaft - Wachstumsfokus"
+          },
+          {
+            "id": "D",
+            "text": "Ich nehme an und frage, ob sie mehr investieren würden.",
+            "theta_value": 2.0,
+            "psychological_mapping": "Hohe Risikobereitschaft - Aggressive Kapitalaufnahme"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "ACHIEV_001",
+      "dimension": "achievement_orientation",
+      "difficulty": -0.2,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Dein {{business_label}} läuft solide. Du verdienst genug, um gut zu leben. Konkurrenten haben ähnliche Ergebnisse.",
+        "question": "Wie fühlst du dich dabei?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Zufrieden - das Geschäft ist stabil und nachhaltig.",
+            "theta_value": -1.4,
+            "psychological_mapping": "Niedrige Leistungsorientierung - Zufriedenheit"
+          },
+          {
+            "id": "B",
+            "text": "Okay für jetzt, aber langfristig möchte ich etwas mehr.",
+            "theta_value": 0.0,
+            "psychological_mapping": "Moderate Leistungsorientierung - Sanfter Ehrgeiz"
+          },
+          {
+            "id": "C",
+            "text": "Unzufrieden - ich sollte besser sein als der Durchschnitt.",
+            "theta_value": 1.3,
+            "psychological_mapping": "Gute Leistungsorientierung - Exzellenzstreben"
+          },
+          {
+            "id": "D",
+            "text": "Frustriert - ich muss an die Spitze, nicht in die Mitte.",
+            "theta_value": 2.0,
+            "psychological_mapping": "Hohe Leistungsorientierung - Dominanzstreben"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "ACHIEV_002",
+      "dimension": "achievement_orientation",
+      "difficulty": 0.5,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Du hast ein wichtiges Kundenprojekt abgeschlossen. Der Kunde ist zufrieden, aber du weißt, es hätte besser sein können.",
+        "question": "Wie gehst du damit um?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Kunde zufrieden = Projekt erfolgreich. Weiter zum nächsten.",
+            "theta_value": -1.3,
+            "psychological_mapping": "Niedrige Leistungsorientierung - Externe Validierung"
+          },
+          {
+            "id": "B",
+            "text": "Ich mache mir eine Notiz für Verbesserungen beim nächsten Mal.",
+            "theta_value": 0.2,
+            "psychological_mapping": "Moderate Leistungsorientierung - Lernen"
+          },
+          {
+            "id": "C",
+            "text": "Ich analysiere, was besser hätte sein können und arbeite daran.",
+            "theta_value": 1.2,
+            "psychological_mapping": "Gute Leistungsorientierung - Selbstoptimierung"
+          },
+          {
+            "id": "D",
+            "text": "Das ärgert mich - ich setze mir höhere Standards für die Zukunft.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Hohe Leistungsorientierung - Perfektionismus"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "ACHIEV_003",
+      "dimension": "achievement_orientation",
+      "difficulty": 0.0,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Du musst dein erstes wichtiges Kundengespräch für dein {{business_label}} vorbereiten.",
+        "question": "Wie bereitest du dich vor?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich schaue spontan, was im Gespräch passiert.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Niedrige Leistungsorientierung - Improvisation"
+          },
+          {
+            "id": "B",
+            "text": "Ich denke kurz über mögliche Fragen nach.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Leicht niedrige Leistungsorientierung - Minimale Vorbereitung"
+          },
+          {
+            "id": "C",
+            "text": "Ich bereite alle wichtigen Punkte gründlich vor.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Gute Leistungsorientierung - Solide Vorbereitung"
+          },
+          {
+            "id": "D",
+            "text": "Ich recherchiere intensiv, erstelle maßgeschneiderte Unterlagen und simuliere das Gespräch.",
+            "theta_value": 1.9,
+            "psychological_mapping": "Hohe Leistungsorientierung - Maximale Vorbereitung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "ACHIEV_004",
+      "dimension": "achievement_orientation",
+      "difficulty": -0.8,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Nach 6 Monaten liegt dein {{revenue_term}} 20% unter deinem Ziel.",
+        "question": "Was tust du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich passe mein Ziel nach unten an - war wohl zu ambitioniert.",
+            "theta_value": -1.5,
+            "psychological_mapping": "Niedrige Leistungsorientierung - Anpassung nach unten"
+          },
+          {
+            "id": "B",
+            "text": "Ich mache weiter wie bisher und hoffe auf Besserung.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Leicht niedrige Leistungsorientierung - Passiv"
+          },
+          {
+            "id": "C",
+            "text": "Ich analysiere die Gründe und passe meine Strategie an.",
+            "theta_value": 0.8,
+            "psychological_mapping": "Gute Leistungsorientierung - Anpassung"
+          },
+          {
+            "id": "D",
+            "text": "Ich entwickle einen aggressiven Aufholplan und arbeite härter.",
+            "theta_value": 1.8,
+            "psychological_mapping": "Hohe Leistungsorientierung - Intensivierung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "ACHIEV_005",
+      "dimension": "achievement_orientation",
+      "difficulty": 1.0,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Du hast dein Jahresziel erreicht. Es ist November.",
+        "question": "Was machst du jetzt?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich entspanne mich - Ziel erreicht, Jahr geschafft.",
+            "theta_value": -1.4,
+            "psychological_mapping": "Niedrige Leistungsorientierung - Zufriedenheit"
+          },
+          {
+            "id": "B",
+            "text": "Ich halte das Niveau und bereite das nächste Jahr vor.",
+            "theta_value": 0.1,
+            "psychological_mapping": "Moderate Leistungsorientierung - Konsolidierung"
+          },
+          {
+            "id": "C",
+            "text": "Ich setze mir ein neues, höheres Ziel für die letzten Wochen.",
+            "theta_value": 1.4,
+            "psychological_mapping": "Gute Leistungsorientierung - Weiterer Ehrgeiz"
+          },
+          {
+            "id": "D",
+            "text": "Das motiviert mich, noch viel mehr herauszuholen - jetzt erst recht!",
+            "theta_value": 2.2,
+            "psychological_mapping": "Hohe Leistungsorientierung - Unersättlich"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "AUTO_001",
+      "dimension": "autonomy_orientation",
+      "difficulty": 0.5,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Ein erfahrener Partner bietet dir €30.000 und Branchenkontakte. Dafür will er 50% Mitsprache bei allen wichtigen Entscheidungen.",
+        "question": "Wie reagierst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Perfekt - die Expertise und Ressourcen brauche ich.",
+            "theta_value": -1.8,
+            "psychological_mapping": "Niedrige Autonomieorientierung - Partnerschaftssuche"
+          },
+          {
+            "id": "B",
+            "text": "Okay, aber ich verhandle auf beratende Rolle (20% Equity) runter.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Leicht niedrige Autonomieorientierung - Kontrollierte Öffnung"
+          },
+          {
+            "id": "C",
+            "text": "Ich lehne ab und suche andere Finanzierungswege.",
+            "theta_value": 1.1,
+            "psychological_mapping": "Gute Autonomieorientierung - Unabhängigkeit"
+          },
+          {
+            "id": "D",
+            "text": "Niemals - ich bleibe lieber klein als Kontrolle abzugeben.",
+            "theta_value": 2.3,
+            "psychological_mapping": "Hohe Autonomieorientierung - Absolute Kontrolle"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "AUTO_002",
+      "dimension": "autonomy_orientation",
+      "difficulty": 0.0,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Ein Branchenverband bietet Mitgliedschaft an. Vorteile: Netzwerk und Ressourcen. Nachteile: Regeln und Verpflichtungen.",
+        "question": "Wie entscheidest du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich trete bei - die Vorteile überwiegen klar.",
+            "theta_value": -1.5,
+            "psychological_mapping": "Niedrige Autonomieorientierung - Integration"
+          },
+          {
+            "id": "B",
+            "text": "Ich trete bei, aber nur als passives Mitglied.",
+            "theta_value": -0.2,
+            "psychological_mapping": "Leicht niedrige Autonomieorientierung - Distanzierte Teilnahme"
+          },
+          {
+            "id": "C",
+            "text": "Ich hole mir die Infos informell, ohne Mitglied zu werden.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Gute Autonomieorientierung - Selektive Beteiligung"
+          },
+          {
+            "id": "D",
+            "text": "Ich mache mein eigenes Ding - Verbände schränken nur ein.",
+            "theta_value": 2.0,
+            "psychological_mapping": "Hohe Autonomieorientierung - Einzelgänger"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "AUTO_003",
+      "dimension": "autonomy_orientation",
+      "difficulty": -0.5,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Du hast eine wichtige Entscheidung für dein {{business_label}} zu treffen. Mehrere erfahrene Berater raten dir zu Option A.",
+        "question": "Wie gehst du vor?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich folge dem Rat der Experten - sie haben mehr Erfahrung.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Niedrige Autonomieorientierung - Expertenvertrauen"
+          },
+          {
+            "id": "B",
+            "text": "Ich nehme den Rat ernst und wäge ihn mit meiner Meinung ab.",
+            "theta_value": 0.0,
+            "psychological_mapping": "Moderate Autonomieorientierung - Abwägung"
+          },
+          {
+            "id": "C",
+            "text": "Ich höre zu, entscheide aber selbst - es ist mein Geschäft.",
+            "theta_value": 1.2,
+            "psychological_mapping": "Gute Autonomieorientierung - Eigene Entscheidung"
+          },
+          {
+            "id": "D",
+            "text": "Mein Bauchgefühl sagt B - ich vertraue mir mehr als anderen.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Hohe Autonomieorientierung - Selbstvertrauen"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "AUTO_004",
+      "dimension": "autonomy_orientation",
+      "difficulty": 0.8,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Ein großer Kunde will dich exklusiv binden. Garantiertes Einkommen, aber du darfst nicht für andere arbeiten.",
+        "question": "Was sagst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Perfekt - sichere Einnahmen sind wichtiger als Freiheit.",
+            "theta_value": -1.7,
+            "psychological_mapping": "Niedrige Autonomieorientierung - Sicherheit über Freiheit"
+          },
+          {
+            "id": "B",
+            "text": "Ich verhandle auf 80% meiner Zeit runter, um etwas Flexibilität zu behalten.",
+            "theta_value": -0.1,
+            "psychological_mapping": "Leicht niedrige Autonomieorientierung - Kompromiss"
+          },
+          {
+            "id": "C",
+            "text": "Ich lehne Exklusivität ab, aber biete Priorität an.",
+            "theta_value": 1.3,
+            "psychological_mapping": "Gute Autonomieorientierung - Unabhängigkeit bewahren"
+          },
+          {
+            "id": "D",
+            "text": "Niemals exklusiv - meine Freiheit ist nicht verhandelbar.",
+            "theta_value": 2.4,
+            "psychological_mapping": "Hohe Autonomieorientierung - Absolute Freiheit"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "AUTO_005",
+      "dimension": "autonomy_orientation",
+      "difficulty": -1.0,
+      "discrimination": 1.4,
+      "template": {
+        "situation": "Du könntest dein {{business_label}} als Franchise aufbauen. Vorteil: etabliertes System. Nachteil: du musst Regeln befolgen.",
+        "question": "Wie stehst du dazu?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ideal - ein bewährtes System gibt mir Sicherheit.",
+            "theta_value": -1.9,
+            "psychological_mapping": "Niedrige Autonomieorientierung - Systemvertrauen"
+          },
+          {
+            "id": "B",
+            "text": "Interessant, wenn ich genug Gestaltungsspielraum habe.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Leicht niedrige Autonomieorientierung - Bedingter Spielraum"
+          },
+          {
+            "id": "C",
+            "text": "Eher nicht - ich möchte meine eigenen Entscheidungen treffen.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Gute Autonomieorientierung - Eigenständigkeit"
+          },
+          {
+            "id": "D",
+            "text": "Auf keinen Fall - ich will 100% eigene Regeln machen.",
+            "theta_value": 2.2,
+            "psychological_mapping": "Hohe Autonomieorientierung - Totale Selbstbestimmung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "PROACT_001",
+      "dimension": "proactiveness",
+      "difficulty": -0.1,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Du startest dein {{business_label}} in 3 Monaten. Aktuell hast du noch keine {{customer_term}} gewonnen.",
+        "question": "Was ist dein Ansatz zur Kundengewinnung?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Erst aufbauen, dann kommen {{customer_term}} durch Qualität von selbst.",
+            "theta_value": -1.5,
+            "psychological_mapping": "Niedrige Proaktivität - Passives Warten"
+          },
+          {
+            "id": "B",
+            "text": "Website und Social Media aufsetzen und auf Anfragen warten.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Leicht niedrige Proaktivität - Passive Präsenz"
+          },
+          {
+            "id": "C",
+            "text": "Jetzt schon potenzielle {{customer_term}} ansprechen und Interesse validieren.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Gute Proaktivität - Aktive Ansprache"
+          },
+          {
+            "id": "D",
+            "text": "Vorverkauf starten - ich will zahlende {{customer_term}} vor dem Launch.",
+            "theta_value": 1.9,
+            "psychological_mapping": "Hohe Proaktivität - Aggressive Vorarbeit"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "PROACT_002",
+      "dimension": "proactiveness",
+      "difficulty": 0.3,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Du hörst von einem neuen Trend in der {{industry_term}}, der in 12 Monaten relevant werden könnte.",
+        "question": "Was machst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Abwarten - vielleicht ist es nur ein Hype.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Niedrige Proaktivität - Abwartend"
+          },
+          {
+            "id": "B",
+            "text": "Ich beobachte die Entwicklung und lese mich ein.",
+            "theta_value": -0.2,
+            "psychological_mapping": "Leicht niedrige Proaktivität - Beobachtend"
+          },
+          {
+            "id": "C",
+            "text": "Ich experimentiere jetzt schon und bereite mich vor.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Gute Proaktivität - Vorbereitung"
+          },
+          {
+            "id": "D",
+            "text": "Sofort investieren - wer zuerst kommt, gewinnt den Markt.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Hohe Proaktivität - First Mover"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "PROACT_003",
+      "dimension": "proactiveness",
+      "difficulty": -0.6,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Du erfährst von einer Fördermöglichkeit für dein {{business_label}}. Deadline ist in 2 Wochen.",
+        "question": "Wie reagierst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Zu kurzfristig - beim nächsten Mal vielleicht.",
+            "theta_value": -1.4,
+            "psychological_mapping": "Niedrige Proaktivität - Vermeidend"
+          },
+          {
+            "id": "B",
+            "text": "Ich schaue mir die Anforderungen mal an.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Leicht niedrige Proaktivität - Unverbindlich"
+          },
+          {
+            "id": "C",
+            "text": "Ich fange sofort mit dem Antrag an.",
+            "theta_value": 0.8,
+            "psychological_mapping": "Gute Proaktivität - Schnelle Aktion"
+          },
+          {
+            "id": "D",
+            "text": "Ich arbeite Tag und Nacht, um die Deadline zu schaffen.",
+            "theta_value": 1.8,
+            "psychological_mapping": "Hohe Proaktivität - Voller Einsatz"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "PROACT_004",
+      "dimension": "proactiveness",
+      "difficulty": 0.7,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Du siehst eine Marktlücke, die noch niemand erkannt hat. Aber sie erfordert Vorarbeit ohne sofortigen Return.",
+        "question": "Was tust du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich konzentriere mich auf das aktuelle Geschäft.",
+            "theta_value": -1.5,
+            "psychological_mapping": "Niedrige Proaktivität - Gegenwartsfokus"
+          },
+          {
+            "id": "B",
+            "text": "Ich merke es mir für später, wenn ich mehr Ressourcen habe.",
+            "theta_value": -0.1,
+            "psychological_mapping": "Leicht niedrige Proaktivität - Verschieben"
+          },
+          {
+            "id": "C",
+            "text": "Ich investiere Zeit nebenbei, um die Chance vorzubereiten.",
+            "theta_value": 1.2,
+            "psychological_mapping": "Gute Proaktivität - Parallele Vorbereitung"
+          },
+          {
+            "id": "D",
+            "text": "Sofort Vollgas - solche Chancen darf man nicht verpassen.",
+            "theta_value": 2.3,
+            "psychological_mapping": "Hohe Proaktivität - Sofortige Aktion"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "PROACT_005",
+      "dimension": "proactiveness",
+      "difficulty": 0.0,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Ein wichtiger Branchenevent findet in 6 Wochen statt. Du bist noch nicht bekannt genug für einen Vortrag.",
+        "question": "Wie gehst du vor?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Dieses Jahr als Besucher - vielleicht nächstes Jahr als Speaker.",
+            "theta_value": -1.3,
+            "psychological_mapping": "Niedrige Proaktivität - Abwartend"
+          },
+          {
+            "id": "B",
+            "text": "Ich frage vorsichtig an, ob es Möglichkeiten gibt.",
+            "theta_value": 0.0,
+            "psychological_mapping": "Moderate Proaktivität - Vorsichtige Nachfrage"
+          },
+          {
+            "id": "C",
+            "text": "Ich bereite einen überzeugenden Pitch vor und bewerbe mich aktiv.",
+            "theta_value": 1.1,
+            "psychological_mapping": "Gute Proaktivität - Aktive Bewerbung"
+          },
+          {
+            "id": "D",
+            "text": "Ich kontaktiere die Organisatoren mehrfach und zeige, warum ich sprechen sollte.",
+            "theta_value": 2.0,
+            "psychological_mapping": "Hohe Proaktivität - Hartnäckiges Verfolgen"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "LOC_001",
+      "dimension": "locus_of_control",
+      "difficulty": 0.2,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Dein {{business_label}} startete vor 2 Monaten. Der {{revenue_term}} liegt 40% unter Plan.",
+        "question": "Woran liegt das hauptsächlich?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Die Marktbedingungen sind schlechter als erwartet - schlechtes Timing.",
+            "theta_value": -1.9,
+            "psychological_mapping": "Externe Kontrollüberzeugung - Marktattribution"
+          },
+          {
+            "id": "B",
+            "text": "Verschiedene externe Faktoren (Wirtschaft, Konkurrenz, Pech) spielen zusammen.",
+            "theta_value": -0.6,
+            "psychological_mapping": "Leicht externe Kontrollüberzeugung - Gemischte Faktoren"
+          },
+          {
+            "id": "C",
+            "text": "Meine Umsetzung muss besser werden - Marketing oder Produkt anpassen.",
+            "theta_value": 0.8,
+            "psychological_mapping": "Interne Kontrollüberzeugung - Handlungsfokus"
+          },
+          {
+            "id": "D",
+            "text": "Ich habe nicht hart genug gearbeitet oder die falschen Entscheidungen getroffen.",
+            "theta_value": 2.0,
+            "psychological_mapping": "Starke interne Kontrollüberzeugung - Volle Verantwortung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "LOC_002",
+      "dimension": "locus_of_control",
+      "difficulty": -0.3,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Dein {{business_label}} läuft besser als erwartet. Du übertriffst alle Ziele.",
+        "question": "Woran liegt der Erfolg?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Glück und gutes Timing - der Markt war bereit.",
+            "theta_value": -1.8,
+            "psychological_mapping": "Externe Kontrollüberzeugung - Glücksattribution"
+          },
+          {
+            "id": "B",
+            "text": "Eine Kombination aus günstigen Umständen und guter Arbeit.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Leicht externe Kontrollüberzeugung - Gemischte Attribution"
+          },
+          {
+            "id": "C",
+            "text": "Meine guten strategischen Entscheidungen zahlen sich aus.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Interne Kontrollüberzeugung - Strategiefokus"
+          },
+          {
+            "id": "D",
+            "text": "Meine harte Arbeit und überlegene Strategie - ich habe es verdient.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Starke interne Kontrollüberzeugung - Leistungsstolz"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "LOC_003",
+      "dimension": "locus_of_control",
+      "difficulty": 0.6,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Ein wichtiger Kunde springt überraschend ab. Du verlierst 30% deines {{revenue_term}}.",
+        "question": "Wie interpretierst du das?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Pech gehabt - so ist das Geschäftsleben manchmal.",
+            "theta_value": -1.7,
+            "psychological_mapping": "Externe Kontrollüberzeugung - Schicksalsattribution"
+          },
+          {
+            "id": "B",
+            "text": "Der Kunde hatte interne Probleme - lag nicht an mir.",
+            "theta_value": -0.5,
+            "psychological_mapping": "Leicht externe Kontrollüberzeugung - Kundenattribution"
+          },
+          {
+            "id": "C",
+            "text": "Ich hätte die Zeichen früher erkennen und gegensteuern können.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Interne Kontrollüberzeugung - Lernfokus"
+          },
+          {
+            "id": "D",
+            "text": "Mein Fehler - ich hätte den Kunden besser binden müssen.",
+            "theta_value": 1.9,
+            "psychological_mapping": "Starke interne Kontrollüberzeugung - Volle Verantwortung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "LOC_004",
+      "dimension": "locus_of_control",
+      "difficulty": -0.8,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Ein Wettbewerber mit mehr Ressourcen dringt in deinen Markt ein.",
+        "question": "Was denkst du?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Gegen die Großen kann ich nichts ausrichten.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Externe Kontrollüberzeugung - Ohnmacht"
+          },
+          {
+            "id": "B",
+            "text": "Mal sehen, wie sich der Markt entwickelt - vielleicht gibt es Raum für alle.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Leicht externe Kontrollüberzeugung - Abwarten"
+          },
+          {
+            "id": "C",
+            "text": "Ich suche meine Nische, wo ich besser sein kann als sie.",
+            "theta_value": 1.1,
+            "psychological_mapping": "Interne Kontrollüberzeugung - Aktive Differenzierung"
+          },
+          {
+            "id": "D",
+            "text": "Challenge accepted - ich finde einen Weg, sie zu schlagen.",
+            "theta_value": 2.2,
+            "psychological_mapping": "Starke interne Kontrollüberzeugung - Kampfgeist"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "LOC_005",
+      "dimension": "locus_of_control",
+      "difficulty": 0.9,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Dein {{business_label}} hat mehrere Herausforderungen: schwierige Wirtschaftslage, starke Konkurrenz, hohe Kosten.",
+        "question": "Wie siehst du deine Situation?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Die äußeren Umstände machen Erfolg fast unmöglich.",
+            "theta_value": -2.0,
+            "psychological_mapping": "Sehr externe Kontrollüberzeugung - Determinismus"
+          },
+          {
+            "id": "B",
+            "text": "Es ist schwierig, aber mit etwas Glück schaffe ich es.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Leicht externe Kontrollüberzeugung - Hoffnung auf Glück"
+          },
+          {
+            "id": "C",
+            "text": "Ich kann diese Faktoren nicht ändern, aber meine Reaktion darauf.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Interne Kontrollüberzeugung - Handlungsspielraum"
+          },
+          {
+            "id": "D",
+            "text": "Egal wie schwierig - mein Erfolg hängt von mir ab, nicht vom Umfeld.",
+            "theta_value": 2.3,
+            "psychological_mapping": "Starke interne Kontrollüberzeugung - Volle Kontrolle"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "SELF_001",
+      "dimension": "self_efficacy",
+      "difficulty": 0.4,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Du musst eine wichtige Aufgabe erledigen, die außerhalb deiner bisherigen Expertise liegt (z.B. Vertragsverhandlung, Finanzplanung, technische Integration).",
+        "question": "Wie gehst du vor?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Sofort einen Experten beauftragen - zu riskant für mich.",
+            "theta_value": -1.7,
+            "psychological_mapping": "Niedrige Selbstwirksamkeit - Sofortige Delegation"
+          },
+          {
+            "id": "B",
+            "text": "Die Grundlagen lernen, dann jemanden zur Kontrolle holen.",
+            "theta_value": -0.2,
+            "psychological_mapping": "Leicht niedrige Selbstwirksamkeit - Unterstütztes Lernen"
+          },
+          {
+            "id": "C",
+            "text": "Gründlich einarbeiten und selbst machen, Experten nur bei Bedarf fragen.",
+            "theta_value": 1.0,
+            "psychological_mapping": "Gute Selbstwirksamkeit - Selbstständiges Lernen"
+          },
+          {
+            "id": "D",
+            "text": "Selbst herausfinden - ich habe schon Schwierigeres gelernt.",
+            "theta_value": 2.1,
+            "psychological_mapping": "Hohe Selbstwirksamkeit - Volles Selbstvertrauen"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "SELF_002",
+      "dimension": "self_efficacy",
+      "difficulty": -0.2,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Du präsentierst dein {{business_label}} vor potenziellen Investoren. Du bist nervös.",
+        "question": "Wie fühlst du dich dabei?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ich werde das wahrscheinlich vermasseln - besser absagen.",
+            "theta_value": -1.8,
+            "psychological_mapping": "Niedrige Selbstwirksamkeit - Vermeidung"
+          },
+          {
+            "id": "B",
+            "text": "Nervös, aber ich hoffe, es läuft irgendwie gut.",
+            "theta_value": -0.4,
+            "psychological_mapping": "Leicht niedrige Selbstwirksamkeit - Hoffnung"
+          },
+          {
+            "id": "C",
+            "text": "Aufgeregt, aber ich habe mich gut vorbereitet und schaffe das.",
+            "theta_value": 0.9,
+            "psychological_mapping": "Gute Selbstwirksamkeit - Zuversicht"
+          },
+          {
+            "id": "D",
+            "text": "Nervosität ist normal - ich werde sie überzeugen.",
+            "theta_value": 1.9,
+            "psychological_mapping": "Hohe Selbstwirksamkeit - Selbstsicherheit"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "SELF_003",
+      "dimension": "self_efficacy",
+      "difficulty": 0.7,
+      "discrimination": 1.8,
+      "template": {
+        "situation": "Dein {{business_label}} steht vor einer komplexen Herausforderung, die du noch nie gelöst hast.",
+        "question": "Wie schätzt du deine Fähigkeit ein, das zu meistern?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Das übersteigt meine Fähigkeiten - ich brauche Hilfe.",
+            "theta_value": -1.6,
+            "psychological_mapping": "Niedrige Selbstwirksamkeit - Überforderung"
+          },
+          {
+            "id": "B",
+            "text": "Schwierig, aber mit genug Unterstützung vielleicht machbar.",
+            "theta_value": -0.1,
+            "psychological_mapping": "Leicht niedrige Selbstwirksamkeit - Bedingte Zuversicht"
+          },
+          {
+            "id": "C",
+            "text": "Herausfordernd, aber ich finde einen Weg.",
+            "theta_value": 1.2,
+            "psychological_mapping": "Gute Selbstwirksamkeit - Problemlöserfokus"
+          },
+          {
+            "id": "D",
+            "text": "Genau mein Ding - komplexe Probleme motivieren mich.",
+            "theta_value": 2.2,
+            "psychological_mapping": "Hohe Selbstwirksamkeit - Herausforderungssuche"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "SELF_004",
+      "dimension": "self_efficacy",
+      "difficulty": -0.6,
+      "discrimination": 1.5,
+      "template": {
+        "situation": "Du erhältst kritisches Feedback von einem {{customer_term}}: Dein {{product_term}} entspricht nicht den Erwartungen.",
+        "question": "Wie reagierst du emotional?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Vielleicht bin ich nicht für dieses Geschäft gemacht.",
+            "theta_value": -1.9,
+            "psychological_mapping": "Niedrige Selbstwirksamkeit - Selbstzweifel"
+          },
+          {
+            "id": "B",
+            "text": "Das tut weh - ich hoffe, ich kann es besser machen.",
+            "theta_value": -0.5,
+            "psychological_mapping": "Leicht niedrige Selbstwirksamkeit - Unsicherheit"
+          },
+          {
+            "id": "C",
+            "text": "Wertvolles Feedback - ich weiß, wie ich es verbessern kann.",
+            "theta_value": 0.8,
+            "psychological_mapping": "Gute Selbstwirksamkeit - Konstruktive Aufnahme"
+          },
+          {
+            "id": "D",
+            "text": "Gut zu wissen - ich werde es so verbessern, dass sie begeistert sind.",
+            "theta_value": 1.8,
+            "psychological_mapping": "Hohe Selbstwirksamkeit - Zuversichtliche Verbesserung"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "SELF_005",
+      "dimension": "self_efficacy",
+      "difficulty": 1.0,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Du überlegst, einen völlig neuen Geschäftsbereich zu erschließen, in dem du keine Erfahrung hast.",
+        "question": "Wie schätzt du deine Erfolgschancen ein?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ohne Erfahrung werde ich scheitern - zu riskant.",
+            "theta_value": -1.7,
+            "psychological_mapping": "Niedrige Selbstwirksamkeit - Erfahrungsabhängigkeit"
+          },
+          {
+            "id": "B",
+            "text": "Schwierig ohne Background - nur mit viel Unterstützung machbar.",
+            "theta_value": -0.3,
+            "psychological_mapping": "Leicht niedrige Selbstwirksamkeit - Vorsicht"
+          },
+          {
+            "id": "C",
+            "text": "Ich kann mir das nötige Wissen aneignen und erfolgreich sein.",
+            "theta_value": 1.1,
+            "psychological_mapping": "Gute Selbstwirksamkeit - Lernzuversicht"
+          },
+          {
+            "id": "D",
+            "text": "Meine Fähigkeiten sind übertragbar - ich schaffe das auch dort.",
+            "theta_value": 2.3,
+            "psychological_mapping": "Hohe Selbstwirksamkeit - Generalisiertes Vertrauen"
+          }
+        ]
+      }
+    }
+  ]
+}

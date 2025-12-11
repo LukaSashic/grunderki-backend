@@ -103,7 +103,7 @@ async def root():
     }
 
 
-@app.get("/health")
+@app.get("/api/health")
 async def health():
     """Health check endpoint"""
     api_key_set = bool(os.getenv("ANTHROPIC_API_KEY"))

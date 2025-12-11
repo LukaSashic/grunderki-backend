@@ -1,0 +1,579 @@
+{
+  "version": "1.0",
+  "language": "de",
+  "metadata": {
+    "description": "Business Context Capture Questions for GründerAI",
+    "created": "2025-12-11",
+    "author": "Opus (Implementation Layer)",
+    "target_time_minutes": "3-5",
+    "target_specificity": "60-70%"
+  },
+  "questions": {
+    "Q1a_category": {
+      "id": "Q1a_category",
+      "type": "multiple_choice",
+      "text": "Was ist deine Geschäftsidee? Wähle die Hauptkategorie:",
+      "help_text": "Wähle die Kategorie, die am besten passt. Du kannst später präzisieren.",
+      "options": [
+        {
+          "id": "restaurant",
+          "text": "Restaurant / Food Service",
+          "icon": "🍽️",
+          "next_question": "Q1b_subcategory_restaurant"
+        },
+        {
+          "id": "consulting",
+          "text": "Beratung / Coaching",
+          "icon": "💼",
+          "next_question": "Q1b_subcategory_consulting"
+        },
+        {
+          "id": "saas",
+          "text": "Tech / Software (SaaS)",
+          "icon": "💻",
+          "next_question": "Q1b_subcategory_saas"
+        },
+        {
+          "id": "ecommerce",
+          "text": "Handel / E-Commerce",
+          "icon": "🛒",
+          "next_question": "Q1b_subcategory_ecommerce"
+        },
+        {
+          "id": "services",
+          "text": "Handwerk / Dienstleistung",
+          "icon": "🔧",
+          "next_question": "Q1b_subcategory_services"
+        },
+        {
+          "id": "creative",
+          "text": "Kreativ / Design / Medien",
+          "icon": "🎨",
+          "next_question": "Q1b_subcategory_creative"
+        },
+        {
+          "id": "health",
+          "text": "Gesundheit / Wellness",
+          "icon": "🏥",
+          "next_question": "Q1b_subcategory_health"
+        },
+        {
+          "id": "other",
+          "text": "Andere",
+          "icon": "💡",
+          "requires_text": true,
+          "text_prompt": "Beschreibe kurz deine Kategorie:",
+          "next_question": "Q1c_description"
+        }
+      ],
+      "required": true,
+      "validation": {
+        "min_selections": 1,
+        "max_selections": 1
+      }
+    },
+    
+    "Q1b_subcategory_restaurant": {
+      "id": "Q1b_subcategory_restaurant",
+      "type": "multiple_choice",
+      "text": "Welche Art von Restaurant?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "restaurant",
+      "options": [
+        {
+          "id": "casual_dining",
+          "text": "Casual Dining (Pizza, Pasta, Burger, etc.)"
+        },
+        {
+          "id": "fine_dining",
+          "text": "Fine Dining"
+        },
+        {
+          "id": "fast_casual",
+          "text": "Fast Casual (Schnell + Qualität)"
+        },
+        {
+          "id": "cafe",
+          "text": "Café / Bakery"
+        },
+        {
+          "id": "ethnic",
+          "text": "Internationale Küche",
+          "requires_followup": true,
+          "followup_question": "Q1b2_cuisine"
+        },
+        {
+          "id": "catering",
+          "text": "Catering / Food Truck"
+        },
+        {
+          "id": "other",
+          "text": "Andere",
+          "requires_text": true
+        }
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b2_cuisine": {
+      "id": "Q1b2_cuisine",
+      "type": "multiple_choice",
+      "text": "Welche Küche?",
+      "parent_question": "Q1b_subcategory_restaurant",
+      "parent_answer": "ethnic",
+      "options": [
+        {"id": "italian", "text": "Italienisch"},
+        {"id": "asian", "text": "Asiatisch"},
+        {"id": "mexican", "text": "Mexikanisch"},
+        {"id": "middle_eastern", "text": "Orientalisch"},
+        {"id": "indian", "text": "Indisch"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b_subcategory_consulting": {
+      "id": "Q1b_subcategory_consulting",
+      "type": "multiple_choice",
+      "text": "Welche Art von Beratung?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "consulting",
+      "options": [
+        {"id": "management", "text": "Unternehmensberatung"},
+        {"id": "it", "text": "IT-Beratung"},
+        {"id": "hr", "text": "Personalberatung / HR"},
+        {"id": "marketing", "text": "Marketing & Kommunikation"},
+        {"id": "finance", "text": "Finanzberatung"},
+        {"id": "coaching", "text": "Business Coaching"},
+        {"id": "legal", "text": "Rechtsberatung (nicht anwaltlich)"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b_subcategory_saas": {
+      "id": "Q1b_subcategory_saas",
+      "type": "multiple_choice",
+      "text": "Welche Art von Software / Tech?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "saas",
+      "options": [
+        {"id": "b2b_saas", "text": "B2B SaaS / Unternehmenssoftware"},
+        {"id": "b2c_app", "text": "B2C App / Consumer"},
+        {"id": "marketplace", "text": "Plattform / Marktplatz"},
+        {"id": "ai_ml", "text": "KI / Machine Learning"},
+        {"id": "ecommerce_tech", "text": "E-Commerce Technologie"},
+        {"id": "fintech", "text": "FinTech"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b_subcategory_ecommerce": {
+      "id": "Q1b_subcategory_ecommerce",
+      "type": "multiple_choice",
+      "text": "Welche Art von Handel?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "ecommerce",
+      "options": [
+        {"id": "online_shop", "text": "Online-Shop"},
+        {"id": "retail", "text": "Einzelhandel / Laden"},
+        {"id": "wholesale", "text": "Großhandel / B2B"},
+        {"id": "dropshipping", "text": "Dropshipping"},
+        {"id": "marketplace_seller", "text": "Marktplatz-Verkäufer (Amazon, eBay)"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b_subcategory_services": {
+      "id": "Q1b_subcategory_services",
+      "type": "multiple_choice",
+      "text": "Welche Art von Dienstleistung / Handwerk?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "services",
+      "options": [
+        {"id": "construction", "text": "Bau / Renovierung"},
+        {"id": "cleaning", "text": "Reinigung / Hausmeister"},
+        {"id": "beauty", "text": "Friseur / Kosmetik"},
+        {"id": "automotive", "text": "Kfz / Werkstatt"},
+        {"id": "electrical", "text": "Elektro / Installation"},
+        {"id": "gardening", "text": "Garten / Landschaftsbau"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b_subcategory_creative": {
+      "id": "Q1b_subcategory_creative",
+      "type": "multiple_choice",
+      "text": "Welche Art von kreativer Arbeit?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "creative",
+      "options": [
+        {"id": "design", "text": "Grafik / Webdesign"},
+        {"id": "photo_video", "text": "Fotografie / Video"},
+        {"id": "content", "text": "Content Creation / Social Media"},
+        {"id": "writing", "text": "Texten / Redaktion"},
+        {"id": "music", "text": "Musik / Audio"},
+        {"id": "event", "text": "Event / Veranstaltung"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1b_subcategory_health": {
+      "id": "Q1b_subcategory_health",
+      "type": "multiple_choice",
+      "text": "Welche Art von Gesundheits-Dienstleistung?",
+      "parent_question": "Q1a_category",
+      "parent_answer": "health",
+      "options": [
+        {"id": "fitness", "text": "Fitness / Personal Training"},
+        {"id": "therapy", "text": "Physiotherapie / Massage"},
+        {"id": "nutrition", "text": "Ernährungsberatung"},
+        {"id": "mental_health", "text": "Coaching / Mental Health"},
+        {"id": "wellness", "text": "Wellness / Spa"},
+        {"id": "other", "text": "Andere", "requires_text": true}
+      ],
+      "next_question": "Q1c_description",
+      "required": true
+    },
+    
+    "Q1c_description": {
+      "id": "Q1c_description",
+      "type": "text",
+      "text": "Beschreibe deine Geschäftsidee in 1 Satz:",
+      "placeholder": "Z.B. 'Hausgemachte Pasta mit Bio-Zutaten für Familien'",
+      "help_text": "Ein einfacher Satz reicht. Was macht dein Angebot besonders?",
+      "max_length": 150,
+      "min_length": 10,
+      "next_question": "Q2a_target_customer",
+      "required": true
+    },
+    
+    "Q2a_target_customer": {
+      "id": "Q2a_target_customer",
+      "type": "multiple_choice",
+      "text": "Wer sind deine Hauptkunden?",
+      "help_text": "Wähle die primäre Zielgruppe. Du kannst später verfeinern.",
+      "dynamic_options": true,
+      "options_generator": "generate_customer_options_by_business_type",
+      "default_options": [
+        {
+          "id": "families",
+          "text": "Familien mit Kindern",
+          "next_question": "Q2b_families_refinement"
+        },
+        {
+          "id": "young_professionals",
+          "text": "Junge Berufstätige (25-40)"
+        },
+        {
+          "id": "seniors",
+          "text": "Senioren (60+)"
+        },
+        {
+          "id": "business_b2b",
+          "text": "Business / B2B Kunden"
+        },
+        {
+          "id": "students",
+          "text": "Studenten / Junge Erwachsene"
+        },
+        {
+          "id": "high_income",
+          "text": "Einkommensstarke Kunden"
+        },
+        {
+          "id": "mixed",
+          "text": "Gemischt / Verschiedene"
+        }
+      ],
+      "next_question": "Q3_problem",
+      "required": true
+    },
+    
+    "Q2b_families_refinement": {
+      "id": "Q2b_families_refinement",
+      "type": "multiple_choice_multiple",
+      "text": "Welche Art von Familien?",
+      "help_text": "Mehrfachauswahl möglich",
+      "parent_question": "Q2a_target_customer",
+      "parent_answer": "families",
+      "options": [
+        {
+          "id": "young_kids",
+          "text": "Mit Kleinkindern (0-6 Jahre)"
+        },
+        {
+          "id": "school_age",
+          "text": "Mit Schulkindern (7-14 Jahre)"
+        },
+        {
+          "id": "teens",
+          "text": "Mit Teenagern (15-18 Jahre)"
+        },
+        {
+          "id": "multi_gen",
+          "text": "Multi-Generationen (mit Großeltern)"
+        }
+      ],
+      "next_question": "Q3_problem",
+      "required": true,
+      "validation": {
+        "min_selections": 1,
+        "max_selections": 4
+      }
+    },
+    
+    "Q3_problem": {
+      "id": "Q3_problem",
+      "type": "multiple_choice",
+      "text": "Was ist die größte Herausforderung deiner Kunden?",
+      "help_text": "Welches Problem löst dein Angebot?",
+      "dynamic_options": true,
+      "options_generator": "generate_problem_options_by_business_type",
+      "default_options": [
+        {
+          "id": "quality",
+          "text": "Fehlende Qualität bei Alternativen"
+        },
+        {
+          "id": "convenience",
+          "text": "Zu umständlich / nicht praktisch"
+        },
+        {
+          "id": "price",
+          "text": "Zu teuer"
+        },
+        {
+          "id": "availability",
+          "text": "Nicht verfügbar / schwer zu finden"
+        },
+        {
+          "id": "experience",
+          "text": "Schlechte Kundenerfahrung"
+        },
+        {
+          "id": "expertise",
+          "text": "Mangelnde Expertise / Beratung"
+        },
+        {
+          "id": "time",
+          "text": "Zeitaufwand zu hoch"
+        },
+        {
+          "id": "other",
+          "text": "Andere",
+          "requires_text": true
+        }
+      ],
+      "next_question": "Q4_stage",
+      "required": true
+    },
+    
+    "Q4_stage": {
+      "id": "Q4_stage",
+      "type": "multiple_choice",
+      "text": "Wo stehst du gerade mit deiner Geschäftsidee?",
+      "options": [
+        {
+          "id": "idea",
+          "text": "Nur Idee - Noch nichts gemacht",
+          "icon": "💡"
+        },
+        {
+          "id": "planning",
+          "text": "Planung - Research & Konzept",
+          "icon": "📋"
+        },
+        {
+          "id": "prototype",
+          "text": "Prototype - Erste Tests",
+          "icon": "🔧"
+        },
+        {
+          "id": "mvp",
+          "text": "MVP - Erste Kunden",
+          "icon": "🚀"
+        },
+        {
+          "id": "revenue",
+          "text": "Umsatz - Aktives Business",
+          "icon": "💰"
+        }
+      ],
+      "next_question": null,
+      "is_final": true,
+      "required": true
+    }
+  },
+  
+  "dynamic_option_generators": {
+    "restaurant": {
+      "customer_options": [
+        {"id": "families", "text": "Familien mit Kindern", "next_question": "Q2b_families_refinement"},
+        {"id": "young_couples", "text": "Junge Paare / Dating"},
+        {"id": "business_lunch", "text": "Business Lunch Crowd"},
+        {"id": "seniors", "text": "Senioren"},
+        {"id": "tourists", "text": "Touristen"},
+        {"id": "mixed", "text": "Gemischt"}
+      ],
+      "problem_options": [
+        {"id": "quality_family_dining", "text": "Gutes Familienessen schwer zu finden"},
+        {"id": "slow_service", "text": "Service zu langsam"},
+        {"id": "kid_unfriendly", "text": "Nicht kinderfreundlich"},
+        {"id": "expensive", "text": "Zu teuer für regelmäßige Besuche"},
+        {"id": "atmosphere", "text": "Unpassende Atmosphäre"},
+        {"id": "quality", "text": "Mangelnde Qualität"}
+      ]
+    },
+    "saas": {
+      "customer_options": [
+        {"id": "smb", "text": "Kleine/Mittelständische Unternehmen"},
+        {"id": "enterprise", "text": "Großunternehmen"},
+        {"id": "startups", "text": "Startups"},
+        {"id": "solopreneurs", "text": "Freelancer / Solopreneure"},
+        {"id": "developers", "text": "Entwickler / Tech-Teams"},
+        {"id": "mixed", "text": "Verschiedene Unternehmensgrößen"}
+      ],
+      "problem_options": [
+        {"id": "too_complex", "text": "Bestehende Tools zu komplex"},
+        {"id": "too_expensive", "text": "Bestehende Lösungen zu teuer"},
+        {"id": "integration", "text": "Fehlende Integration"},
+        {"id": "slow", "text": "Zu langsam / ineffizient"},
+        {"id": "missing_features", "text": "Wichtige Features fehlen"},
+        {"id": "poor_support", "text": "Schlechter Support"}
+      ]
+    },
+    "consulting": {
+      "customer_options": [
+        {"id": "smb", "text": "Kleine/Mittelständische Unternehmen"},
+        {"id": "enterprise", "text": "Großunternehmen"},
+        {"id": "startups", "text": "Startups / Gründer"},
+        {"id": "executives", "text": "Führungskräfte"},
+        {"id": "professionals", "text": "Fachexperten"},
+        {"id": "mixed", "text": "Verschiedene"}
+      ],
+      "problem_options": [
+        {"id": "lack_expertise", "text": "Mangelnde interne Expertise"},
+        {"id": "need_strategy", "text": "Fehlende Strategie"},
+        {"id": "change_management", "text": "Veränderungsprozesse"},
+        {"id": "efficiency", "text": "Effizienzprobleme"},
+        {"id": "growth", "text": "Wachstumsherausforderungen"},
+        {"id": "digital", "text": "Digitalisierung"}
+      ]
+    },
+    "ecommerce": {
+      "customer_options": [
+        {"id": "consumers", "text": "Endverbraucher (B2C)"},
+        {"id": "business", "text": "Unternehmen (B2B)"},
+        {"id": "niche", "text": "Nischen-Zielgruppe"},
+        {"id": "young_adults", "text": "Junge Erwachsene (18-35)"},
+        {"id": "mixed", "text": "Gemischt"}
+      ],
+      "problem_options": [
+        {"id": "availability", "text": "Produkt schwer zu finden"},
+        {"id": "price", "text": "Zu hohe Preise"},
+        {"id": "quality", "text": "Mangelnde Qualität"},
+        {"id": "selection", "text": "Begrenzte Auswahl"},
+        {"id": "shipping", "text": "Schlechte Lieferoptionen"},
+        {"id": "trust", "text": "Mangelndes Vertrauen"}
+      ]
+    },
+    "services": {
+      "customer_options": [
+        {"id": "homeowners", "text": "Hausbesitzer / Mieter"},
+        {"id": "businesses", "text": "Gewerbekunden"},
+        {"id": "property_managers", "text": "Hausverwaltungen"},
+        {"id": "individuals", "text": "Privatpersonen"},
+        {"id": "mixed", "text": "Gemischt"}
+      ],
+      "problem_options": [
+        {"id": "reliability", "text": "Unzuverlässige Anbieter"},
+        {"id": "quality", "text": "Mangelnde Qualität"},
+        {"id": "availability", "text": "Schwer Termine zu bekommen"},
+        {"id": "price_transparency", "text": "Intransparente Preise"},
+        {"id": "communication", "text": "Schlechte Kommunikation"},
+        {"id": "expertise", "text": "Fehlende Fachkompetenz"}
+      ]
+    },
+    "creative": {
+      "customer_options": [
+        {"id": "businesses", "text": "Unternehmen / Marken"},
+        {"id": "agencies", "text": "Agenturen"},
+        {"id": "startups", "text": "Startups"},
+        {"id": "individuals", "text": "Privatpersonen"},
+        {"id": "influencers", "text": "Influencer / Creators"},
+        {"id": "mixed", "text": "Gemischt"}
+      ],
+      "problem_options": [
+        {"id": "creativity", "text": "Mangel an Kreativität"},
+        {"id": "consistency", "text": "Inkonsistente Qualität"},
+        {"id": "turnaround", "text": "Zu lange Lieferzeiten"},
+        {"id": "cost", "text": "Hohe Kosten"},
+        {"id": "communication", "text": "Schlechte Abstimmung"},
+        {"id": "expertise", "text": "Fehlende Expertise"}
+      ]
+    },
+    "health": {
+      "customer_options": [
+        {"id": "fitness_enthusiasts", "text": "Fitness-Begeisterte"},
+        {"id": "busy_professionals", "text": "Berufstätige mit wenig Zeit"},
+        {"id": "seniors", "text": "Senioren"},
+        {"id": "rehab_patients", "text": "Reha-Patienten"},
+        {"id": "health_conscious", "text": "Gesundheitsbewusste"},
+        {"id": "mixed", "text": "Gemischt"}
+      ],
+      "problem_options": [
+        {"id": "motivation", "text": "Fehlende Motivation"},
+        {"id": "time", "text": "Zeitmangel"},
+        {"id": "expertise", "text": "Mangelnde Beratung"},
+        {"id": "accessibility", "text": "Schlechte Erreichbarkeit"},
+        {"id": "personalization", "text": "Keine individuelle Betreuung"},
+        {"id": "cost", "text": "Zu hohe Kosten"}
+      ]
+    }
+  },
+  
+  "question_flow": {
+    "start": "Q1a_category",
+    "estimated_questions": 5,
+    "max_questions": 7,
+    "phases": [
+      {
+        "name": "business_type",
+        "questions": ["Q1a_category", "Q1b_*", "Q1b2_*"],
+        "weight": 0.3
+      },
+      {
+        "name": "description",
+        "questions": ["Q1c_description"],
+        "weight": 0.2
+      },
+      {
+        "name": "target_customer",
+        "questions": ["Q2a_target_customer", "Q2b_*"],
+        "weight": 0.2
+      },
+      {
+        "name": "problem",
+        "questions": ["Q3_problem"],
+        "weight": 0.15
+      },
+      {
+        "name": "stage",
+        "questions": ["Q4_stage"],
+        "weight": 0.15
+      }
+    ]
+  }
+}

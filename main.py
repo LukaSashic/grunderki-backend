@@ -1,6 +1,6 @@
 """
 GründerAI Backend - Complete with Legal Citations System
-FIXED VERSION - Extracts data correctly from generate_complete result
+ENHANCED VERSION - Now includes Business Context Capture Phase
 """
 
 from fastapi import FastAPI, HTTPException
@@ -22,17 +22,29 @@ logger = logging.getLogger(__name__)
 # Create FastAPI app
 app = FastAPI(
     title="GründerAI Backend API",
-    version="1.0.0",
-    description="Backend with Legal Citations System for GZ-compliant Businessplans",
+    version="1.1.0",
+    description="Backend with Business Context Capture, Legal Citations System for GZ-compliant Businessplans",
 )
 
-# CORS
+# Import and include business context router
+try:
+    from business_context_routes import router as business_context_router
+    app.include_router(business_context_router)
+    logger.info("✅ Business Context routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ Business Context routes not loaded: {e}")
+
+# CORS - Allow frontend origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://grunderai.vercel.app",
+        "https://gruenderai.vercel.app",
+        "*",  # For development - restrict in production
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -87,18 +99,25 @@ async def root():
     """Root endpoint - Service info"""
     return {
         "service": "GründerAI Backend API",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "status": "running",
         "features": [
+            "Business Context Capture (NEW)",
             "Legal Citations (18+ official sources)",
             "GZ Compliance Checking",
             "Enhanced Businessplan Generator",
             "Input Validations",
         ],
         "endpoints": {
+            "business_context": {
+                "start": "POST /api/v1/assessment/business-context/start",
+                "answer": "POST /api/v1/assessment/business-context/answer",
+                "progress": "GET /api/v1/assessment/business-context/progress/{session_id}",
+                "complete": "POST /api/v1/assessment/business-context/complete",
+            },
             "businessplan": "POST /api/businessplan/enhanced",
             "citations": "GET /api/citations",
-            "health": "GET /health",
+            "health": "GET /api/health",
         },
     }
 
@@ -318,6 +337,7 @@ async def startup_event():
     logger.info("=" * 70)
     logger.info("🚀 GründerAI Backend Starting...")
     logger.info("")
+    logger.info("📋 Business Context Capture: Available")
     logger.info("📝 Enhanced Generator: Available")
     logger.info("🏛️  Legal Citations: 18+ official sources")
     logger.info("✅ Input Validations: Enabled")
@@ -326,10 +346,14 @@ async def startup_event():
     )
     logger.info("")
     logger.info("Endpoints:")
+    logger.info("  POST /api/v1/assessment/business-context/start")
+    logger.info("  POST /api/v1/assessment/business-context/answer")
+    logger.info("  GET  /api/v1/assessment/business-context/progress/{id}")
+    logger.info("  POST /api/v1/assessment/business-context/complete")
     logger.info("  POST /api/businessplan/enhanced")
     logger.info("  GET  /api/citations")
     logger.info("  GET  /api/citations/{key}")
-    logger.info("  GET  /health")
+    logger.info("  GET  /api/health")
     logger.info("=" * 70)
 
 

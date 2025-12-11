@@ -281,3 +281,93 @@ def _calculate_quality_score(businessplan: Dict) -> int:
 # ============================================================================
 
 __all__ = ['router']
+
+
+# ============================================================================
+# ENHANCED GENERATOR WITH LEGAL CITATIONS
+# Add this code to the END of businessplan_api.py
+# ============================================================================
+
+from businessplan_generator_enhanced import EnhancedBusinessplanGenerator
+from adaptive_financial_calculator_full import AdaptiveFinancialCalculator
+
+class EnhancedBusinessplanRequest(BaseModel):
+    """Request for enhanced businessplan with legal citations"""
+    # Basic Info
+    name: str
+    email: Optional[str] = None
+    business_idea: str
+    
+    # Business Details
+    industry: Optional[str] = 'dienstleistung'
+    target_market: Optional[str] = None
+    
+    # Experience
+    experience_level: Optional[str] = 'junior'
+    years_experience: Optional[int] = 0
+    previous_self_employment: Optional[bool] = False
+    
+    # Network
+    network_strength: Optional[str] = 'medium'
+    first_customers_pipeline: Optional[int] = 0
+    
+    # Financial
+    hours_per_week_available: int = 20
+    startup_capital: float = 10000
+    monthly_living_costs: float = 2000
+    partner_income_monthly: Optional[float] = 0
+    
+    # Part-time (optional)
+    part_time_job_possible: Optional[bool] = False
+    part_time_hours_per_week: Optional[int] = 0
+    part_time_income_monthly: Optional[float] = 0
+
+@router.post('/generate-enhanced')
+async def generate_enhanced_businessplan(request: EnhancedBusinessplanRequest):
+    """
+    Generate GZ-compliant businessplan with legal citations
+    
+    Features:
+    - Legal citations (SGB III Â§ 93, Fachliche Weisungen BA)
+    - Input validation (hours â‰¥15, part-time rules, capital)
+    - Compliance checking with rechtsgrundlage
+    - Enhanced prompts with official sources
+    
+    Returns businessplan with:
+    - compliance_score (0-100)
+    - legal_citations used
+    - validation results
+    - gz_compliant status
+    """
+    try:
+        logger.info(f'Starting enhanced businessplan for: {request.name}')
+        
+        # Initialize enhanced generator
+        generator = EnhancedBusinessplanGenerator()
+        
+        # Convert request to dict
+        profile = request.dict()
+        
+        # Generate businessplan with legal citations
+        result = generator.generate(profile)
+        
+        # Get compliance score
+        compliance_score = result.get('compliance_score', 0)
+        
+        logger.info(f'Businessplan generated! Compliance: {compliance_score}/100')
+        
+        return {
+            'success': True,
+            'businessplan': result.get('businessplan', {}),
+            'compliance_score': compliance_score,
+            'legal_citations': result.get('legal_citations', []),
+            'validations': result.get('validations', {}),
+            'gz_compliant': result.get('gz_compliant', True),
+            'generated_at': datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f'Error generating businessplan: {error_msg}')
+        raise HTTPException(status_code=500, detail=error_msg)
+

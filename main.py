@@ -1,430 +1,344 @@
 """
-GründerAI Backend - FastAPI Application with IRT-CAT Engine
+GründerAI Backend - Complete with Legal Citations System
+FIXED VERSION - Extracts data correctly from generate_complete result
 """
 
-from socratic_api import router as socratic_router
-from vision_discovery_api import router as vision_router
-from businessplan_api import router as businessplan_router
-from fastapi import FastAPI, HTTPException, Body, Depends
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
-from typing import Dict, List, Optional
+from pydantic import BaseModel
+from typing import Optional
 import logging
 import os
 from dotenv import load_dotenv
-
-# Load environment variables FIRST!
-load_dotenv()
 from datetime import datetime
-import uuid
 
-from database import engine, Base, get_db
-from sqlalchemy.orm import Session
-from models import (
-    User,
-    AssessmentSession,
-    UserIntake,
-    ItemResponse,
-    PersonalityScore,
-    IRTItemBank,
-)
+# Load environment
+load_dotenv()
 
-# Import IRT Engine
-from irt_engine import IRTCATEngine
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-)
+# Setup logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize FastAPI app
+# Create FastAPI app
 app = FastAPI(
     title="GründerAI Backend API",
-    description="IRT-CAT Personality Assessment for German Entrepreneurs",
     version="1.0.0",
+    description="Backend with Legal Citations System for GZ-compliant Businessplans",
 )
-app.include_router(socratic_router)
-app.include_router(vision_router)
-app.include_router(businessplan_router)
 
-# CORS Configuration
-allowed_origins_str = os.getenv(
-    "ALLOWED_ORIGINS",
-    "http://localhost:3000,http://localhost:5173,https://gruenderki.netlify.app",
-)
-allowed_origins = [origin.strip() for origin in allowed_origins_str.split(",")]
-
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Initialize IRT-CAT Engine
-irt_engine = IRTCATEngine()
+# ============================================================================
+# MODELS
+# ============================================================================
 
 
-# Startup Event - Create Tables
-@app.on_event("startup")
-async def startup_event():
-    """Create tables on startup if they don't exist"""
-    logger.info("=" * 50)
-    logger.info("GründerAI Backend Starting...")
+class EnhancedBusinessplanRequest(BaseModel):
+    """Enhanced businessplan request with legal citations"""
 
-    try:
-        Base.metadata.create_all(bind=engine)
-        logger.info("✅ Database tables checked/created successfully")
-    except Exception as e:
-        logger.error(f"❌ Database table creation error: {e}")
+    # Basic Info
+    name: str
+    email: Optional[str] = None
+    business_idea: str
 
-    logger.info(f"Configuring CORS for origins: {allowed_origins}")
-    logger.info(f"IRT-CAT Engine initialized with {len(irt_engine.item_bank)} items")
-    logger.info(f"Assessing {len(irt_engine.dimensions)} personality dimensions")
-    logger.info("=" * 50)
+    # Business Details
+    industry: Optional[str] = "dienstleistung"
+    target_market: Optional[str] = None
 
+    # Experience
+    experience_level: Optional[str] = "junior"
+    years_experience: Optional[int] = 0
+    previous_self_employment: Optional[bool] = False
 
-# Pydantic Models
-class IntakeRequest(BaseModel):
-    name: str = Field(..., min_length=2, max_length=100)
-    email: str = Field(..., pattern=r"^[^@]+@[^@]+\.[^@]+$")
-    business_idea: str = Field(..., min_length=10, max_length=1000)
-    business_type: str
-    experience_level: str
-    timeline: str
-    gz_interest: str
-    growth_vision: str
+    # Network
+    network_strength: Optional[str] = "medium"
+    first_customers_pipeline: Optional[int] = 0
 
+    # Financial (REQUIRED for GZ compliance)
+    hours_per_week_available: int = 20
+    startup_capital: float = 10000
+    monthly_living_costs: float = 2000
+    partner_income_monthly: Optional[float] = 0
 
-class AssessmentStartRequest(BaseModel):
-    session_id: str
+    # Part-time (optional)
+    part_time_job_possible: Optional[bool] = False
+    part_time_hours_per_week: Optional[int] = 0
+    part_time_income_monthly: Optional[float] = 0
 
 
-class SubmitResponseRequest(BaseModel):
-    session_id: str
-    item_id: str
-    response_value: int = Field(..., ge=1, le=5)
-    response_time_ms: Optional[int] = None
+# ============================================================================
+# ENDPOINTS
+# ============================================================================
 
 
-# Health Check
-@app.get("/api/health")
-async def health_check():
-    """Health check endpoint"""
-    return {
-        "status": "healthy",
-        "service": "gruenderai-backend",
-        "version": "1.0.0",
-        "timestamp": datetime.now().isoformat(),
-    }
-
-
-@app.get("/api/cache-stats")
-async def cache_stats():
-    """Get cache statistics"""
-    from cache_service import cache
-
-    stats = cache.get_stats()
-    return {"cache": stats, "redis_connected": cache.client is not None}
-
-
-@app.get("/api/admin/create-tables")
-async def create_tables_endpoint():
-    """
-    Admin endpoint to create database tables
-    WARNING: Remove this in production!
-    """
-    try:
-        from database import Base, engine
-
-        Base.metadata.create_all(bind=engine)
-
-        return {
-            "success": True,
-            "message": "Tables created successfully",
-            "tables": [
-                "users",
-                "user_intakes",
-                "assessment_sessions",
-                "item_responses",
-                "personality_scores",
-                "irt_item_bank",
-            ],
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
-
-
-# Root endpoint
 @app.get("/")
 async def root():
-    """Root endpoint with API information"""
+    """Root endpoint - Service info"""
     return {
         "service": "GründerAI Backend API",
         "version": "1.0.0",
         "status": "running",
+        "features": [
+            "Legal Citations (18+ official sources)",
+            "GZ Compliance Checking",
+            "Enhanced Businessplan Generator",
+            "Input Validations",
+        ],
         "endpoints": {
-            "health": "/api/health",
-            "intake": "POST /api/v1/intake",
-            "start_assessment": "POST /api/v1/assessment/start",
-            "submit_response": "POST /api/v1/assessment/response",
-            "get_results": "GET /api/v1/assessment/results/{session_id}",
+            "businessplan": "POST /api/businessplan/enhanced",
+            "citations": "GET /api/citations",
+            "health": "GET /health",
         },
     }
 
 
-# NEW: Save User Intake
-@app.post("/api/v1/intake")
-async def save_user_intake(intake: IntakeRequest, db: Session = Depends(get_db)):
+@app.get("/health")
+async def health():
+    """Health check endpoint"""
+    api_key_set = bool(os.getenv("ANTHROPIC_API_KEY"))
+    return {
+        "status": "ok",
+        "api_key_set": api_key_set,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+
+@app.post("/api/businessplan/enhanced")
+async def generate_enhanced_businessplan(request: EnhancedBusinessplanRequest):
     """
-    Save user intake data from progressive profiling
-    Creates user, session, and intake records
+    Generate GZ-compliant businessplan with legal citations
+
+    Features:
+    ✅ Legal citations (SGB III § 93, Fachliche Weisungen BA)
+    ✅ Input validation (hours ≥15, part-time rules, capital)
+    ✅ Compliance checking with rechtsgrundlage
+    ✅ Enhanced prompts with official sources
+
+    Returns:
+    - businessplan: Complete businessplan sections
+    - compliance_score: 0-100 GZ compliance score
+    - legal_citations: List of citations used
+    - validations: Validation results with legal basis
+    - gz_compliant: Boolean compliance status
     """
     try:
-        # 1. Create or get user by email
-        user = db.query(User).filter(User.email == intake.email).first()
-        if not user:
-            user = User(email=intake.email)
-            db.add(user)
-            db.flush()  # Get user.id
-            logger.info(f"Created new user: {intake.email}")
-        else:
-            logger.info(f"Existing user found: {intake.email}")
+        logger.info("=" * 70)
+        logger.info(f"📝 Generating enhanced businessplan for: {request.name}")
+        logger.info(f"   Business: {request.business_idea}")
+        logger.info(f"   Hours/week: {request.hours_per_week_available}")
+        logger.info(f"   Capital: €{request.startup_capital:,.2f}")
+        logger.info("=" * 70)
 
-        # 2. Create assessment session
-        session = AssessmentSession(
-            user_id=user.id,
-            business_idea=intake.business_idea,
-            status="intake_complete",
-        )
-        db.add(session)
-        db.flush()  # Get session.id
+        # Import generator (lazy import to avoid startup issues)
+        from businessplan_generator_enhanced import EnhancedBusinessplanGenerator
 
-        # 3. Create intake record
-        intake_record = UserIntake(
-            session_id=session.id,
-            name=intake.name,
-            email=intake.email,
-            business_idea=intake.business_idea,
-            business_type=intake.business_type,
-            experience_level=intake.experience_level,
-            timeline=intake.timeline,
-            gz_interest=intake.gz_interest,
-            growth_vision=intake.growth_vision,
-        )
-        db.add(intake_record)
+        # Initialize generator
+        generator = EnhancedBusinessplanGenerator()
 
-        # 4. Commit all changes
-        db.commit()
+        # Convert request to dict
+        profile = request.dict()
 
-        logger.info(f"✅ Intake saved: {session.id} for {intake.email}")
+        # Generate using wrapper method
+        result = await generator.generate_from_simple_profile(profile)
 
+        # ===================================================================
+        # EXTRACT RESULTS FROM CORRECT KEYS - FIXED!
+        # ===================================================================
+
+        # Extract compliance data from gz_compliance dict
+        gz_compliance_data = result.get("gz_compliance", {})
+        compliance_score = gz_compliance_data.get("total_score", 0)
+        gz_compliant = compliance_score >= 70
+
+        # Extract legal citations from legal_basis
+        legal_basis_dict = gz_compliance_data.get("legal_basis", {})
+        legal_citations = [
+            {
+                "category": cat,
+                "format": info.get("rechtsgrundlage", ""),
+                "short_text": info.get("anforderung", ""),
+                "source": info.get("quelle", ""),
+            }
+            for cat, info in legal_basis_dict.items()
+        ]
+
+        # Build businessplan dict from individual sections
+        businessplan = {
+            "executive_summary": result.get("executive_summary", ""),
+            "geschaeftsidee": result.get("geschaeftsidee", ""),
+            "gruenderperson": result.get("gruenderperson", ""),
+            "markt_wettbewerb": result.get("markt_wettbewerb", ""),
+            "marketing_vertrieb": result.get("marketing_vertrieb", ""),
+            "organisation": result.get("organisation", ""),
+            "finanzplan": result.get("finanzplan", {}),
+            "risikomanagement": result.get("risikomanagement", ""),
+            "meilensteine": result.get("meilensteine", ""),
+            "swot": result.get("swot_data", {}),
+            "meta": result.get("meta", {}),
+        }
+
+        # Extract validations
+        validations = result.get("living_validation", {})
+
+        logger.info("=" * 70)
+        logger.info(f"✅ Businessplan generated successfully!")
+        logger.info(f"   Compliance Score: {compliance_score}/100")
+        logger.info(f"   Legal Citations: {len(legal_citations)}")
+        logger.info(f"   GZ Compliant: {gz_compliant}")
+        logger.info("=" * 70)
+
+        # Return result
         return {
             "success": True,
-            "session_id": session.id,
-            "message": "Intake data gespeichert",
-            "user": {"name": intake.name, "email": intake.email},
+            "businessplan": businessplan,
+            "compliance_score": compliance_score,
+            "legal_citations": legal_citations,
+            "validations": validations,
+            "gz_compliant": gz_compliant,
+            "generated_at": datetime.utcnow().isoformat(),
+            "metadata": {
+                "generator_version": "enhanced_with_legal_citations",
+                "citations_count": len(legal_citations),
+                "validation_passed": gz_compliant,
+                "sections_generated": list(businessplan.keys()),
+            },
         }
 
+    except ValueError as e:
+        # Validation errors
+        error_msg = str(e)
+        logger.error(f"❌ Validation error: {error_msg}")
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "error": "Validation failed",
+                "message": error_msg,
+                "type": "validation_error",
+            },
+        )
+
     except Exception as e:
-        db.rollback()
-        logger.error(f"❌ Error saving intake: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Fehler beim Speichern: {str(e)}")
+        # Other errors
+        error_msg = str(e)
+        logger.error(f"❌ Error generating businessplan: {error_msg}")
+        logger.exception("Full traceback:")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "Generation failed",
+                "message": error_msg,
+                "type": "generation_error",
+            },
+        )
 
 
-# Start Assessment
-@app.post("/api/v1/assessment/start")
-async def start_assessment(
-    request: AssessmentStartRequest, db: Session = Depends(get_db)
-):
+@app.get("/api/citations")
+async def list_citations():
     """
-    Start IRT-CAT assessment for a session
+    List all available legal citations
+
+    Returns all 18+ official legal citations used for GZ compliance
     """
     try:
-        # Get session
-        session = (
-            db.query(AssessmentSession)
-            .filter(AssessmentSession.id == request.session_id)
-            .first()
-        )
+        from legal_citations import LEGAL_CITATIONS, get_citation
 
-        if not session:
-            raise HTTPException(status_code=404, detail="Session not found")
-
-        # Update session status
-        session.status = "assessment_active"
-        db.commit()
-
-        # Start IRT-CAT session
-        result = irt_engine.start_session(
-            session_id=request.session_id,
-            business_idea=session.business_idea,
-        )
-
-        logger.info(f"Assessment started: {request.session_id}")
+        citations = []
+        for key in LEGAL_CITATIONS.keys():
+            citation = get_citation(key)
+            if citation:
+                citations.append(
+                    {
+                        "key": key,
+                        "format": citation.format(),
+                        "short_text": citation.short_text,
+                        "category": citation.category,
+                        "official_source": citation.official_source,
+                    }
+                )
 
         return {
-            **result,
-            "instructions": "Beantworten Sie die Fragen basierend auf Ihren echten Präferenzen.",
+            "total": len(citations),
+            "citations": citations,
+            "categories": list(set(c["category"] for c in citations)),
+        }
+
+    except Exception as e:
+        logger.error(f"Error listing citations: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/citations/{citation_key}")
+async def get_citation_detail(citation_key: str):
+    """Get detailed information about a specific legal citation"""
+    try:
+        from legal_citations import get_citation
+
+        citation = get_citation(citation_key)
+        if not citation:
+            raise HTTPException(
+                status_code=404, detail=f"Citation '{citation_key}' not found"
+            )
+
+        return {
+            "key": citation_key,
+            "format": citation.format(),
+            "short_text": citation.short_text,
+            "full_text": citation.full_text,
+            "category": citation.category,
+            "official_source": citation.official_source,
+            "applies_to": citation.applies_to,
         }
 
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error starting assessment: {str(e)}")
+        logger.error(f"Error getting citation: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# Submit Response
-@app.post("/api/v1/assessment/response")
-async def submit_response(
-    request: SubmitResponseRequest, db: Session = Depends(get_db)
-):
-    """
-    Submit response to an assessment item
-    """
-    try:
-        # Get session
-        session = (
-            db.query(AssessmentSession)
-            .filter(AssessmentSession.id == request.session_id)
-            .first()
-        )
-
-        if not session:
-            raise HTTPException(status_code=404, detail="Session not found")
-
-        # Submit to IRT engine
-        result = irt_engine.submit_response(
-            session_id=request.session_id,
-            item_id=request.item_id,
-            response_value=request.response_value,
-        )
-
-        # Save response to database
-        item_response = ItemResponse(
-            session_id=request.session_id,
-            item_id=request.item_id,
-            dimension=result.get("dimension", "unknown"),
-            response_value=request.response_value,
-            response_time_ms=request.response_time_ms,
-        )
-        db.add(item_response)
-        db.commit()
-
-        logger.info(
-            f"Response submitted: {request.session_id} - Item {request.item_id}"
-        )
-
-        return result
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error submitting response: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+# ============================================================================
+# STARTUP
+# ============================================================================
 
 
-# Get Results
-@app.get("/api/v1/assessment/results/{session_id}")
-async def get_results(session_id: str, db: Session = Depends(get_db)):
-    """
-    Get final assessment results
-    """
-    try:
-        # Get session
-        session = (
-            db.query(AssessmentSession)
-            .filter(AssessmentSession.id == session_id)
-            .first()
-        )
-
-        if not session:
-            raise HTTPException(status_code=404, detail="Session not found")
-
-        # Get results from IRT engine
-        results = irt_engine.get_session_results(session_id)
-
-        # Save personality scores to database
-        if results["is_complete"]:
-            # Check if scores already saved
-            existing_scores = (
-                db.query(PersonalityScore)
-                .filter(PersonalityScore.session_id == session_id)
-                .first()
-            )
-
-            if not existing_scores:
-                scores = results["personality_profile"]["dimensions"]
-
-                personality_score = PersonalityScore(
-                    session_id=session_id,
-                    innovativeness=scores.get("innovativeness", {}).get(
-                        "score_percentile"
-                    ),
-                    risk_taking=scores.get("risk_taking", {}).get("score_percentile"),
-                    achievement_orientation=scores.get(
-                        "achievement_orientation", {}
-                    ).get("score_percentile"),
-                    autonomy_orientation=scores.get("autonomy_orientation", {}).get(
-                        "score_percentile"
-                    ),
-                    proactiveness=scores.get("proactiveness", {}).get(
-                        "score_percentile"
-                    ),
-                    locus_of_control=scores.get("locus_of_control", {}).get(
-                        "score_percentile"
-                    ),
-                    self_efficacy=scores.get("self_efficacy", {}).get(
-                        "score_percentile"
-                    ),
-                )
-                db.add(personality_score)
-
-            # Update session status
-            session.status = "completed"
-            session.completed_at = datetime.now()
-            db.commit()
-
-        logger.info(f"Results retrieved: {session_id}")
-
-        return results
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error getting results: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# Error handlers
-@app.exception_handler(HTTPException)
-async def http_exception_handler(request, exc):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail": exc.detail, "status_code": exc.status_code},
+@app.on_event("startup")
+async def startup_event():
+    """Startup event"""
+    logger.info("=" * 70)
+    logger.info("🚀 GründerAI Backend Starting...")
+    logger.info("")
+    logger.info("📝 Enhanced Generator: Available")
+    logger.info("🏛️  Legal Citations: 18+ official sources")
+    logger.info("✅ Input Validations: Enabled")
+    logger.info(
+        f"🔐 API Key: {'✓ Set' if os.getenv('ANTHROPIC_API_KEY') else '✗ NOT SET'}"
     )
+    logger.info("")
+    logger.info("Endpoints:")
+    logger.info("  POST /api/businessplan/enhanced")
+    logger.info("  GET  /api/citations")
+    logger.info("  GET  /api/citations/{key}")
+    logger.info("  GET  /health")
+    logger.info("=" * 70)
 
 
-@app.exception_handler(Exception)
-async def general_exception_handler(request, exc):
-    logger.error(f"Unhandled exception: {str(exc)}")
-    return JSONResponse(
-        status_code=500,
-        content={
-            "detail": "Internal server error",
-            "message": str(exc),
-            "status_code": 500,
-        },
-    )
-
+# ============================================================================
+# MAIN
+# ============================================================================
 
 if __name__ == "__main__":
     import uvicorn
 
-    port = int(os.getenv("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+    logger.info("Starting Uvicorn server...")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False, log_level="info")

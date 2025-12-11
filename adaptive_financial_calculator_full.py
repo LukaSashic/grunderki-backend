@@ -1,15 +1,15 @@
-# adaptive_financial_calculator_full.py
+﻿# adaptive_financial_calculator_full.py
 """
 Adaptive Financial Calculator - WITH LEGAL CITATION VALIDATIONS
 
-Berechnet realistische Finanzpläne basierend auf Gründer-Profil
+Berechnet realistische FinanzplÃ¤ne basierend auf GrÃ¼nder-Profil
 + Validiert alle Inputs gegen GZ-Anforderungen mit Rechtsgrundlagen
 
 NEW IN THIS VERSION:
 - validate_hauptberuflich_hours() - Min. 15h/Woche Validation
-- validate_part_time_job() - Nebentätigkeit Validation
+- validate_part_time_job() - NebentÃ¤tigkeit Validation
 - validate_startup_capital() - Kapital Validation
-- All validations include legal citations (SGB III § 93, Fachliche Weisungen BA)
+- All validations include legal citations (SGB III Â§ 93, Fachliche Weisungen BA)
 - Validation results returned in generate_adaptive_financials()
 """
 
@@ -51,28 +51,28 @@ logger = logging.getLogger(__name__)
 
 LEGAL_CITATIONS_SUBSET = {
     'gz_hauptberuflich': {
-        'format': 'SGB III § 93 Abs. 2',
-        'short_text': 'Mind. 15 Stunden/Woche erforderlich für Hauptberuflichkeit',
+        'format': 'SGB III Â§ 93 Abs. 2',
+        'short_text': 'Mind. 15 Stunden/Woche erforderlich fÃ¼r Hauptberuflichkeit',
         'official_source': 'https://www.gesetze-im-internet.de/sgb_3/__93.html'
     },
     'gz_nebentaetigkeit_allowed': {
-        'format': 'SGB III § 421 i.V.m. § 155',
-        'short_text': 'Nebentätigkeit < 15h/Woche ist erlaubt, aber meldepflichtig',
+        'format': 'SGB III Â§ 421 i.V.m. Â§ 155',
+        'short_text': 'NebentÃ¤tigkeit < 15h/Woche ist erlaubt, aber meldepflichtig',
         'official_source': 'https://www.gesetze-im-internet.de/sgb_3/__155.html'
     },
     'gz_teilzeit_warning': {
-        'format': 'Fachliche Weisungen BA zu § 93 SGB III',
-        'short_text': 'Bei > 15h/Woche oder > 50% Einkommen droht Rückforderung!',
+        'format': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
+        'short_text': 'Bei > 15h/Woche oder > 50% Einkommen droht RÃ¼ckforderung!',
         'official_source': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf'
     },
     'gz_teilzeit_minijob': {
-        'format': 'Fachliche Weisungen BA zu § 93 SGB III',
-        'short_text': 'Minijob (bis 538 EUR) ist möglich, wenn < 15h/Woche',
+        'format': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
+        'short_text': 'Minijob (bis 538 EUR) ist mÃ¶glich, wenn < 15h/Woche',
         'official_source': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf'
     },
     'gz_tragfaehigkeit': {
-        'format': 'Fachliche Weisungen BA zu § 93 SGB III',
-        'short_text': 'Tragfähige Existenzgrundlage, Lebenshaltungskosten müssen gedeckt werden',
+        'format': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
+        'short_text': 'TragfÃ¤hige Existenzgrundlage, Lebenshaltungskosten mÃ¼ssen gedeckt werden',
         'official_source': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf'
     }
 }
@@ -102,10 +102,10 @@ def validate_hauptberuflich_hours(hours_per_week: int) -> Dict:
     
     Examples:
         >>> validate_hauptberuflich_hours(30)
-        {'valid': True, 'legal_citation': 'SGB III § 93 Abs. 2', ...}
+        {'valid': True, 'legal_citation': 'SGB III Â§ 93 Abs. 2', ...}
         
         >>> validate_hauptberuflich_hours(12)
-        {'valid': False, 'error': '⚠️ Mind. 15 Stunden/Woche erforderlich...', ...}
+        {'valid': False, 'error': 'âš ï¸ Mind. 15 Stunden/Woche erforderlich...', ...}
     """
     citation = LEGAL_CITATIONS_SUBSET['gz_hauptberuflich']
     
@@ -118,52 +118,52 @@ def validate_hauptberuflich_hours(hours_per_week: int) -> Dict:
     if hours_per_week < 15:
         result.update({
             'valid': False,
-            'error': f"""⚠️ GZ-ANFORDERUNG NICHT ERFÜLLT!
+            'error': f"""âš ï¸ GZ-ANFORDERUNG NICHT ERFÃœLLT!
 
 Sie haben {hours_per_week} Stunden pro Woche angegeben.
 
 Rechtsgrundlage: {citation['format']}
 Anforderung: {citation['short_text']}
 
-Für den Gründungszuschuss ist eine hauptberufliche selbständige Tätigkeit erforderlich.
-Dies ist in der Regel bei mindestens 15 Stunden wöchentlich der Fall.
+FÃ¼r den GrÃ¼ndungszuschuss ist eine hauptberufliche selbstÃ¤ndige TÃ¤tigkeit erforderlich.
+Dies ist in der Regel bei mindestens 15 Stunden wÃ¶chentlich der Fall.
 
 WICHTIG: Bei weniger als 15 Stunden droht:
-• Ablehnung des Gründungszuschuss-Antrags
-• Rückforderung bereits gezahlter Beträge
+â€¢ Ablehnung des GrÃ¼ndungszuschuss-Antrags
+â€¢ RÃ¼ckforderung bereits gezahlter BetrÃ¤ge
 
 Quelle: {citation['official_source']}""",
             'severity': 'CRITICAL',
-            'recommendation': 'Erhöhen Sie Ihre wöchentlichen Stunden auf mindestens 15 (besser 20-30 Stunden).'
+            'recommendation': 'ErhÃ¶hen Sie Ihre wÃ¶chentlichen Stunden auf mindestens 15 (besser 20-30 Stunden).'
         })
         return result
     
     if hours_per_week < 20:
         result.update({
             'valid': True,
-            'warning': f"""💡 HINWEIS: Niedrige Stundenzahl
+            'warning': f"""ðŸ’¡ HINWEIS: Niedrige Stundenzahl
 
 Sie haben {hours_per_week} Stunden pro Woche angegeben.
 
-Dies erfüllt zwar das Minimum von 15 Stunden ({citation['format']}), 
-aber die Agentur für Arbeit könnte kritisch prüfen ob die Hauptberuflichkeit 
-tatsächlich gegeben ist.
+Dies erfÃ¼llt zwar das Minimum von 15 Stunden ({citation['format']}), 
+aber die Agentur fÃ¼r Arbeit kÃ¶nnte kritisch prÃ¼fen ob die Hauptberuflichkeit 
+tatsÃ¤chlich gegeben ist.
 
 EMPFEHLUNG: 
-• 20-30 Stunden pro Woche sind sicherer
-• Dokumentieren Sie Ihre Arbeitszeiten
-• Zeigen Sie intensive Geschäftstätigkeit""",
+â€¢ 20-30 Stunden pro Woche sind sicherer
+â€¢ Dokumentieren Sie Ihre Arbeitszeiten
+â€¢ Zeigen Sie intensive GeschÃ¤ftstÃ¤tigkeit""",
             'severity': 'INFO',
-            'recommendation': '20-30 Stunden pro Woche empfohlen für sichere GZ-Bewilligung.'
+            'recommendation': '20-30 Stunden pro Woche empfohlen fÃ¼r sichere GZ-Bewilligung.'
         })
         return result
     
     # All good
     result.update({
         'valid': True,
-        'note': f"""✅ GZ-KONFORM
+        'note': f"""âœ… GZ-KONFORM
 
-{hours_per_week} Stunden pro Woche erfüllen die Hauptberuflichkeits-Anforderung.
+{hours_per_week} Stunden pro Woche erfÃ¼llen die Hauptberuflichkeits-Anforderung.
 
 Rechtsgrundlage: {citation['format']}"""
     })
@@ -196,10 +196,10 @@ def validate_part_time_job(
     
     Examples:
         >>> validate_part_time_job(10, 500, 2000)
-        {'valid': True, 'note': 'Nebentätigkeit ist GZ-konform...'}
+        {'valid': True, 'note': 'NebentÃ¤tigkeit ist GZ-konform...'}
         
         >>> validate_part_time_job(20, 1500, 1000)
-        {'valid': False, 'error': '🚨 KRITISCH: Nebentätigkeit gefährdet...'}
+        {'valid': False, 'error': 'ðŸš¨ KRITISCH: NebentÃ¤tigkeit gefÃ¤hrdet...'}
     """
     
     allowed = LEGAL_CITATIONS_SUBSET['gz_nebentaetigkeit_allowed']
@@ -209,9 +209,9 @@ def validate_part_time_job(
         'legal_citations': [allowed['format'], warning['format']],
         'official_sources': [allowed['official_source'], warning['official_source']],
         'requirements': [
-            'Nebentätigkeit < 15 Stunden wöchentlich',
+            'NebentÃ¤tigkeit < 15 Stunden wÃ¶chentlich',
             'Nebeneinkommen < 50% des Gesamteinkommens',
-            'Unverzüglich bei Agentur für Arbeit melden (§ 60 SGB III)'
+            'UnverzÃ¼glich bei Agentur fÃ¼r Arbeit melden (Â§ 60 SGB III)'
         ]
     }
     
@@ -231,7 +231,7 @@ def validate_part_time_job(
     if hours_violation and income_violation:
         result.update({
             'valid': False,
-            'error': f"""🚨 KRITISCH: Nebentätigkeit gefährdet Hauptberuflichkeit!
+            'error': f"""ðŸš¨ KRITISCH: NebentÃ¤tigkeit gefÃ¤hrdet Hauptberuflichkeit!
 
 DOPPELTE VERLETZUNG der GZ-Anforderungen:
 
@@ -243,10 +243,10 @@ DOPPELTE VERLETZUNG der GZ-Anforderungen:
 
 {warning['short_text']}
 
-⚠️ RISIKO:
-• Rückforderung des gesamten Gründungszuschusses
-• Ablehnung der Phase 2 (weitere 9 Monate)
-• Rechtliche Konsequenzen
+âš ï¸ RISIKO:
+â€¢ RÃ¼ckforderung des gesamten GrÃ¼ndungszuschusses
+â€¢ Ablehnung der Phase 2 (weitere 9 Monate)
+â€¢ Rechtliche Konsequenzen
 
 Quellen: 
 {allowed['official_source']}
@@ -260,17 +260,17 @@ Quellen:
     if hours_violation:
         result.update({
             'valid': False,
-            'error': f"""🚨 KRITISCH: Zu viele Stunden Nebentätigkeit!
+            'error': f"""ðŸš¨ KRITISCH: Zu viele Stunden NebentÃ¤tigkeit!
 
 Sie haben {part_time_hours} Stunden pro Woche angegeben.
 
 Rechtsgrundlage: {allowed['format']}
-Anforderung: Nebentätigkeit < 15 Stunden wöchentlich
+Anforderung: NebentÃ¤tigkeit < 15 Stunden wÃ¶chentlich
 
 {warning['short_text']}
 
-Bei mehr als 15 Stunden wöchentlich ist die Hauptberuflichkeit der selbständigen 
-Tätigkeit gefährdet. Dies kann zur Rückforderung des Gründungszuschusses führen.
+Bei mehr als 15 Stunden wÃ¶chentlich ist die Hauptberuflichkeit der selbstÃ¤ndigen 
+TÃ¤tigkeit gefÃ¤hrdet. Dies kann zur RÃ¼ckforderung des GrÃ¼ndungszuschusses fÃ¼hren.
 
 Quelle: {allowed['official_source']}""",
             'severity': 'CRITICAL',
@@ -282,18 +282,18 @@ Quelle: {allowed['official_source']}""",
     if income_violation:
         result.update({
             'valid': False,
-            'error': f"""🚨 KRITISCH: Nebeneinkommen zu hoch!
+            'error': f"""ðŸš¨ KRITISCH: Nebeneinkommen zu hoch!
 
 Nebeneinkommen: {part_time_ratio:.0f}% des Gesamteinkommens
-(Nebenjob: {part_time_income:.0f} EUR, Hauptgeschäft: {main_income_expected:.0f} EUR)
+(Nebenjob: {part_time_income:.0f} EUR, HauptgeschÃ¤ft: {main_income_expected:.0f} EUR)
 
 Rechtsgrundlage: {warning['format']}
 Anforderung: Nebeneinkommen < 50% des Gesamteinkommens
 
 {warning['short_text']}
 
-Wenn die Nebentätigkeit mehr als 50% des Gesamteinkommens generiert, gefährdet 
-dies die Hauptberuflichkeit der selbständigen Tätigkeit.
+Wenn die NebentÃ¤tigkeit mehr als 50% des Gesamteinkommens generiert, gefÃ¤hrdet 
+dies die Hauptberuflichkeit der selbstÃ¤ndigen TÃ¤tigkeit.
 
 Quelle: {warning['official_source']}""",
             'severity': 'CRITICAL',
@@ -305,11 +305,11 @@ Quelle: {warning['official_source']}""",
     if part_time_hours >= 12 or part_time_ratio > 40:
         result.update({
             'valid': True,
-            'warning': f"""⚠️ VORSICHT: Nahe an GZ-Grenzen!
+            'warning': f"""âš ï¸ VORSICHT: Nahe an GZ-Grenzen!
 
 Aktuelle Situation:
-• Stunden: {part_time_hours}h/Woche (Limit: < 15h)
-• Einkommen: {part_time_ratio:.0f}% (Limit: < 50%)
+â€¢ Stunden: {part_time_hours}h/Woche (Limit: < 15h)
+â€¢ Einkommen: {part_time_ratio:.0f}% (Limit: < 50%)
 
 Sie sind noch GZ-konform, aber nahe an den Grenzen.
 
@@ -318,9 +318,9 @@ Rechtsgrundlagen:
 {warning['format']}: {warning['short_text']}
 
 WICHTIG:
-• Melden Sie die Nebentätigkeit unverzüglich bei der Agentur für Arbeit (§ 60 SGB III)
-• Dokumentieren Sie Ihre Arbeitszeiten
-• Beobachten Sie das Einkommensverhältnis""",
+â€¢ Melden Sie die NebentÃ¤tigkeit unverzÃ¼glich bei der Agentur fÃ¼r Arbeit (Â§ 60 SGB III)
+â€¢ Dokumentieren Sie Ihre Arbeitszeiten
+â€¢ Beobachten Sie das EinkommensverhÃ¤ltnis""",
             'severity': 'WARNING',
             'recommendation': 'Halten Sie Abstand zu den Grenzen (max. 12h/Woche, max. 40% Einkommen).'
         })
@@ -329,23 +329,23 @@ WICHTIG:
     # All good
     result.update({
         'valid': True,
-        'note': f"""✅ NEBENTÄTIGKEIT GZ-KONFORM
+        'note': f"""âœ… NEBENTÃ„TIGKEIT GZ-KONFORM
 
-Ihre Nebentätigkeit erfüllt die GZ-Anforderungen:
-• {part_time_hours}h/Woche (< 15h) ✓
-• {part_time_ratio:.0f}% des Einkommens (< 50%) ✓
+Ihre NebentÃ¤tigkeit erfÃ¼llt die GZ-Anforderungen:
+â€¢ {part_time_hours}h/Woche (< 15h) âœ“
+â€¢ {part_time_ratio:.0f}% des Einkommens (< 50%) âœ“
 
 Rechtsgrundlagen:
 {allowed['format']}: {allowed['short_text']}
 
-⚠️ WICHTIG: Unverzüglich bei Agentur für Arbeit melden!
+âš ï¸ WICHTIG: UnverzÃ¼glich bei Agentur fÃ¼r Arbeit melden!
 
-Meldepflicht nach § 60 SGB III:
-Alle Änderungen der persönlichen und wirtschaftlichen Verhältnisse müssen 
-der Agentur für Arbeit unverzüglich gemeldet werden.
+Meldepflicht nach Â§ 60 SGB III:
+Alle Ã„nderungen der persÃ¶nlichen und wirtschaftlichen VerhÃ¤ltnisse mÃ¼ssen 
+der Agentur fÃ¼r Arbeit unverzÃ¼glich gemeldet werden.
 
 Quelle: {allowed['official_source']}""",
-        'reminder': 'Meldung bei Agentur für Arbeit nicht vergessen!',
+        'reminder': 'Meldung bei Agentur fÃ¼r Arbeit nicht vergessen!',
         'recommendation': 'Dokumentieren Sie Arbeitszeiten und Einnahmen fortlaufend.'
     })
     
@@ -380,9 +380,9 @@ def validate_startup_capital(capital: float, living_costs_monthly: float) -> Dic
     if capital < 5000:
         result.update({
             'valid': False,
-            'error': f"""⚠️ STARTKAPITAL ZU NIEDRIG
+            'error': f"""âš ï¸ STARTKAPITAL ZU NIEDRIG
 
-Verfügbar: {capital:.0f} EUR
+VerfÃ¼gbar: {capital:.0f} EUR
 Monatliche Lebenshaltungskosten: {living_costs_monthly:.0f} EUR
 Reichweite: {months_covered:.1f} Monate
 
@@ -390,29 +390,29 @@ Rechtsgrundlage: {citation['format']}
 Anforderung: {citation['short_text']}
 
 EMPFEHLUNG: Mindestens 10.000 EUR Startkapital
-→ Deckt ca. 3 Monate Lebenshaltungskosten + Geschäftskosten
+â†’ Deckt ca. 3 Monate Lebenshaltungskosten + GeschÃ¤ftskosten
 
 Quelle: {citation['official_source']}""",
             'severity': 'HIGH',
-            'recommendation': 'Erhöhen Sie Startkapital auf mind. 10.000 EUR'
+            'recommendation': 'ErhÃ¶hen Sie Startkapital auf mind. 10.000 EUR'
         })
         return result
     
     if months_covered < 2:
         result.update({
             'valid': True,
-            'warning': f"""💡 HINWEIS: Geringe Kapitalreserve
+            'warning': f"""ðŸ’¡ HINWEIS: Geringe Kapitalreserve
 
 Startkapital: {capital:.0f} EUR
 Reichweite: {months_covered:.1f} Monate Lebenshaltungskosten
 
-Die fachkundige Stelle könnte dies als zu knapp bewerten.
+Die fachkundige Stelle kÃ¶nnte dies als zu knapp bewerten.
 
 Rechtsgrundlage: {citation['format']}
 Anforderung: {citation['short_text']}
 
 EMPFEHLUNG: 3-6 Monate Lebenshaltungskosten als Puffer
-→ Mindestens {living_costs_monthly * 3:.0f} EUR
+â†’ Mindestens {living_costs_monthly * 3:.0f} EUR
 
 Quelle: {citation['official_source']}""",
             'severity': 'INFO',
@@ -422,11 +422,11 @@ Quelle: {citation['official_source']}""",
     
     result.update({
         'valid': True,
-        'note': f"""✅ STARTKAPITAL AUSREICHEND
+        'note': f"""âœ… STARTKAPITAL AUSREICHEND
 
 {capital:.0f} EUR = {months_covered:.1f} Monate Lebenshaltungskosten
 
-Dies bietet eine solide Grundlage für die Gründung.
+Dies bietet eine solide Grundlage fÃ¼r die GrÃ¼ndung.
 
 Rechtsgrundlage: {citation['format']}"""
     })
@@ -508,7 +508,7 @@ INDUSTRY_RAMP_PROFILES = {
 
 class AdaptiveFinancialCalculator:
     """
-    Berechnet intelligente Finanzpläne basierend auf Gründer-Profil
+    Berechnet intelligente FinanzplÃ¤ne basierend auf GrÃ¼nder-Profil
     WITH LEGAL CITATION VALIDATIONS
     
     Features:
@@ -521,11 +521,11 @@ class AdaptiveFinancialCalculator:
     """
     
     def __init__(self):
-        logger.info("✅ Adaptive Financial Calculator initialized WITH VALIDATIONS")
+        logger.info("âœ… Adaptive Financial Calculator initialized WITH VALIDATIONS")
     
     def calculate_utilization_curve(
         self,
-        profile: GrounderProfile,
+        profile: 'GrounderProfile',
         months: int = 12
     ) -> List[float]:
         """
@@ -611,13 +611,13 @@ class AdaptiveFinancialCalculator:
             
             curve.append(round(util, 3))
         
-        logger.info(f"📈 Utilization: {curve[0]:.1%} → {curve[-1]:.1%}")
+        logger.info(f"ðŸ“ˆ Utilization: {curve[0]:.1%} â†’ {curve[-1]:.1%}")
         
         return curve
     
     def calculate_flexible_living_costs(
         self,
-        profile: GrounderProfile,
+        profile: 'GrounderProfile',
         base_living_monthly: float,
         months: int = 12
     ) -> Tuple[List[float], Dict]:
@@ -626,8 +626,8 @@ class AdaptiveFinancialCalculator:
         
         Faktoren:
         - Partner-Einkommen
-        - Temporäre Reduzierung
-        - Teilzeit-Job (als zusätzliches Einkommen)
+        - TemporÃ¤re Reduzierung
+        - Teilzeit-Job (als zusÃ¤tzliches Einkommen)
         
         Returns:
             (monthly_costs, metadata)
@@ -677,13 +677,13 @@ class AdaptiveFinancialCalculator:
                 metadata['part_time_income'] = pt_income
                 metadata['part_time_months'] = pt_months
         
-        logger.info(f"💰 Living costs: {costs[0]:,.0f} EUR/Monat (effective)")
+        logger.info(f"ðŸ’° Living costs: {costs[0]:,.0f} EUR/Monat (effective)")
         
         return costs, metadata
     
     def generate_adaptive_financials(
         self,
-        profile: GrounderProfile,
+        profile: 'GrounderProfile',
         revenue_sources: List[Dict],
         base_living_costs: float,
         business_costs_monthly: float,
@@ -693,7 +693,7 @@ class AdaptiveFinancialCalculator:
         Generate complete adaptive financial plan WITH VALIDATIONS
         
         Args:
-            profile: GrounderProfile
+            profile: 'GrounderProfile'
             revenue_sources: [{'type': 'hourly', 'price': 120}, ...]
             base_living_costs: Base living costs
             business_costs_monthly: Avg monthly business costs
@@ -703,7 +703,7 @@ class AdaptiveFinancialCalculator:
             Complete financial plan with scenarios, recommendation & VALIDATIONS
         """
         
-        logger.info("🚀 Generating adaptive financial plan WITH VALIDATIONS...")
+        logger.info("ðŸš€ Generating adaptive financial plan WITH VALIDATIONS...")
         
         # ========================================
         # NEW: VALIDATE INPUTS WITH LEGAL CITATIONS
@@ -720,10 +720,10 @@ class AdaptiveFinancialCalculator:
         
         if not hours_validation['valid']:
             critical_errors.append(hours_validation['error'])
-            logger.error(f"❌ CRITICAL: Hours validation failed: {hours_validation['error'][:100]}...")
+            logger.error(f"âŒ CRITICAL: Hours validation failed: {hours_validation['error'][:100]}...")
         elif 'warning' in hours_validation:
             warnings.append(hours_validation['warning'])
-            logger.warning(f"⚠️ Hours validation warning")
+            logger.warning(f"âš ï¸ Hours validation warning")
         
         # 2. Validate part-time (if applicable)
         part_time_possible = getattr(profile, 'part_time_job_possible', False)
@@ -745,10 +745,10 @@ class AdaptiveFinancialCalculator:
             
             if not pt_validation['valid']:
                 critical_errors.append(pt_validation['error'])
-                logger.error(f"❌ CRITICAL: Part-time validation failed")
+                logger.error(f"âŒ CRITICAL: Part-time validation failed")
             elif 'warning' in pt_validation:
                 warnings.append(pt_validation['warning'])
-                logger.warning(f"⚠️ Part-time validation warning")
+                logger.warning(f"âš ï¸ Part-time validation warning")
         else:
             validations['part_time'] = None
         
@@ -761,7 +761,7 @@ class AdaptiveFinancialCalculator:
         
         if not capital_validation['valid']:
             warnings.append(capital_validation['error'])
-            logger.warning(f"⚠️ Capital validation: Not sufficient")
+            logger.warning(f"âš ï¸ Capital validation: Not sufficient")
         elif 'warning' in capital_validation:
             warnings.append(capital_validation['warning'])
         
@@ -770,12 +770,12 @@ class AdaptiveFinancialCalculator:
         # ========================================
         
         if critical_errors:
-            logger.error(f"🚨 Cannot generate financials: {len(critical_errors)} critical validation errors")
+            logger.error(f"ðŸš¨ Cannot generate financials: {len(critical_errors)} critical validation errors")
             return {
                 'error': 'VALIDATION_FAILED',
                 'critical_errors': critical_errors,
                 'validations': validations,
-                'message': 'Finanzplan kann nicht generiert werden - kritische GZ-Anforderungen nicht erfüllt'
+                'message': 'Finanzplan kann nicht generiert werden - kritische GZ-Anforderungen nicht erfÃ¼llt'
             }
         
         # ========================================
@@ -857,7 +857,7 @@ class AdaptiveFinancialCalculator:
         # 9. Include warnings in recommendation
         recommendation_text = self._explain_recommendation(recommended, profile)
         if warnings:
-            recommendation_text += "\n\n⚠️ HINWEISE:\n" + "\n".join(warnings)
+            recommendation_text += "\n\nâš ï¸ HINWEISE:\n" + "\n".join(warnings)
         
         return {
             'recommended_scenario': recommended,
@@ -990,7 +990,7 @@ class AdaptiveFinancialCalculator:
         self,
         base: Dict,
         optimal: Dict,
-        profile: GrounderProfile
+        profile: 'GrounderProfile'
     ) -> Dict:
         """Determine recommended scenario"""
         
@@ -1003,7 +1003,7 @@ class AdaptiveFinancialCalculator:
     def _calculate_confidence(
         self,
         scenario: Dict,
-        profile: GrounderProfile
+        profile: 'GrounderProfile'
     ) -> int:
         """Calculate confidence score (0-100)"""
         
@@ -1054,33 +1054,33 @@ class AdaptiveFinancialCalculator:
     def _explain_recommendation(
         self,
         scenario: Dict,
-        profile: GrounderProfile
+        profile: 'GrounderProfile'
     ) -> str:
         """Explain recommendation"""
         
         reasons = []
         
         if scenario['endkontostand'] > 0:
-            reasons.append(f"✅ Positiver Kontostand ({scenario['endkontostand']:,.0f} EUR)")
+            reasons.append(f"âœ… Positiver Kontostand ({scenario['endkontostand']:,.0f} EUR)")
         else:
-            reasons.append(f"⚠️ Negativer Kontostand ({scenario['endkontostand']:,.0f} EUR), mit Kapital + Emergency Fund überbrückbar")
+            reasons.append(f"âš ï¸ Negativer Kontostand ({scenario['endkontostand']:,.0f} EUR), mit Kapital + Emergency Fund Ã¼berbrÃ¼ckbar")
         
         if scenario['gesamt_gewinn_geschaeft'] > 0:
-            reasons.append(f"✅ Business profitabel ({scenario['gesamt_gewinn_geschaeft']:,.0f} EUR)")
+            reasons.append(f"âœ… Business profitabel ({scenario['gesamt_gewinn_geschaeft']:,.0f} EUR)")
         
         if "Monat" in scenario['break_even_monat']:
-            reasons.append(f"✅ Break-Even: {scenario['break_even_monat']}")
+            reasons.append(f"âœ… Break-Even: {scenario['break_even_monat']}")
         
         net_strength = getattr(profile.network_strength, 'value', 'unknown') if hasattr(profile, 'network_strength') else 'unknown'
         if net_strength == 'strong':
-            reasons.append("✅ Starkes Netzwerk ermöglicht schnelleren Ramp-up")
+            reasons.append("âœ… Starkes Netzwerk ermÃ¶glicht schnelleren Ramp-up")
         
         first_customers = getattr(profile, 'first_customers_pipeline', 0)
         if first_customers > 0:
-            reasons.append(f"✅ {first_customers} Kunden bereits im Pipeline")
+            reasons.append(f"âœ… {first_customers} Kunden bereits im Pipeline")
         
         if scenario.get('gesamt_zusatz_einkommen', 0) > 0:
-            reasons.append(f"✅ Teilzeit-Job trägt {scenario['gesamt_zusatz_einkommen']:,.0f} EUR bei")
+            reasons.append(f"âœ… Teilzeit-Job trÃ¤gt {scenario['gesamt_zusatz_einkommen']:,.0f} EUR bei")
         
         return "\n".join(reasons)
 
@@ -1099,14 +1099,15 @@ __all__ = [
 
 
 if __name__ == "__main__":
-    print("✅ Adaptive Financial Calculator WITH VALIDATIONS loaded successfully!")
-    print("📦 Main class: AdaptiveFinancialCalculator")
-    print("🏛️ Legal Citations: validate_hauptberuflich_hours, validate_part_time_job, validate_startup_capital")
-    print("🔧 Ready for integration!")
+    print("âœ… Adaptive Financial Calculator WITH VALIDATIONS loaded successfully!")
+    print("ðŸ“¦ Main class: AdaptiveFinancialCalculator")
+    print("ðŸ›ï¸ Legal Citations: validate_hauptberuflich_hours, validate_part_time_job, validate_startup_capital")
+    print("ðŸ”§ Ready for integration!")
     print("")
     print("NEW FEATURES:")
     print("  - All inputs validated against GZ requirements")
-    print("  - Legal citations (SGB III § 93, Fachliche Weisungen BA)")
+    print("  - Legal citations (SGB III Â§ 93, Fachliche Weisungen BA)")
     print("  - Validation results included in generate_adaptive_financials() output")
     print("  - Critical errors prevent financial plan generation")
     print("  - Warnings included in recommendation")
+

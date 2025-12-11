@@ -1,4 +1,4 @@
-# businessplan_generator_enhanced.py
+﻿# businessplan_generator_enhanced.py
 """
 Enhanced Businessplan Generator - TAG 6 Implementation WITH LEGAL CITATIONS
 
@@ -6,7 +6,7 @@ GZ-COMPLIANT BUSINESSPLAN GENERATOR + LEGAL CITATIONS
 ======================================================
 
 NEW IN THIS VERSION:
-- ALL prompts include legal citations (SGB III § 93, Fachliche Weisungen BA)
+- ALL prompts include legal citations (SGB III Â§ 93, Fachliche Weisungen BA)
 - GZ_CRITERIA enhanced with rechtsgrundlage for each criterion
 - Helper functions for legal citations
 - Compliance checker shows legal basis for requirements
@@ -25,10 +25,10 @@ Features:
 
 Chapters Generated:
 1. Executive Summary (GZ-focused + Legal Citations)
-2. Geschäftsidee & Vision
-3. Gründerperson & Qualifikation (extended with legal requirements)
+2. GeschÃ¤ftsidee & Vision
+3. GrÃ¼nderperson & Qualifikation (extended with legal requirements)
 4. Markt & Wettbewerb (with research & sources)
-5. Marketing & Vertriebsstrategie (with "intensive Geschäftstätigkeit")
+5. Marketing & Vertriebsstrategie (with "intensive GeschÃ¤ftstÃ¤tigkeit")
 6. JTBD & Kundennutzen
 7. Organisation & Arbeitsweise
 8. Finanzplanung (realistic + scenarios)
@@ -37,9 +37,9 @@ Chapters Generated:
 11. Anhang & Quellen
 
 GZ-Compliance Criteria Checked (WITH LEGAL BASIS):
-- Hauptberuflichkeit (SGB III § 93 Abs. 2)
+- Hauptberuflichkeit (SGB III Â§ 93 Abs. 2)
 - Fachliche Qualifikation (Fachliche Weisungen BA)
-- Wirtschaftliche Tragfähigkeit (Fachliche Weisungen BA)
+- Wirtschaftliche TragfÃ¤higkeit (Fachliche Weisungen BA)
 - Marktpotenzial nachgewiesen
 - Lebenshaltungskosten gedeckt
 - Konkrete Umsetzungsplanung
@@ -63,27 +63,27 @@ logger = logging.getLogger(__name__)
 try:
     from adaptive_financial_calculator_full import AdaptiveFinancialCalculator
     ADAPTIVE_CALCULATOR_AVAILABLE = True
-    logger.info("✅ Adaptive Financial Calculator available")
+    logger.info("âœ… Adaptive Financial Calculator available")
 except ImportError:
     ADAPTIVE_CALCULATOR_AVAILABLE = False
-    logger.warning("⚠️ Adaptive Calculator not available - using standard calculator")
+    logger.warning("âš ï¸ Adaptive Calculator not available - using standard calculator")
 
 try:
     from grounder_profile import GrounderProfile, create_profile_from_dict
     GROUNDER_PROFILE_AVAILABLE = True
-    logger.info("✅ Grounder Profile schema available")
+    logger.info("âœ… Grounder Profile schema available")
 except ImportError:
     GROUNDER_PROFILE_AVAILABLE = False
-    logger.warning("⚠️ Grounder Profile not available - using standard calculator")
+    logger.warning("âš ï¸ Grounder Profile not available - using standard calculator")
 
 # Try to import legal citations (optional)
 try:
     from legal_citations import get_citation, format_citation_for_docx
     LEGAL_CITATIONS_AVAILABLE = True
-    logger.info("✅ Legal Citations module available")
+    logger.info("âœ… Legal Citations module available")
 except ImportError:
     LEGAL_CITATIONS_AVAILABLE = False
-    logger.warning("⚠️ Legal Citations module not available - using hardcoded citations")
+    logger.warning("âš ï¸ Legal Citations module not available - using hardcoded citations")
 
 
 # ============================================================================
@@ -111,39 +111,39 @@ class EnhancedContentGenerator:
         self.client = Anthropic(api_key=api_key)
         self.model = "claude-sonnet-4-20250514"  # Latest model
         
-        logger.info("✅ Enhanced Content Generator initialized with Legal Citations")
+        logger.info("âœ… Enhanced Content Generator initialized with Legal Citations")
     
     async def generate_executive_summary(self, data: Dict) -> str:
         """
         Executive Summary - GZ-focused with LEGAL CITATIONS
         
         Key Points:
-        - Hauptberuflichkeit (SGB III § 93 Abs. 2)
+        - Hauptberuflichkeit (SGB III Â§ 93 Abs. 2)
         - Qualifikation (Fachliche Weisungen BA)
-        - Wirtschaftliche Tragfähigkeit (Fachliche Weisungen BA)
+        - Wirtschaftliche TragfÃ¤higkeit (Fachliche Weisungen BA)
         - Conservative language with legal basis
         """
         
-        prompt = f"""Schreibe eine Executive Summary für einen Businessplan (max 350 Wörter).
+        prompt = f"""Schreibe eine Executive Summary fÃ¼r einen Businessplan (max 350 WÃ¶rter).
 
-**KRITISCH: Dies ist für einen Gründungszuschuss (GZ) Antrag!**
+**KRITISCH: Dies ist fÃ¼r einen GrÃ¼ndungszuschuss (GZ) Antrag!**
 
 **RECHTSGRUNDLAGEN:**
-Der Gründungszuschuss ist eine Ermessensleistung (SGB III § 93 Abs. 1) - KEIN Rechtsanspruch!
-Die fachkundige Stelle (IHK/HWK/Steuerberater) prüft nach Fachlichen Weisungen BA:
+Der GrÃ¼ndungszuschuss ist eine Ermessensleistung (SGB III Â§ 93 Abs. 1) - KEIN Rechtsanspruch!
+Die fachkundige Stelle (IHK/HWK/Steuerberater) prÃ¼ft nach Fachlichen Weisungen BA:
 
-1. HAUPTBERUFLICHKEIT (SGB III § 93 Abs. 2)
-   → Anforderung: Mindestens 15 Stunden wöchentlich
-   → WICHTIG: Explizit Stundenzahl nennen!
-   → VERMEIDE: "nebenbei", "Freizeit", "Hobby"
+1. HAUPTBERUFLICHKEIT (SGB III Â§ 93 Abs. 2)
+   â†’ Anforderung: Mindestens 15 Stunden wÃ¶chentlich
+   â†’ WICHTIG: Explizit Stundenzahl nennen!
+   â†’ VERMEIDE: "nebenbei", "Freizeit", "Hobby"
 
 2. FACHLICHE QUALIFIKATION (Fachliche Weisungen BA)
-   → Anforderung: Notwendige Kenntnisse und Fähigkeiten nachweisbar
-   → Betone: Jahre Berufserfahrung, Zertifikate, Projekterfolge
+   â†’ Anforderung: Notwendige Kenntnisse und FÃ¤higkeiten nachweisbar
+   â†’ Betone: Jahre Berufserfahrung, Zertifikate, Projekterfolge
 
-3. WIRTSCHAFTLICHE TRAGFÄHIGKEIT (Fachliche Weisungen BA)
-   → Anforderung: Tragfähige Existenzgrundlage, Lebenshaltungskosten gedeckt
-   → Zeige: Realistische Zahlen, konservative Planung
+3. WIRTSCHAFTLICHE TRAGFÃ„HIGKEIT (Fachliche Weisungen BA)
+   â†’ Anforderung: TragfÃ¤hige Existenzgrundlage, Lebenshaltungskosten gedeckt
+   â†’ Zeige: Realistische Zahlen, konservative Planung
 
 **STIL:**
 - Sachlich-professionell, konservativ
@@ -152,35 +152,35 @@ Die fachkundige Stelle (IHK/HWK/Steuerberater) prüft nach Fachlichen Weisungen 
 
 **STRUKTUR:**
 
-1. Geschäftsidee (2 Sätze):
+1. GeschÃ¤ftsidee (2 SÃ¤tze):
    - WAS: {data.get('what', '')}
-   - FÜR WEN: {data.get('who', '')}
+   - FÃœR WEN: {data.get('who', '')}
 
-2. Marktproblem (2 Sätze):
+2. Marktproblem (2 SÃ¤tze):
    - Problem: {data.get('problem', '')}
    - Warum wichtig/dringend?
 
-3. Gründerperson (3 Sätze):
+3. GrÃ¼nderperson (3 SÃ¤tze):
    - Qualifikation: {data.get('why_you', '')}
    - WARUM fachlich geeignet (Nachweise!)
    - Hauptberuflich: EXPLIZIT Stunden nennen!
 
-4. Geschäftsmodell (2 Sätze):
+4. GeschÃ¤ftsmodell (2 SÃ¤tze):
    - Revenue: {data.get('revenue_source', '')}
    - Warum realistisch?
 
-5. Finanzierung & Tragfähigkeit (2 Sätze):
+5. Finanzierung & TragfÃ¤higkeit (2 SÃ¤tze):
    - Kapitalbedarf: {data.get('capital_needs', '')}
-   - Wirtschaftliche Tragfähigkeit gegeben
+   - Wirtschaftliche TragfÃ¤higkeit gegeben
 
 6. Ziel & Ausblick (1 Satz)
 
 **WICHTIG:**
 - Zahlen NUR wenn aus Input vorhanden
-- VERWENDE: "fundiert", "nachweislich", "realistisch", "tragfähig"
+- VERWENDE: "fundiert", "nachweislich", "realistisch", "tragfÃ¤hig"
 
 **PFLICHT-FORMULIERUNG am Ende:**
-"Die Gründung erfolgt hauptberuflich mit mindestens [X] Stunden pro Woche (SGB III § 93 Abs. 2). Die wirtschaftliche Tragfähigkeit ist durch konservative Finanzplanung und nachgewiesene fachliche Qualifikation gegeben."
+"Die GrÃ¼ndung erfolgt hauptberuflich mit mindestens [X] Stunden pro Woche (SGB III Â§ 93 Abs. 2). Die wirtschaftliche TragfÃ¤higkeit ist durch konservative Finanzplanung und nachgewiesene fachliche Qualifikation gegeben."
 
 Schreibe NUR die Executive Summary:"""
 
@@ -188,7 +188,7 @@ Schreibe NUR die Executive Summary:"""
     
     async def generate_gruenderperson_extended(self, data: Dict) -> str:
         """
-        Gründerperson - Extended with CV-style + LEGAL CITATIONS
+        GrÃ¼nderperson - Extended with CV-style + LEGAL CITATIONS
         
         IHK/AfA want to see:
         - Detailed work history
@@ -201,21 +201,21 @@ Schreibe NUR die Executive Summary:"""
         why_you = data.get('why_you', '')
         how = data.get('how', '')
         
-        prompt = f"""Schreibe einen ausführlichen "Gründerperson & Qualifikation" Abschnitt (600-800 Wörter).
+        prompt = f"""Schreibe einen ausfÃ¼hrlichen "GrÃ¼nderperson & Qualifikation" Abschnitt (600-800 WÃ¶rter).
 
 **RECHTSGRUNDLAGE:**
-Fachliche Weisungen BA zu § 93 SGB III: Fachliche Qualifikation
+Fachliche Weisungen BA zu Â§ 93 SGB III: Fachliche Qualifikation
 
-→ Anforderung: "Die Antragstellerin oder der Antragsteller muss über die notwendigen Kenntnisse und Fähigkeiten zur Ausübung der selbständigen Tätigkeit verfügen."
+â†’ Anforderung: "Die Antragstellerin oder der Antragsteller muss Ã¼ber die notwendigen Kenntnisse und FÃ¤higkeiten zur AusÃ¼bung der selbstÃ¤ndigen TÃ¤tigkeit verfÃ¼gen."
 
-Die fachkundige Stelle (IHK/HWK/Steuerberater) prüft:
+Die fachkundige Stelle (IHK/HWK/Steuerberater) prÃ¼ft:
 - Ausbildung & formale Qualifikationen
 - Berufserfahrung (mind. 2-3 Jahre empfohlen)
 - Branchenkenntnisse
 - Projekterfolge mit messbaren Ergebnissen
 - Nachweis der fachlichen Eignung
 
-**VERFÜGBARE INFORMATIONEN:**
+**VERFÃœGBARE INFORMATIONEN:**
 {why_you}
 
 Arbeitsweise: {how}
@@ -226,50 +226,50 @@ Arbeitsweise: {how}
 
 Schreibe im CV-Stil (neueste zuerst):
 - Extrahiere alle Firmen/Positionen aus dem Input
-- Für jede Station: Zeitraum, Firma, Position, Verantwortung
-- WENN konkrete Projekte erwähnt: Beschreibe sie mit Ergebnissen
+- FÃ¼r jede Station: Zeitraum, Firma, Position, Verantwortung
+- WENN konkrete Projekte erwÃ¤hnt: Beschreibe sie mit Ergebnissen
 
 Beispiel-Format:
 "**2020-2024: Senior Consultant bei [Firma], [Ort]**
 - Position: [Rolle]
 - Verantwortung: [Was gemacht]
-- Erfolge: [Konkrete Ergebnisse mit Zahlen wenn möglich]"
+- Erfolge: [Konkrete Ergebnisse mit Zahlen wenn mÃ¶glich]"
 
 ### 3.2 Fachliche Qualifikationen
 
 Listen auf:
-- Alle erwähnten Zertifikate
+- Alle erwÃ¤hnten Zertifikate
 - Fortbildungen
 - Technische Skills
 - Branchen-Expertise
 
-### 3.3 Warum Selbständigkeit jetzt?
+### 3.3 Warum SelbstÃ¤ndigkeit jetzt?
 
-Erkläre in 2-3 Absätzen:
-1. Was in der Karriere zur Gründungs-Idee geführt hat
-2. Welche Marktlücke erkannt wurde
+ErklÃ¤re in 2-3 AbsÃ¤tzen:
+1. Was in der Karriere zur GrÃ¼ndungs-Idee gefÃ¼hrt hat
+2. Welche MarktlÃ¼cke erkannt wurde
 3. Warum JETZT der richtige Zeitpunkt ist
-4. Persönliche Motivation (authentisch aber professionell)
+4. PersÃ¶nliche Motivation (authentisch aber professionell)
 
 ### 3.4 Netzwerk & Branchenkontakte
 
-WENN im Input erwähnt:
+WENN im Input erwÃ¤hnt:
 - Mitgliedschaften
 - Kontakte
 - Speaking/Workshops
 - SONST: Allgemein halten
 
 **WICHTIG:**
-- Zeige LÜCKENLOS: Diese Person KANN das Business führen
+- Zeige LÃœCKENLOS: Diese Person KANN das Business fÃ¼hren
 - Belege ALLES mit konkreten Beispielen
-- Fachkundige Stelle prüft kritisch nach Fachlichen Weisungen BA!
+- Fachkundige Stelle prÃ¼ft kritisch nach Fachlichen Weisungen BA!
 - Je mehr Nachweise, desto besser
 
 **STIL:**
 - Faktisch, nicht prahlend
-- Erfolge mit Zahlen wenn möglich
-- Realistische Selbsteinschätzung
-- GZ-konform: Zeigen dass hauptberuflich möglich
+- Erfolge mit Zahlen wenn mÃ¶glich
+- Realistische SelbsteinschÃ¤tzung
+- GZ-konform: Zeigen dass hauptberuflich mÃ¶glich
 
 Schreibe den kompletten Abschnitt:"""
 
@@ -299,15 +299,15 @@ Schreibe den kompletten Abschnitt:"""
         research_text = ""
         if market_research:
             research_text = f"""
-**VERFÜGBARE MARKTDATEN:**
+**VERFÃœGBARE MARKTDATEN:**
 {json.dumps(market_research, indent=2, ensure_ascii=False)}
 """
         
-        prompt = f"""Schreibe einen umfassenden "Markt & Wettbewerbsanalyse" Abschnitt (800-1000 Wörter).
+        prompt = f"""Schreibe einen umfassenden "Markt & Wettbewerbsanalyse" Abschnitt (800-1000 WÃ¶rter).
 
 **KRITISCH: IHK fordert Nachweis von Marktpotenzial!**
 
-**GESCHÄFTSIDEE:**
+**GESCHÃ„FTSIDEE:**
 - Was: {what}
 - Zielgruppe: {who}
 - Problem: {problem}
@@ -316,14 +316,14 @@ Schreibe den kompletten Abschnitt:"""
 
 **STRUKTUR (GENAU befolgen!):**
 
-### 4.1 Marktgröße & Potenzial
+### 4.1 MarktgrÃ¶ÃŸe & Potenzial
 
 **Deutscher Gesamtmarkt:**
-- Wie viele potenzielle Kunden gibt es? (Schätze basierend auf Zielgruppe)
-- Wenn Daten verfügbar: Zitiere mit [Quelle]
-- Wenn keine Daten: "Laut Branchenschätzung..."
+- Wie viele potenzielle Kunden gibt es? (SchÃ¤tze basierend auf Zielgruppe)
+- Wenn Daten verfÃ¼gbar: Zitiere mit [Quelle]
+- Wenn keine Daten: "Laut BranchenschÃ¤tzung..."
 
-**Marktpotenzial für diese Branche:**
+**Marktpotenzial fÃ¼r diese Branche:**
 - Marktwachstum (wenn bekannt)
 - Digitalisierungsgrad
 - Budget-Potenzial
@@ -336,22 +336,22 @@ Schreibe den kompletten Abschnitt:"""
 
 **Hauptwettbewerber (mind. 3-5 benennen):**
 
-Für jeden Konkurrenten (selbst wenn nicht im Input, generiere plausible):
-1. Name: [Firma oder Typ wie "Große Beratungen", "Freelancer"]
+FÃ¼r jeden Konkurrenten (selbst wenn nicht im Input, generiere plausible):
+1. Name: [Firma oder Typ wie "GroÃŸe Beratungen", "Freelancer"]
 2. Fokus: [Was sie machen]
-3. Stärke: [Ihr Vorteil]
-4. Schwäche: [Ihre Limitation]
+3. StÃ¤rke: [Ihr Vorteil]
+4. SchwÃ¤che: [Ihre Limitation]
 
 **Beispiel-Format:**
-"**1. [Konkurrent A] (z.B. große Beratung)**
+"**1. [Konkurrent A] (z.B. groÃŸe Beratung)**
 - Fokus: Enterprise-Kunden
-- Stärke: Etabliert, viele Ressourcen
-- Schwäche: Zu teuer für KMUs (200+ EUR/h)
+- StÃ¤rke: Etabliert, viele Ressourcen
+- SchwÃ¤che: Zu teuer fÃ¼r KMUs (200+ EUR/h)
 
 **2. [Konkurrent B] (z.B. Freelancer)**
 - Fokus: Einzelprojekte
-- Stärke: Günstig (80-100 EUR/h)
-- Schwäche: Keine Prozessberatung, nur Umsetzung"
+- StÃ¤rke: GÃ¼nstig (80-100 EUR/h)
+- SchwÃ¤che: Keine Prozessberatung, nur Umsetzung"
 
 ### 4.3 Wettbewerbsvorteil (USP)
 
@@ -362,8 +362,8 @@ Eine klare Positionierungs-Aussage (1 Satz)
 1. Preis: [Wie positioniert vs. Wettbewerb]
 2. Fokus: [Spezialisierung]
 3. Geschwindigkeit: [Schneller? Wie?]
-4. Qualität: [Was besser?]
-5. Erreichbarkeit: [Persönlich vs. große Firma?]
+4. QualitÃ¤t: [Was besser?]
+5. Erreichbarkeit: [PersÃ¶nlich vs. groÃŸe Firma?]
 
 ### 4.4 Markteintritt & Potenzial
 
@@ -372,10 +372,10 @@ Eine klare Positionierungs-Aussage (1 Satz)
 - Langfristiges Potenzial
 
 **STIL:**
-- Faktisch mit Zahlen wo möglich
-- Bei Schätzungen: Konservativ!
+- Faktisch mit Zahlen wo mÃ¶glich
+- Bei SchÃ¤tzungen: Konservativ!
 - Quellen zitieren wenn vorhanden
-- Realistisch bleiben (nicht übertreiben)
+- Realistisch bleiben (nicht Ã¼bertreiben)
 
 **WICHTIG:**
 - WENN keine echten Daten: "Basierend auf Branchenerfahrung..."
@@ -393,7 +393,7 @@ Schreibe den kompletten Abschnitt:"""
         AfA MUST see:
         - Concrete customer acquisition plan
         - How will first customers come?
-        - "Intensive Geschäftstätigkeit" (legal requirement for Phase 2)
+        - "Intensive GeschÃ¤ftstÃ¤tigkeit" (legal requirement for Phase 2)
         - Sales funnel
         - Budget allocation
         """
@@ -402,26 +402,26 @@ Schreibe den kompletten Abschnitt:"""
         who = data.get('who', '')
         revenue_source = data.get('revenue_source', '')
         
-        prompt = f"""Schreibe ein vollständiges "Marketing & Vertriebsstrategie" Kapitel (700-900 Wörter).
+        prompt = f"""Schreibe ein vollstÃ¤ndiges "Marketing & Vertriebsstrategie" Kapitel (700-900 WÃ¶rter).
 
-**RECHTSGRUNDLAGE FÜR GZ-BEWILLIGUNG:**
-Fachliche Weisungen BA zu § 94 SGB III: Nachweis der Geschäftstätigkeit
+**RECHTSGRUNDLAGE FÃœR GZ-BEWILLIGUNG:**
+Fachliche Weisungen BA zu Â§ 94 SGB III: Nachweis der GeschÃ¤ftstÃ¤tigkeit
 
-→ Anforderung: "Für die Bewilligung der zweiten Förderphase muss nach 6 Monaten nachgewiesen werden, dass eine intensive Geschäftstätigkeit und hauptberufliche unternehmerische Aktivitäten vorliegen."
+â†’ Anforderung: "FÃ¼r die Bewilligung der zweiten FÃ¶rderphase muss nach 6 Monaten nachgewiesen werden, dass eine intensive GeschÃ¤ftstÃ¤tigkeit und hauptberufliche unternehmerische AktivitÃ¤ten vorliegen."
 
-Die Agentur prüft:
+Die Agentur prÃ¼ft:
 - Wie werden erste Kunden gewonnen? (konkret!)
 - Wann kommt der erste Umsatz? (Monat 1-3 ideal)
-- Wie wird hauptberufliche Tätigkeit sichergestellt?
+- Wie wird hauptberufliche TÃ¤tigkeit sichergestellt?
 
-**NACHWEISE FÜR "INTENSIVE GESCHÄFTSTÄTIGKEIT":**
+**NACHWEISE FÃœR "INTENSIVE GESCHÃ„FTSTÃ„TIGKEIT":**
 - Kundenlisten
 - Rechnungen / Angebote
-- Verträge
-- Akquise-Aktivitäten dokumentiert
+- VertrÃ¤ge
+- Akquise-AktivitÃ¤ten dokumentiert
 - Arbeitszeitnachweise
 
-**GESCHÄFTSIDEE:**
+**GESCHÃ„FTSIDEE:**
 - Was: {what}
 - Zielgruppe: {who}
 - Revenue: {revenue_source}
@@ -435,18 +435,18 @@ Die Agentur prüft:
 **Phase 1: Monat 1-3 (Netzwerk-Aktivierung)**
 
 Budget: [500-800 EUR]
-Maßnahmen (konkret!):
+MaÃŸnahmen (konkret!):
 1. LinkedIn: Profil optimieren + [X] Kontakte/Woche
-2. Networking: [Typ wie BNI, IHK-Events] + wöchentliche Treffen
-3. Direktansprache: [X] Erstgespräche mit [bestehenden Kontakten/Ex-Kollegen]
-4. [Weitere Maßnahme basierend auf Branche]
+2. Networking: [Typ wie BNI, IHK-Events] + wÃ¶chentliche Treffen
+3. Direktansprache: [X] ErstgesprÃ¤che mit [bestehenden Kontakten/Ex-Kollegen]
+4. [Weitere MaÃŸnahme basierend auf Branche]
 
 Erwartung: 2-3 Pilotkunden aus Netzwerk
 
 **Phase 2: Monat 4-6 (Content & Empfehlungen)**
 
 Budget: [600-1000 EUR]
-Maßnahmen:
+MaÃŸnahmen:
 1. Content: [LinkedIn Posts / Blog / Videos] - [Frequenz]
 2. Workshops: [Wo? IHK? Online?] - [Thema]
 3. Case Studies: Erste Projekte dokumentieren
@@ -457,11 +457,11 @@ Erwartung: 3-4 neue Kunden
 **Phase 3: Monat 7-12 (Skalierung)**
 
 Budget: [1000-1500 EUR]
-Maßnahmen:
+MaÃŸnahmen:
 1. Paid Ads: [LinkedIn/Google] - [Budget/Monat]
 2. Partnerschaften: [Mit wem? Steuerberater? IT-Dienstleister?]
 3. Events: [Networking, Speaking]
-4. [Weitere Kanäle]
+4. [Weitere KanÃ¤le]
 
 Erwartung: 5-8 neue Kunden
 
@@ -470,22 +470,22 @@ Erwartung: 5-8 neue Kunden
 **Pipeline-Struktur:**
 ```
 [X] Leads (z.B. LinkedIn-Kontakte)
-  → [Y] Antworten ([Z]%)
-  → [A] Gespräche ([B]%)
-  → [C] Angebote ([D]%)
-  → [E] Aufträge ([F]%)
+  â†’ [Y] Antworten ([Z]%)
+  â†’ [A] GesprÃ¤che ([B]%)
+  â†’ [C] Angebote ([D]%)
+  â†’ [E] AuftrÃ¤ge ([F]%)
 ```
 
-Beispiel: 100 → 20 → 10 → 4 → 2
+Beispiel: 100 â†’ 20 â†’ 10 â†’ 4 â†’ 2
 
 **Customer Journey:**
 1. Awareness: [Wie werden sie aufmerksam?]
-2. Interest: [Erstgespräch - wie lang? kostenlos?]
+2. Interest: [ErstgesprÃ¤ch - wie lang? kostenlos?]
 3. Consideration: [Assessment/Probe-Projekt?]
 4. Decision: [Angebot]
 5. Retention: [Wie Kunden halten?]
 
-**Sales Cycle:** [3-6 Monate für B2B typisch]
+**Sales Cycle:** [3-6 Monate fÃ¼r B2B typisch]
 
 ### 5.3 Erste Kunden-Leads
 
@@ -506,10 +506,10 @@ Beispiel: 100 → 20 → 10 → 4 → 2
 ### 5.4 Pricing & Angebote
 
 **Einstiegsangebot:** [Name]
-- Preis: [Niedrig für Quick-Win]
+- Preis: [Niedrig fÃ¼r Quick-Win]
 - Dauer: [Kurz]
 - Scope: [Klein aber Wert-generierend]
-- Ziel: Schneller Erfolg → Folgeaufträge
+- Ziel: Schneller Erfolg â†’ FolgeauftrÃ¤ge
 
 **Standard-Angebot:** [Name]
 - Preis: [Aus revenue_source ableiten]
@@ -520,16 +520,16 @@ Beispiel: 100 → 20 → 10 → 4 → 2
 **STIL:**
 - KONKRET (nicht vage!)
 - REALISTISCH (konservative Conversion-Raten)
-- NACHVOLLZIEHBAR (jede Zahl begründen)
+- NACHVOLLZIEHBAR (jede Zahl begrÃ¼nden)
 
-**KRITISCH für GZ Phase 2 (nach 6 Monaten):**
-Die Agentur will NACHWEISE sehen für "intensive Geschäftstätigkeit":
+**KRITISCH fÃ¼r GZ Phase 2 (nach 6 Monaten):**
+Die Agentur will NACHWEISE sehen fÃ¼r "intensive GeschÃ¤ftstÃ¤tigkeit":
 - Kundenliste mit Projekten
-- Rechnungen & Zahlungseingänge
-- Dokumentierte Akquise-Aktivitäten
+- Rechnungen & ZahlungseingÃ¤nge
+- Dokumentierte Akquise-AktivitÃ¤ten
 - Arbeitszeitnachweise (Hauptberuflichkeit!)
 
-Ohne diese Nachweise: Phase 2 (weitere 300 EUR/Monat für 9 Monate) wird NICHT bewilligt!
+Ohne diese Nachweise: Phase 2 (weitere 300 EUR/Monat fÃ¼r 9 Monate) wird NICHT bewilligt!
 
 Schreibe das komplette Kapitel:"""
 
@@ -548,57 +548,57 @@ Schreibe das komplette Kapitel:"""
         
         risks_from_swot = swot_data.get('risiken', [])
         
-        prompt = f"""Schreibe ein "Risikomanagement" Kapitel (600-800 Wörter).
+        prompt = f"""Schreibe ein "Risikomanagement" Kapitel (600-800 WÃ¶rter).
 
-**KRITISCH: IHK will sehen dass ALLE Risiken erkannt und Gegenmaßnahmen geplant sind!**
+**KRITISCH: IHK will sehen dass ALLE Risiken erkannt und GegenmaÃŸnahmen geplant sind!**
 
-**WICHTIG - GZ-SPEZIFISCHE RISIKEN MÜSSEN ABGEDECKT WERDEN:**
+**WICHTIG - GZ-SPEZIFISCHE RISIKEN MÃœSSEN ABGEDECKT WERDEN:**
 
-1. HAUPTBERUFLICHKEIT GEFÄHRDET
-   Rechtsgrundlage: SGB III § 93 Abs. 2
-   Risiko: Weniger als 15h/Woche für Business → GZ-Rückforderung
-   Gegenmaßnahme: Zeiterfassung, klare Arbeitsplanung, keine Vollzeit-Anstellung parallel
+1. HAUPTBERUFLICHKEIT GEFÃ„HRDET
+   Rechtsgrundlage: SGB III Â§ 93 Abs. 2
+   Risiko: Weniger als 15h/Woche fÃ¼r Business â†’ GZ-RÃ¼ckforderung
+   GegenmaÃŸnahme: Zeiterfassung, klare Arbeitsplanung, keine Vollzeit-Anstellung parallel
 
-2. NEBENTÄTIGKEIT ZU UMFANGREICH
-   Rechtsgrundlage: Fachliche Weisungen BA zu § 93 SGB III
-   Erlaubt: Nebentätigkeit < 15h/Woche UND < 50% des Einkommens
-   Risiko: Bei Überschreitung droht Rückforderung des gesamten Gründungszuschusses!
-   Gegenmaßnahme: 
-   - Wenn Nebentätigkeit nötig → max. 14h/Woche
-   - Unverzüglich bei Agentur für Arbeit melden (§ 60 SGB III)
+2. NEBENTÃ„TIGKEIT ZU UMFANGREICH
+   Rechtsgrundlage: Fachliche Weisungen BA zu Â§ 93 SGB III
+   Erlaubt: NebentÃ¤tigkeit < 15h/Woche UND < 50% des Einkommens
+   Risiko: Bei Ãœberschreitung droht RÃ¼ckforderung des gesamten GrÃ¼ndungszuschusses!
+   GegenmaÃŸnahme: 
+   - Wenn NebentÃ¤tigkeit nÃ¶tig â†’ max. 14h/Woche
+   - UnverzÃ¼glich bei Agentur fÃ¼r Arbeit melden (Â§ 60 SGB III)
    - Dokumentation der Arbeitszeiten
 
-3. WIRTSCHAFTLICHE TRAGFÄHIGKEIT NICHT NACHWEISBAR
-   Rechtsgrundlage: Fachliche Weisungen BA zu § 93 SGB III
-   Risiko: Break-Even > 12 Monate, Liquidität nicht gesichert → Ablehnung oder Rückforderung
-   Gegenmaßnahme: 
+3. WIRTSCHAFTLICHE TRAGFÃ„HIGKEIT NICHT NACHWEISBAR
+   Rechtsgrundlage: Fachliche Weisungen BA zu Â§ 93 SGB III
+   Risiko: Break-Even > 12 Monate, LiquiditÃ¤t nicht gesichert â†’ Ablehnung oder RÃ¼ckforderung
+   GegenmaÃŸnahme: 
    - Konservative Planung
    - Puffer einplanen (mindestens 3 Monate Lebenshaltungskosten)
    - Alternative Einnahmequellen identifizieren
-   - Teilzeit-Job als Überbrückung (max. 14h/Woche!)
+   - Teilzeit-Job als ÃœberbrÃ¼ckung (max. 14h/Woche!)
 
-4. KEINE "INTENSIVE GESCHÄFTSTÄTIGKEIT" NACHWEISBAR (für Phase 2)
-   Rechtsgrundlage: Fachliche Weisungen BA zu § 94 SGB III
-   Risiko: Phase 2 (weitere 300 EUR für 9 Monate) wird nicht bewilligt
-   Gegenmaßnahme:
+4. KEINE "INTENSIVE GESCHÃ„FTSTÃ„TIGKEIT" NACHWEISBAR (fÃ¼r Phase 2)
+   Rechtsgrundlage: Fachliche Weisungen BA zu Â§ 94 SGB III
+   Risiko: Phase 2 (weitere 300 EUR fÃ¼r 9 Monate) wird nicht bewilligt
+   GegenmaÃŸnahme:
    - Ab Monat 1: Kunden akquirieren
-   - Alle Aktivitäten dokumentieren (Angebote, Gespräche, Verträge)
+   - Alle AktivitÃ¤ten dokumentieren (Angebote, GesprÃ¤che, VertrÃ¤ge)
    - Rechnungen schreiben und aufbewahren
-   - Arbeitszeitnachweise führen
+   - Arbeitszeitnachweise fÃ¼hren
 
 **IDENTIFIZIERTE RISIKEN (aus SWOT):**
 {chr(10).join(f'- {r}' for r in risks_from_swot)}
 
 **STRUKTUR:**
 
-### 9.1 Risiko-Übersicht
+### 9.1 Risiko-Ãœbersicht
 
 Erstelle Tabelle (als Text formatiert):
 
-| Risiko | Wahrscheinlichkeit | Auswirkung | Gegenmaßnahme |
+| Risiko | Wahrscheinlichkeit | Auswirkung | GegenmaÃŸnahme |
 |--------|-------------------|------------|---------------|
-| Hauptberuflichkeit gefährdet | [Niedrig/Mittel] | [Sehr Hoch] | [Zeiterfassung, klare Planung] |
-| Kundenakquise dauert länger | [Mittel bis Hoch] | [Mittel-Hoch] | [Teilzeit-Job, Puffer] |
+| Hauptberuflichkeit gefÃ¤hrdet | [Niedrig/Mittel] | [Sehr Hoch] | [Zeiterfassung, klare Planung] |
+| Kundenakquise dauert lÃ¤nger | [Mittel bis Hoch] | [Mittel-Hoch] | [Teilzeit-Job, Puffer] |
 | ... | ... | ... | ... |
 
 **WEITERE RISIKEN ABDECKEN:**
@@ -606,50 +606,50 @@ Erstelle Tabelle (als Text formatiert):
 5. **Krankheit/Ausfall**
    - Wahrscheinlichkeit: Niedrig
    - Auswirkung: Projektabbruch, Umsatzausfall
-   - Gegenmaßnahme: [Netzwerk für Vertretung? Versicherung?]
+   - GegenmaÃŸnahme: [Netzwerk fÃ¼r Vertretung? Versicherung?]
 
 6. **Preisdruck durch Wettbewerb**
    - Wahrscheinlichkeit: Mittel
    - Auswirkung: Geringere Margen
-   - Gegenmaßnahme: [Differenzierung? Premium-Positionierung?]
+   - GegenmaÃŸnahme: [Differenzierung? Premium-Positionierung?]
 
-7. **Technologische Änderungen**
+7. **Technologische Ã„nderungen**
    - Wahrscheinlichkeit: Mittel
    - Auswirkung: Expertise veraltet
-   - Gegenmaßnahme: [Fortbildungsbudget? Netzwerk?]
+   - GegenmaÃŸnahme: [Fortbildungsbudget? Netzwerk?]
 
 8. **Wirtschaftskrise**
    - Wahrscheinlichkeit: Niedrig bis Mittel
-   - Auswirkung: Budgetkürzungen bei Kunden
-   - Gegenmaßnahme: [Diversifikation? Flexible Kostenstruktur?]
+   - Auswirkung: BudgetkÃ¼rzungen bei Kunden
+   - GegenmaÃŸnahme: [Diversifikation? Flexible Kostenstruktur?]
 
 9-10. [Weitere branchenspezifische Risiken]
 
-### 9.2 Liquiditätssicherung
+### 9.2 LiquiditÃ¤tssicherung
 
 **Worst-Case Szenario:**
 - Wenn Umsatz 30% unter Plan:
   - [Was passiert?]
   - [Wie lange Eigenkapital reicht]
-  - [Ab wann Gegenmaßnahmen?]
+  - [Ab wann GegenmaÃŸnahmen?]
 
-**Gegenmaßnahmen bei Liquiditätsengpass:**
+**GegenmaÃŸnahmen bei LiquiditÃ¤tsengpass:**
 1. [Privatentnahme reduzieren]
 2. [Teilzeit-Job suchen - max. 14h/Woche!]
 3. [Kurzfristige Finanzierung?]
-4. [Notfallplan: Zurück in Anstellung]
+4. [Notfallplan: ZurÃ¼ck in Anstellung]
 
 ### 9.3 Versicherungen & Absicherung
 
 - Berufshaftpflicht: [Ja, [X] EUR/Monat]
 - Krankenversicherung: [Selbstzahler, [X] EUR/Monat]
-- Berufsunfähigkeit: [Optional, erwägen]
+- BerufsunfÃ¤higkeit: [Optional, erwÃ¤gen]
 - [Weitere relevante]
 
 **STIL:**
 - Ehrlich (Risiken nicht kleinreden)
-- Lösungsorientiert (immer Gegenmaßnahme)
-- Realistisch (keine Schönfärberei)
+- LÃ¶sungsorientiert (immer GegenmaÃŸnahme)
+- Realistisch (keine SchÃ¶nfÃ¤rberei)
 - GZ-konform (spezifische Risiken ansprechen!)
 
 Schreibe das komplette Kapitel:"""
@@ -667,18 +667,18 @@ Schreibe das komplette Kapitel:"""
         - Shows commitment
         """
         
-        prompt = f"""Schreibe ein "Meilensteine & Zeitplan" Kapitel (400-600 Wörter).
+        prompt = f"""Schreibe ein "Meilensteine & Zeitplan" Kapitel (400-600 WÃ¶rter).
 
 **KRITISCH: AfA will konkrete Umsetzungsplanung sehen!**
 
 **STRUKTUR:**
 
-### 10.1 Vorbereitungsphase (vor Gründung)
+### 10.1 Vorbereitungsphase (vor GrÃ¼ndung)
 
 **Woche 1-2:**
 - Gewerbeanmeldung
 - Steuerberater beauftragen
-- Versicherungen abschließen
+- Versicherungen abschlieÃŸen
 
 **Woche 3-4:**
 - Website/LinkedIn optimieren
@@ -688,35 +688,35 @@ Schreibe das komplette Kapitel:"""
 ### 10.2 Startphase (Monat 1-3)
 
 **Monat 1:**
-- Ziel: 2 Erstgespräche
-- Maßnahmen: [Networking, LinkedIn]
+- Ziel: 2 ErstgesprÃ¤che
+- MaÃŸnahmen: [Networking, LinkedIn]
 - Meilenstein: Website live
 
 **Monat 2:**
 - Ziel: 1 Pilot-Projekt akquiriert
-- Maßnahmen: [Follow-ups, Angebote]
+- MaÃŸnahmen: [Follow-ups, Angebote]
 - Meilenstein: Erster Auftrag
 
 **Monat 3:**
 - Ziel: Pilot-Projekt erfolgreich abgeschlossen
-- Maßnahmen: Case Study erstellen
+- MaÃŸnahmen: Case Study erstellen
 - Meilenstein: Erste Empfehlung
 
 ### 10.3 Wachstumsphase (Monat 4-12)
 
 **Monat 4-6:**
 - Ziel: 3-4 aktive Kunden
-- Maßnahmen: Content Marketing starten
+- MaÃŸnahmen: Content Marketing starten
 - Meilenstein: Break-Even erreicht
 
 **Monat 7-9:**
 - Ziel: 6-8 Kunden
-- Maßnahmen: Paid Ads, Partnerschaften
+- MaÃŸnahmen: Paid Ads, Partnerschaften
 - Meilenstein: [X] EUR Umsatz/Monat stabil
 
 **Monat 10-12:**
 - Ziel: 8-12 Kunden
-- Maßnahmen: Skalierung, evtl. Freelancer für Overflow
+- MaÃŸnahmen: Skalierung, evtl. Freelancer fÃ¼r Overflow
 - Meilenstein: Jahr 1 Ziel erreicht
 
 ### 10.4 Langfristige Vision (Jahr 2-3)
@@ -922,7 +922,7 @@ class RealisticFinancialPlanner:
         """
         DETAILED fixed costs breakdown
         
-        GZ-Prüfer want to see EVERY cost item!
+        GZ-PrÃ¼fer want to see EVERY cost item!
         
         NOTE: Living costs (Privatentnahme) are separate!
         NOTE: Equipment purchases from capital, not monthly costs!
@@ -989,7 +989,7 @@ class RealisticFinancialPlanner:
         """
         Best/Base/Worst case scenarios
         
-        GZ-Prüfer want to see: "What if things go wrong?"
+        GZ-PrÃ¼fer want to see: "What if things go wrong?"
         """
         
         base_umsatz = jahr_1['gesamt_umsatz']
@@ -1004,7 +1004,7 @@ class RealisticFinancialPlanner:
                 'privatentnahme': base_privat,
                 'gewinn_geschaeft': round((base_umsatz * 1.2) - (base_kosten * 1.05), 2),
                 'saldo': round((base_umsatz * 1.2) - (base_kosten * 1.05) - base_privat, 2),
-                'beschreibung': 'Mehr Empfehlungen, schnellere Projektabschlüsse'
+                'beschreibung': 'Mehr Empfehlungen, schnellere ProjektabschlÃ¼sse'
             },
             'base_case': {
                 'name': 'Base-Case (Planung)',
@@ -1022,8 +1022,8 @@ class RealisticFinancialPlanner:
                 'privatentnahme': round(base_privat * 0.8, 2),  # Reduce living standard temporarily
                 'gewinn_geschaeft': round((base_umsatz * 0.7) - (base_kosten * 0.95), 2),
                 'saldo': round((base_umsatz * 0.7) - (base_kosten * 0.95) - (base_privat * 0.8), 2),
-                'beschreibung': 'Verzögerte Akquise, längere Sales Cycles',
-                'ueberbrueckung': 'Teilzeit-Job parallel (max. 14h/Woche, 1.200 EUR/Monat gemäß Fachlichen Weisungen BA) oder Privatentnahme reduzieren'
+                'beschreibung': 'VerzÃ¶gerte Akquise, lÃ¤ngere Sales Cycles',
+                'ueberbrueckung': 'Teilzeit-Job parallel (max. 14h/Woche, 1.200 EUR/Monat gemÃ¤ÃŸ Fachlichen Weisungen BA) oder Privatentnahme reduzieren'
             }
         }
     
@@ -1031,7 +1031,7 @@ class RealisticFinancialPlanner:
         """
         Document ALL assumptions for transparency
         
-        GZ-Prüfer: "Woher kommen diese Zahlen?"
+        GZ-PrÃ¼fer: "Woher kommen diese Zahlen?"
         """
         
         return {
@@ -1039,12 +1039,12 @@ class RealisticFinancialPlanner:
                 'stundensatz': revenue_sources[0]['price'] if revenue_sources else 120,
                 'stundensatz_begruendung': 'Marktvergleich: Enterprise 200-280 EUR/h, Freelancer 80-150 EUR/h. Positionierung: Premium-KMU',
                 'auslastung_jahr_1': 'Konservativ: Max 50% (inkl. Akquise, Admin, Fortbildung)',
-                'auslastung_begruendung': 'B2B Sales Cycle 3-4 Monate. Einzelunternehmer benötigt 20% für nicht-fakturierbare Tätigkeiten',
-                'verfuegbare_stunden': '80h/Monat fakturierbar (bei 30h/Woche gesamt - Hauptberuflichkeit gemäß SGB III § 93 Abs. 2 erfüllt)'
+                'auslastung_begruendung': 'B2B Sales Cycle 3-4 Monate. Einzelunternehmer benÃ¶tigt 20% fÃ¼r nicht-fakturierbare TÃ¤tigkeiten',
+                'verfuegbare_stunden': '80h/Monat fakturierbar (bei 30h/Woche gesamt - Hauptberuflichkeit gemÃ¤ÃŸ SGB III Â§ 93 Abs. 2 erfÃ¼llt)'
             },
             'kosten': {
                 'fixkosten_monat': 1925,
-                'fixkosten_detail': 'Siehe detaillierte Aufschlüsselung im Finanzplan',
+                'fixkosten_detail': 'Siehe detaillierte AufschlÃ¼sselung im Finanzplan',
                 'variable_kosten': '12% vom Umsatz (Reisen, Material)',
                 'privatentnahme': f"{jahr_1['monate'][0]['privatentnahme']:.0f} EUR/Monat",
                 'privatentnahme_begruendung': 'Basierend auf realen Lebenshaltungskosten mit 20% Puffer'
@@ -1099,10 +1099,10 @@ class RealisticFinancialPlanner:
         parts = revenue_str.split(',')
         
         for part in parts:
-            price_match = re.search(r'(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s*€', part)
+            price_match = re.search(r'(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s*â‚¬', part)
             if price_match:
                 price = float(price_match.group(1).replace('.', '').replace(',', '.'))
-                name = part.split('à')[0].strip() if 'à' in part else 'Umsatz'
+                name = part.split('Ã ')[0].strip() if 'Ã ' in part else 'Umsatz'
                 
                 if 'stunde' in part.lower():
                     sources.append({'name': name, 'price': price, 'type': 'hourly'})
@@ -1115,7 +1115,7 @@ class RealisticFinancialPlanner:
     
     def _monat_name(self, monat: int) -> str:
         """Month number to name"""
-        names = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun',
+        names = ['Jan', 'Feb', 'MÃ¤r', 'Apr', 'Mai', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
         return names[monat - 1]
     
@@ -1276,28 +1276,28 @@ class GZComplianceChecker:
     GZ_CRITERIA = {
         'hauptberuflichkeit': {
             'weight': 15,
-            'rechtsgrundlage': 'SGB III § 93 Abs. 2',
+            'rechtsgrundlage': 'SGB III Â§ 93 Abs. 2',
             'quelle': 'https://www.gesetze-im-internet.de/sgb_3/__93.html',
-            'anforderung': 'Mindestens 15 Stunden wöchentlich für die selbständige Tätigkeit',
+            'anforderung': 'Mindestens 15 Stunden wÃ¶chentlich fÃ¼r die selbstÃ¤ndige TÃ¤tigkeit',
             'checks': [
                 {
                     'id': '15h_mentioned',
-                    'name': 'Mind. 15h/Woche erwähnt',
-                    'rechtsgrundlage': 'SGB III § 93 Abs. 2',
+                    'name': 'Mind. 15h/Woche erwÃ¤hnt',
+                    'rechtsgrundlage': 'SGB III Â§ 93 Abs. 2',
                     'severity': 'CRITICAL',
                     'points': 5
                 },
                 {
                     'id': 'hauptberuflich_stated',
                     'name': '"Hauptberuflich" explizit genannt',
-                    'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93',
+                    'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93',
                     'severity': 'HIGH',
                     'points': 5
                 },
                 {
                     'id': 'no_hobby_words',
-                    'name': 'Keine Hobby-Wörter verwendet',
-                    'rechtsgrundlage': 'SGB III § 93 Abs. 2',
+                    'name': 'Keine Hobby-WÃ¶rter verwendet',
+                    'rechtsgrundlage': 'SGB III Â§ 93 Abs. 2',
                     'severity': 'MEDIUM',
                     'points': 5
                 }
@@ -1305,9 +1305,9 @@ class GZComplianceChecker:
         },
         'qualifikation': {
             'weight': 15,
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93 SGB III',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
             'quelle': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf',
-            'anforderung': 'Notwendige Kenntnisse und Fähigkeiten zur Ausübung der selbständigen Tätigkeit',
+            'anforderung': 'Notwendige Kenntnisse und FÃ¤higkeiten zur AusÃ¼bung der selbstÃ¤ndigen TÃ¤tigkeit',
             'checks': [
                 {
                     'id': 'experience_detailed',
@@ -1317,7 +1317,7 @@ class GZComplianceChecker:
                 },
                 {
                     'id': 'certificates_mentioned',
-                    'name': 'Zertifikate/Qualifikationen erwähnt',
+                    'name': 'Zertifikate/Qualifikationen erwÃ¤hnt',
                     'severity': 'MEDIUM',
                     'points': 4
                 },
@@ -1331,12 +1331,12 @@ class GZComplianceChecker:
         },
         'marktanalyse': {
             'weight': 20,
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93 SGB III',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
             'anforderung': 'Marktpotenzial muss nachvollziehbar dargestellt werden',
             'checks': [
                 {
                     'id': 'market_size_numbers',
-                    'name': 'Marktgröße mit Zahlen',
+                    'name': 'MarktgrÃ¶ÃŸe mit Zahlen',
                     'severity': 'HIGH',
                     'points': 6
                 },
@@ -1362,8 +1362,8 @@ class GZComplianceChecker:
         },
         'finanzplan': {
             'weight': 25,
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93 SGB III',
-            'anforderung': 'Finanzplan zeigt tragfähige Existenzgrundlage, Lebenshaltungskosten können gedeckt werden',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
+            'anforderung': 'Finanzplan zeigt tragfÃ¤hige Existenzgrundlage, Lebenshaltungskosten kÃ¶nnen gedeckt werden',
             'checks': [
                 {
                     'id': 'realistic_revenue',
@@ -1400,8 +1400,8 @@ class GZComplianceChecker:
         },
         'marketing': {
             'weight': 10,
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 94 SGB III',
-            'anforderung': 'Intensive Geschäftstätigkeit muss nachgewiesen werden können',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 94 SGB III',
+            'anforderung': 'Intensive GeschÃ¤ftstÃ¤tigkeit muss nachgewiesen werden kÃ¶nnen',
             'checks': [
                 {
                     'id': 'acquisition_plan',
@@ -1411,7 +1411,7 @@ class GZComplianceChecker:
                 },
                 {
                     'id': 'first_customers',
-                    'name': 'Strategie für erste Kunden',
+                    'name': 'Strategie fÃ¼r erste Kunden',
                     'severity': 'HIGH',
                     'points': 3
                 },
@@ -1426,7 +1426,7 @@ class GZComplianceChecker:
         'risiken': {
             'weight': 10,
             'rechtsgrundlage': 'Allgemeine Anforderung fachkundige Stelle',
-            'anforderung': 'Risiken müssen erkannt und Gegenmaßnahmen geplant sein',
+            'anforderung': 'Risiken mÃ¼ssen erkannt und GegenmaÃŸnahmen geplant sein',
             'checks': [
                 {
                     'id': 'risks_identified',
@@ -1436,7 +1436,7 @@ class GZComplianceChecker:
                 },
                 {
                     'id': 'countermeasures',
-                    'name': 'Gegenmaßnahmen für jedes Risiko',
+                    'name': 'GegenmaÃŸnahmen fÃ¼r jedes Risiko',
                     'severity': 'MEDIUM',
                     'points': 3
                 },
@@ -1460,7 +1460,7 @@ class GZComplianceChecker:
                 },
                 {
                     'id': 'sources_bibliography',
-                    'name': 'Quellenverzeichnis gefüllt',
+                    'name': 'Quellenverzeichnis gefÃ¼llt',
                     'severity': 'LOW',
                     'points': 2
                 },
@@ -1525,7 +1525,7 @@ class GZComplianceChecker:
                 
                 if not passed:
                     # Format issue with legal citation
-                    issue_text = f"❌ {check_name}"
+                    issue_text = f"âŒ {check_name}"
                     if config.get('rechtsgrundlage'):
                         issue_text += f" (Rechtsgrundlage: {config['rechtsgrundlage']})"
                     
@@ -1580,7 +1580,7 @@ class GZComplianceChecker:
         elif results['total_score'] >= 60:
             results['bewilligungs_wahrscheinlichkeit'] = '40-55% (Grenzfall - Nachbesserung empfohlen)'
         else:
-            results['bewilligungs_wahrscheinlichkeit'] = '<40% (Ungenügend - Umfassende Überarbeitung erforderlich)'
+            results['bewilligungs_wahrscheinlichkeit'] = '<40% (UngenÃ¼gend - Umfassende Ãœberarbeitung erforderlich)'
         
         # Generate improvements
         results['improvements'] = self._generate_improvements(results)
@@ -1643,21 +1643,21 @@ class GZComplianceChecker:
         improvements = []
         
         if results['total_score'] < 80:
-            improvements.append("📋 PRIORITÄT: Kritische Mängel beheben")
+            improvements.append("ðŸ“‹ PRIORITÃ„T: Kritische MÃ¤ngel beheben")
         
         for issue in results['critical_missing']:
-            improvements.append(f"🔴 KRITISCH: {issue} ergänzen")
+            improvements.append(f"ðŸ”´ KRITISCH: {issue} ergÃ¤nzen")
         
         # Add legal reminders
         if results['total_score'] < 90:
             improvements.append("""
-📖 RECHTLICHE GRUNDLAGEN BEACHTEN:
-- Hauptberuflichkeit: SGB III § 93 Abs. 2 (Min. 15h/Woche)
-- Fachliche Qualifikation: Fachliche Weisungen BA zu § 93
-- Wirtschaftliche Tragfähigkeit: Fachliche Weisungen BA zu § 93
-- Intensive Geschäftstätigkeit: Fachliche Weisungen BA zu § 94 (für Phase 2)
+ðŸ“– RECHTLICHE GRUNDLAGEN BEACHTEN:
+- Hauptberuflichkeit: SGB III Â§ 93 Abs. 2 (Min. 15h/Woche)
+- Fachliche Qualifikation: Fachliche Weisungen BA zu Â§ 93
+- Wirtschaftliche TragfÃ¤higkeit: Fachliche Weisungen BA zu Â§ 93
+- Intensive GeschÃ¤ftstÃ¤tigkeit: Fachliche Weisungen BA zu Â§ 94 (fÃ¼r Phase 2)
 
-Alle Anforderungen müssen dokumentiert nachweisbar sein!
+Alle Anforderungen mÃ¼ssen dokumentiert nachweisbar sein!
             """)
         
         return improvements
@@ -1683,14 +1683,14 @@ Alle Anforderungen müssen dokumentiert nachweisbar sein!
             warnings.append({
                 'severity': 'CRITICAL',
                 'category': 'Finanzplan',
-                'message': f"🚨 KRITISCH: Geschäftsgewinn Jahr 1 ist negativ ({gewinn_geschaeft:,.0f} EUR)! Wirtschaftliche Tragfähigkeit nicht gegeben (Fachliche Weisungen BA zu § 93)!",
+                'message': f"ðŸš¨ KRITISCH: GeschÃ¤ftsgewinn Jahr 1 ist negativ ({gewinn_geschaeft:,.0f} EUR)! Wirtschaftliche TragfÃ¤higkeit nicht gegeben (Fachliche Weisungen BA zu Â§ 93)!",
                 'score_deduction': 30
             })
         elif gewinn_geschaeft < 10000:
             warnings.append({
                 'severity': 'WARNING',
                 'category': 'Finanzplan',
-                'message': f"⚠️ Geschäftsgewinn Jahr 1 ist niedrig ({gewinn_geschaeft:,.0f} EUR). Empfehlung: Umsatz erhöhen oder Kosten senken.",
+                'message': f"âš ï¸ GeschÃ¤ftsgewinn Jahr 1 ist niedrig ({gewinn_geschaeft:,.0f} EUR). Empfehlung: Umsatz erhÃ¶hen oder Kosten senken.",
                 'score_deduction': 10
             })
         
@@ -1703,21 +1703,21 @@ Alle Anforderungen müssen dokumentiert nachweisbar sein!
                 warnings.append({
                     'severity': 'CRITICAL',
                     'category': 'Finanzplan',
-                    'message': f"🚨 KRITISCH: Kontostand am Jahresende ({endkontostand:,.0f} EUR) übersteigt Startkapital ({startkapital:,.0f} EUR)! Finanzierung unklar!",
+                    'message': f"ðŸš¨ KRITISCH: Kontostand am Jahresende ({endkontostand:,.0f} EUR) Ã¼bersteigt Startkapital ({startkapital:,.0f} EUR)! Finanzierung unklar!",
                     'score_deduction': 25
                 })
             else:
                 warnings.append({
                     'severity': 'WARNING',
                     'category': 'Finanzplan',
-                    'message': f"⚠️ Negativer Kontostand am Jahresende ({endkontostand:,.0f} EUR), aber mit Startkapital ({startkapital:,.0f} EUR) überbrückbar. Agentur könnte nachfragen.",
+                    'message': f"âš ï¸ Negativer Kontostand am Jahresende ({endkontostand:,.0f} EUR), aber mit Startkapital ({startkapital:,.0f} EUR) Ã¼berbrÃ¼ckbar. Agentur kÃ¶nnte nachfragen.",
                     'score_deduction': 10
                 })
         elif endkontostand < startkapital * 0.5:
             warnings.append({
                 'severity': 'INFO',
                 'category': 'Finanzplan',
-                'message': f"💡 Kontostand am Jahresende ({endkontostand:,.0f} EUR) ist niedriger als Startkapital. Liquiditätsreserve gering.",
+                'message': f"ðŸ’¡ Kontostand am Jahresende ({endkontostand:,.0f} EUR) ist niedriger als Startkapital. LiquiditÃ¤tsreserve gering.",
                 'score_deduction': 5
             })
         
@@ -1728,7 +1728,7 @@ Alle Anforderungen müssen dokumentiert nachweisbar sein!
             warnings.append({
                 'severity': 'WARNING',
                 'category': 'Finanzplan',
-                'message': "⚠️ Break-Even nicht in Jahr 1 erreicht. Business braucht länger bis Profitabilität.",
+                'message': "âš ï¸ Break-Even nicht in Jahr 1 erreicht. Business braucht lÃ¤nger bis ProfitabilitÃ¤t.",
                 'score_deduction': 15
             })
         elif "Monat" in break_even:
@@ -1738,7 +1738,7 @@ Alle Anforderungen müssen dokumentiert nachweisbar sein!
                     warnings.append({
                         'severity': 'INFO',
                         'category': 'Finanzplan',
-                        'message': f"💡 Break-Even erst in {break_even}. Könnte schneller sein mit besserer Akquise.",
+                        'message': f"ðŸ’¡ Break-Even erst in {break_even}. KÃ¶nnte schneller sein mit besserer Akquise.",
                         'score_deduction': 5
                     })
             except:
@@ -1757,46 +1757,46 @@ def get_legal_citation_for_criterion(criterion_id: str) -> dict:
     
     Returns:
         {
-            'rechtsgrundlage': 'SGB III § 93 Abs. 2',
+            'rechtsgrundlage': 'SGB III Â§ 93 Abs. 2',
             'quelle': 'https://...',
             'anforderung': 'Mindestens 15 Stunden...'
         }
     """
     citations = {
         'hauptberuflichkeit': {
-            'rechtsgrundlage': 'SGB III § 93 Abs. 2',
+            'rechtsgrundlage': 'SGB III Â§ 93 Abs. 2',
             'quelle': 'https://www.gesetze-im-internet.de/sgb_3/__93.html',
-            'anforderung': 'Mindestens 15 Stunden wöchentlich für die selbständige Tätigkeit'
+            'anforderung': 'Mindestens 15 Stunden wÃ¶chentlich fÃ¼r die selbstÃ¤ndige TÃ¤tigkeit'
         },
         'qualifikation': {
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93 SGB III',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
             'quelle': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf',
-            'anforderung': 'Notwendige Kenntnisse und Fähigkeiten nachweisbar'
+            'anforderung': 'Notwendige Kenntnisse und FÃ¤higkeiten nachweisbar'
         },
         'tragfaehigkeit': {
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93 SGB III',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
             'quelle': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf',
-            'anforderung': 'Tragfähige Existenzgrundlage, Lebenshaltungskosten können gedeckt werden'
+            'anforderung': 'TragfÃ¤hige Existenzgrundlage, Lebenshaltungskosten kÃ¶nnen gedeckt werden'
         },
         'ermessen': {
-            'rechtsgrundlage': 'SGB III § 93 Abs. 1',
+            'rechtsgrundlage': 'SGB III Â§ 93 Abs. 1',
             'quelle': 'https://www.gesetze-im-internet.de/sgb_3/__93.html',
-            'anforderung': 'Gründungszuschuss ist Ermessensleistung - kein Rechtsanspruch'
+            'anforderung': 'GrÃ¼ndungszuschuss ist Ermessensleistung - kein Rechtsanspruch'
         },
         'nebentaetigkeit': {
-            'rechtsgrundlage': 'SGB III § 421 i.V.m. § 155',
+            'rechtsgrundlage': 'SGB III Â§ 421 i.V.m. Â§ 155',
             'quelle': 'https://www.gesetze-im-internet.de/sgb_3/__155.html',
-            'anforderung': 'Nebentätigkeit < 15h/Woche erlaubt, aber meldepflichtig'
+            'anforderung': 'NebentÃ¤tigkeit < 15h/Woche erlaubt, aber meldepflichtig'
         },
         'nebentaetigkeit_warning': {
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 93 SGB III',
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 93 SGB III',
             'quelle': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-93_ba014875.pdf',
-            'anforderung': 'Bei > 15h oder > 50% Einkommen droht Rückforderung'
+            'anforderung': 'Bei > 15h oder > 50% Einkommen droht RÃ¼ckforderung'
         },
-        'intensive_geschaeftstätigkeit': {
-            'rechtsgrundlage': 'Fachliche Weisungen BA zu § 94 SGB III',
+        'intensive_geschaeftstÃ¤tigkeit': {
+            'rechtsgrundlage': 'Fachliche Weisungen BA zu Â§ 94 SGB III',
             'quelle': 'https://www.arbeitsagentur.de/datei/fw-sgb-iii-94_ba014876.pdf',
-            'anforderung': 'Intensive Geschäftstätigkeit und hauptberufliche unternehmerische Aktivitäten für Phase 2 erforderlich'
+            'anforderung': 'Intensive GeschÃ¤ftstÃ¤tigkeit und hauptberufliche unternehmerische AktivitÃ¤ten fÃ¼r Phase 2 erforderlich'
         }
     }
     
@@ -1808,18 +1808,18 @@ def format_legal_warning(criterion_id: str, issue: str) -> str:
     Format warning message with legal citation
     
     Example:
-    >>> format_legal_warning('hauptberuflichkeit', 'Mind. 15h/Woche nicht erwähnt')
-    '⚠️ Mind. 15h/Woche nicht erwähnt
+    >>> format_legal_warning('hauptberuflichkeit', 'Mind. 15h/Woche nicht erwÃ¤hnt')
+    'âš ï¸ Mind. 15h/Woche nicht erwÃ¤hnt
     
-    Rechtsgrundlage: SGB III § 93 Abs. 2
-    Anforderung: Mindestens 15 Stunden wöchentlich...'
+    Rechtsgrundlage: SGB III Â§ 93 Abs. 2
+    Anforderung: Mindestens 15 Stunden wÃ¶chentlich...'
     """
     citation = get_legal_citation_for_criterion(criterion_id)
     
     if not citation:
-        return f"⚠️ {issue}"
+        return f"âš ï¸ {issue}"
     
-    return f"""⚠️ {issue}
+    return f"""âš ï¸ {issue}
 
 Rechtsgrundlage: {citation.get('rechtsgrundlage', 'N/A')}
 Anforderung: {citation.get('anforderung', 'N/A')}
@@ -1851,10 +1851,10 @@ class EnhancedBusinessplanGenerator:
         # Adaptive calculator (if available)
         if ADAPTIVE_CALCULATOR_AVAILABLE:
             self.adaptive_calculator = AdaptiveFinancialCalculator()
-            logger.info("✅ Adaptive Financial Calculator enabled")
+            logger.info("âœ… Adaptive Financial Calculator enabled")
         else:
             self.adaptive_calculator = None
-            logger.info("ℹ️ Using standard financial calculator")
+            logger.info("â„¹ï¸ Using standard financial calculator")
         
         # From TAG 4
         from businessplan_generator import (
@@ -1869,7 +1869,232 @@ class EnhancedBusinessplanGenerator:
         self.living_calc = LivingCostCalculator()
         self.swot = SWOTAnalyzer()
         
-        logger.info("✅ Enhanced Businessplan Generator initialized WITH LEGAL CITATIONS")
+        logger.info("âœ… Enhanced Businessplan Generator initialized WITH LEGAL CITATIONS")
+
+   # ========================================================================
+    # WRAPPER METHOD - PASTE THIS INTO businessplan_generator_enhanced.py
+    # Replace the entire generate_from_simple_profile method with this version
+    # Location: Inside EnhancedBusinessplanGenerator class, after __init__
+    # ========================================================================
+    
+    async def generate_from_simple_profile(self, profile: Dict) -> Dict:
+        """
+        Simplified businessplan generation from basic profile data
+        
+        Perfect for:
+        - API endpoints with simple user input
+        - Testing and prototyping
+        - Quick businessplan generation without full discovery process
+        
+        Args:
+            profile: Simple profile with:
+                - name (str): User name
+                - business_idea (str): Business concept
+                - industry (str, optional): Industry/sector
+                - experience_level (str, optional): junior/mid/senior
+                - hours_per_week_available (int): Available hours
+                - startup_capital (float): Available capital
+                - monthly_living_costs (float): Monthly expenses
+                - target_market (str, optional): Target customers
+                - email (str, optional): Contact email
+                - plus any other fields from EnhancedBusinessplanRequest
+        
+        Returns:
+            Dict with:
+                - All original sections from generate_complete
+                - gz_compliance with gz_score and citations_used
+        """
+        logger.info(f"📝 Generating businessplan from simple profile: {profile.get('name', 'Unknown')}")
+        
+        # Extract core data
+        business_idea = profile.get('business_idea', 'Dienstleistung')
+        industry = profile.get('industry', 'dienstleistung')
+        name = profile.get('name', 'Gründer')
+        experience = profile.get('experience_level', 'junior')
+        
+        # ===================================================================
+        # VISION DATA - Auto-generate from business idea
+        # ===================================================================
+        vision_data = {
+            "mission": business_idea,
+            "vision": f"Führender Anbieter für {business_idea} mit höchster Qualität und Kundenzufriedenheit",
+            "values": [
+                "Qualität und Exzellenz",
+                "Kundenorientierung",
+                "Innovation und Weiterentwicklung",
+                "Nachhaltigkeit"
+            ],
+            "business_model": "Dienstleistung" if industry == "coaching" else industry.capitalize(),
+            "unique_value_proposition": f"Professionelle {business_idea} mit individueller Betreuung",
+            "target_customer": profile.get('target_market', 'Unternehmen und Privatpersonen in Deutschland'),
+            "industry": industry
+        }
+        
+        # ===================================================================
+        # JTBD DATA - Jobs-to-be-Done Analysis
+        # ===================================================================
+        jtbd_data = {
+            "jobs": [
+                "Effiziente Problemlösung für Zielkunden",
+                "Zeitersparnis durch professionelle Unterstützung",
+                "Qualitätssteigerung in relevanten Bereichen"
+            ],
+            "pains": [
+                "Zeitmangel bei komplexen Aufgaben",
+                "Fehlende Expertise in spezifischen Bereichen",
+                "Hoher Koordinationsaufwand",
+                "Unsicherheit bei wichtigen Entscheidungen"
+            ],
+            "gains": [
+                "Deutliche Zeitersparnis",
+                "Professionelle Expertise",
+                "Messbare Ergebnisse",
+                "Langfristige Unterstützung"
+            ],
+            "customer_segments": [
+                profile.get('target_market', 'Kleine und mittlere Unternehmen'),
+                "Gründer und Startups",
+                "Etablierte Unternehmen mit Optimierungsbedarf"
+            ]
+        }
+        
+        # ===================================================================
+        # GZ DATA - Gründungszuschuss Requirements
+        # ===================================================================
+        hours = profile.get('hours_per_week_available', 20)
+        capital = profile.get('startup_capital', 10000)
+        living_costs = profile.get('monthly_living_costs', 2000)
+        
+        gz_data = {
+            "hours_per_week": hours,
+            "startup_capital": capital,
+            "monthly_living_costs": living_costs,
+            "hauptberuflich": hours >= 15,
+            "part_time_job": profile.get('part_time_job_possible', False),
+            "part_time_hours": profile.get('part_time_hours_per_week', 0),
+            "part_time_income": profile.get('part_time_income_monthly', 0),
+            "partner_income": profile.get('partner_income_monthly', 0),
+            "previous_self_employment": profile.get('previous_self_employment', False),
+            "years_experience": profile.get('years_experience', 0),
+            "network_strength": profile.get('network_strength', 'medium'),
+            "first_customers": profile.get('first_customers_pipeline', 0)
+        }
+        
+        # ===================================================================
+        # USER INFO - Personal and Location Data
+        # ===================================================================
+        user_info = {
+            "name": name,
+            "email": profile.get('email', ''),
+            "location": {
+                "city": "Berlin",
+                "bundesland": "Berlin",
+                "plz": "10115",
+                "district": "Mitte"
+            },
+            "family_status": "single",
+            "experience_level": experience,
+            "qualifications": self._generate_qualifications(experience, industry)
+        }
+        
+        # ===================================================================
+        # GROUNDER PROFILE - Complete profile for adaptive calculator
+        # ===================================================================
+        grounder_profile = profile.copy()
+        grounder_profile.update({
+            "calculated_fields": {
+                "hauptberuflich_compliant": hours >= 15,
+                "capital_sufficient": capital >= 5000,
+                "hours_compliant": hours >= 15
+            }
+        })
+        
+        # ===================================================================
+        # GENERATE COMPLETE BUSINESSPLAN
+        # ===================================================================
+        logger.info("🚀 Calling generate_complete with auto-generated data...")
+        
+        result = await self.generate_complete(
+            vision_data=vision_data,
+            jtbd_data=jtbd_data,
+            gz_data=gz_data,
+            user_info=user_info,
+            market_research=None,
+            grounder_profile=grounder_profile
+        )
+        
+        # ===================================================================
+        # DEBUG: Show result structure
+        # ===================================================================
+        logger.info("=" * 70)
+        logger.info("🔍 DEBUG: Checking result structure...")
+        logger.info(f"Result type: {type(result)}")
+        logger.info(f"Result keys: {list(result.keys()) if isinstance(result, dict) else 'NOT A DICT'}")
+        if isinstance(result, dict):
+            for key in result.keys():
+                value = result[key]
+                if isinstance(value, (list, dict)):
+                    logger.info(f"  {key}: {type(value).__name__} (length: {len(value)})")
+                else:
+                    logger.info(f"  {key}: {str(value)[:100]}...")
+        logger.info("=" * 70)
+        
+        # ===================================================================
+        # EXTRACT COMPLIANCE DATA - FIX: Use correct keys!
+        # ===================================================================
+        gz_compliance_data = result.get('gz_compliance', {})
+        logger.info("=" * 70)
+        logger.info("INSPECTING GZ_COMPLIANCE:")
+        logger.info(f"Type: {type(gz_compliance_data)}")
+        logger.info(f"Keys: {list(gz_compliance_data.keys()) if isinstance(gz_compliance_data, dict) else 'NOT A DICT'}")
+        if isinstance(gz_compliance_data, dict):
+            for k, v in gz_compliance_data.items():
+                logger.info(f"  {k} = {v}")
+        logger.info("=" * 70)
+        gz_score = gz_compliance_data.get('total_score', 0)
+        
+        # Extract legal citations from legal_basis dict
+        legal_basis_dict = gz_compliance_data.get('legal_basis', {})
+        citations_used = [
+            {
+                'category': cat,
+                'format': info.get('rechtsgrundlage', ''),
+                'short_text': info.get('anforderung', ''),
+                'source': info.get('quelle', '')
+            }
+            for cat, info in legal_basis_dict.items()
+        ]
+        
+        logger.info(f"✅ Businessplan generated! Compliance: {gz_score}/100")
+        logger.info(f"📖 Legal Citations: {len(citations_used)}")
+        
+        return result
+    
+    def _generate_qualifications(self, experience_level: str, industry: str) -> list:
+        """Generate realistic qualifications based on experience and industry"""
+        base_qualifications = {
+            "junior": [
+                "Relevante Ausbildung oder Studium",
+                "Erste praktische Erfahrungen",
+                "Grundlegende Branchenkenntnisse"
+            ],
+            "mid": [
+                "Mehrjährige Berufserfahrung in der Branche",
+                "Nachweisbare Erfolge in relevanten Projekten",
+                "Fundierte Fachkenntnisse",
+                "Netzwerk in der Branche"
+            ],
+            "senior": [
+                "Langjährige Expertise (8+ Jahre)",
+                "Nachweisbare Erfolge und Referenzen",
+                "Umfassendes Branchennetzwerk",
+                "Spezialisierung in relevanten Bereichen",
+                "Führungserfahrung"
+            ]
+        }
+        
+        return base_qualifications.get(experience_level, base_qualifications["mid"])
+
     
     async def generate_complete(
         self,
@@ -1895,13 +2120,13 @@ class EnhancedBusinessplanGenerator:
             Complete businessplan with compliance report + legal citations
         """
         
-        logger.info("🚀 Starting ENHANCED businessplan generation WITH LEGAL CITATIONS...")
+        logger.info("ðŸš€ Starting ENHANCED businessplan generation WITH LEGAL CITATIONS...")
         
         # Check if adaptive planning is enabled
         if grounder_profile and self.adaptive_calculator:
-            logger.info("🎯 Using ADAPTIVE financial planning based on founder profile")
+            logger.info("ðŸŽ¯ Using ADAPTIVE financial planning based on founder profile")
         else:
-            logger.info("📊 Using STANDARD financial planning")
+            logger.info("ðŸ“Š Using STANDARD financial planning")
         
         # Merge data
         data = {**vision_data, **jtbd_data, **gz_data}
@@ -1914,7 +2139,7 @@ class EnhancedBusinessplanGenerator:
         )
         
         # Calculate living costs
-        logger.info("💰 Calculating living costs...")
+        logger.info("ðŸ’° Calculating living costs...")
         
         # Ensure location is in proper format for living costs calculation
         location_for_calc = user_info['location']
@@ -1936,15 +2161,15 @@ class EnhancedBusinessplanGenerator:
         )
         
         # Generate SWOT
-        logger.info("📊 Generating SWOT...")
+        logger.info("ðŸ“Š Generating SWOT...")
         swot_data = self.swot.generate_swot(data)
         
         # Generate Financial Plan (ADAPTIVE or STANDARD)
-        logger.info("💵 Generating financial plan...")
+        logger.info("ðŸ’µ Generating financial plan...")
         
         if grounder_profile and self.adaptive_calculator and GROUNDER_PROFILE_AVAILABLE:
             # === ADAPTIVE FINANCIAL PLANNING ===
-            logger.info("🎯 Using ADAPTIVE calculator with founder profile")
+            logger.info("ðŸŽ¯ Using ADAPTIVE calculator with founder profile")
             
             try:
                 # Create GrounderProfile object from dict
@@ -1975,7 +2200,7 @@ class EnhancedBusinessplanGenerator:
                 # Use recommended scenario as financials
                 financials = {
                     'startkapital': startup_capital,
-                    'startkapital_herkunft': 'Siehe Gründerprofil',
+                    'startkapital_herkunft': 'Siehe GrÃ¼nderprofil',
                     'jahr_1': adaptive_result['recommended_scenario'],
                     'jahr_2': adaptive_result['alternative_scenarios']['base'],
                     'jahr_3': adaptive_result['alternative_scenarios']['base'],
@@ -1990,17 +2215,17 @@ class EnhancedBusinessplanGenerator:
                         'confidence_score': adaptive_result['confidence_score'],
                         'recommendation_reasoning': adaptive_result['recommendation_reasoning']
                     },
-                    'annahmen': f"Adaptive Finanzplanung basierend auf Gründerprofil:\n{adaptive_result['recommendation_reasoning']}"
+                    'annahmen': f"Adaptive Finanzplanung basierend auf GrÃ¼nderprofil:\n{adaptive_result['recommendation_reasoning']}"
                 }
                 
-                logger.info(f"✅ Adaptive planning: Confidence {adaptive_result['confidence_score']}/100")
+                logger.info(f"âœ… Adaptive planning: Confidence {adaptive_result['confidence_score']}/100")
                 
             except Exception as e:
-                logger.error(f"❌ Adaptive calculator failed: {e}, falling back to standard")
+                logger.error(f"âŒ Adaptive calculator failed: {e}, falling back to standard")
                 financials = self.financial_planner.generate_realistic_financials(data, living_costs)
         else:
             # === STANDARD FINANCIAL PLANNING ===
-            logger.info("📊 Using STANDARD calculator")
+            logger.info("ðŸ“Š Using STANDARD calculator")
             financials = self.financial_planner.generate_realistic_financials(data, living_costs)
         
         # Validate living costs
@@ -2010,7 +2235,7 @@ class EnhancedBusinessplanGenerator:
         )
         
         # Generate ALL CHAPTERS
-        logger.info("✍️ Generating ALL chapters WITH LEGAL CITATIONS...")
+        logger.info("âœï¸ Generating ALL chapters WITH LEGAL CITATIONS...")
         
         businessplan = {
             'meta': {
@@ -2027,7 +2252,7 @@ class EnhancedBusinessplanGenerator:
             # Chapter 2: Vision (reuse from TAG 4)
             'geschaeftsidee': await self.content_generator.generate_executive_summary(data),
             
-            # Chapter 3: Gründerperson (WITH LEGAL REQUIREMENTS)
+            # Chapter 3: GrÃ¼nderperson (WITH LEGAL REQUIREMENTS)
             'gruenderperson': await self.content_generator.generate_gruenderperson_extended(data),
             
             # Chapter 4: Markt & Wettbewerb
@@ -2064,13 +2289,13 @@ class EnhancedBusinessplanGenerator:
         }
         
         # Run GZ Compliance Check WITH LEGAL CITATIONS
-        logger.info("🔍 Running GZ compliance check WITH LEGAL BASIS...")
+        logger.info("ðŸ” Running GZ compliance check WITH LEGAL BASIS...")
         compliance_report = self.compliance_checker.check_compliance(businessplan)
         
         businessplan['gz_compliance'] = compliance_report
         
-        logger.info(f"✅ Businessplan generated! GZ Score: {compliance_report['total_score']}/100")
-        logger.info(f"📖 Legal citations included in all chapters and compliance report")
+        logger.info(f"âœ… Businessplan generated! GZ Score: {compliance_report['total_score']}/100")
+        logger.info(f"ðŸ“– Legal citations included in all chapters and compliance report")
         
         return businessplan
 
@@ -2090,20 +2315,24 @@ __all__ = [
 
 
 if __name__ == "__main__":
-    print("✅ Enhanced Businessplan Generator (TAG 6) WITH LEGAL CITATIONS loaded!")
-    print("📦 Features:")
+    print("âœ… Enhanced Businessplan Generator (TAG 6) WITH LEGAL CITATIONS loaded!")
+    print("ðŸ“¦ Features:")
     print("  - 11 complete chapters (vs. 6 in TAG 4)")
     print("  - ALL prompts include legal citations (SGB III, Fachliche Weisungen BA)")
     print("  - GZ compliance checking WITH legal basis")
-    print("  - Marketing with 'intensive Geschäftstätigkeit' requirement")
+    print("  - Marketing with 'intensive GeschÃ¤ftstÃ¤tigkeit' requirement")
     print("  - Risikomanagement with GZ-specific risks")
     print("  - Meilensteine & Zeitplan")
     print("  - Realistic financial planning")
     print("  - Iterative refinement support")
     print("")
-    print("🏛️ Legal Citations Integrated:")
-    print("  - SGB III § 93 Abs. 1 (Ermessensleistung)")
-    print("  - SGB III § 93 Abs. 2 (Hauptberuflichkeit)")
-    print("  - Fachliche Weisungen BA zu § 93 (Qualifikation, Tragfähigkeit)")
-    print("  - Fachliche Weisungen BA zu § 94 (Intensive Geschäftstätigkeit)")
-    print("  - SGB III § 421 i.V.m. § 155 (Nebentätigkeit)")
+    print("ðŸ›ï¸ Legal Citations Integrated:")
+    print("  - SGB III Â§ 93 Abs. 1 (Ermessensleistung)")
+    print("  - SGB III Â§ 93 Abs. 2 (Hauptberuflichkeit)")
+    print("  - Fachliche Weisungen BA zu Â§ 93 (Qualifikation, TragfÃ¤higkeit)")
+    print("  - Fachliche Weisungen BA zu Â§ 94 (Intensive GeschÃ¤ftstÃ¤tigkeit)")
+    print("  - SGB III Â§ 421 i.V.m. Â§ 155 (NebentÃ¤tigkeit)")
+
+
+
+

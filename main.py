@@ -1,7 +1,7 @@
 """
 GründerAI Backend - Complete with Legal Citations System
-ENHANCED VERSION - Business Context + Personality Scenarios
-Version: 2.0.0
+ENHANCED VERSION - Business Context + Personality Scenarios + Results Visualization
+Version: 3.0.0
 """
 
 from fastapi import FastAPI, HTTPException
@@ -11,7 +11,7 @@ from typing import Optional
 import logging
 import os
 from dotenv import load_dotenv
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Load environment
 load_dotenv()
@@ -23,8 +23,8 @@ logger = logging.getLogger(__name__)
 # Create FastAPI app
 app = FastAPI(
     title="GründerAI Backend API",
-    version="2.0.0",
-    description="Backend with Business Context Capture, Personality Scenarios, Legal Citations System for GZ-compliant Businessplans",
+    version="3.0.0",
+    description="Backend with Business Context, Personality Scenarios, Results Visualization, Legal Citations for GZ-compliant Businessplans",
 )
 
 # ============================================================================
@@ -39,13 +39,21 @@ try:
 except ImportError as e:
     logger.warning(f"⚠️ Business Context routes not loaded: {e}")
 
-# Day 2: Personality Scenarios Router (NEW!)
+# Day 2: Personality Scenarios Router
 try:
     from scenario_routes import router as scenario_router
     app.include_router(scenario_router)
     logger.info("✅ Personality Scenario routes loaded")
 except ImportError as e:
     logger.warning(f"⚠️ Personality Scenario routes not loaded: {e}")
+
+# Day 3: Results Visualization Router (NEW!)
+try:
+    from results_routes import router as results_router
+    app.include_router(results_router)
+    logger.info("✅ Results Visualization routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ Results Visualization routes not loaded: {e}")
 
 # ============================================================================
 # CORS - Allow frontend origins
@@ -114,15 +122,15 @@ async def root():
     """Root endpoint - Service info"""
     return {
         "service": "GründerAI Backend API",
-        "version": "2.0.0",
+        "version": "3.0.0",
         "status": "running",
         "features": [
             "Business Context Capture (Day 1)",
-            "Personality Scenarios (Day 2 - NEW!)",
+            "Personality Scenarios (Day 2)",
+            "Results Visualization (Day 3 - NEW!)",
             "Legal Citations (18+ official sources)",
             "GZ Compliance Checking",
             "Enhanced Businessplan Generator",
-            "Input Validations",
         ],
         "endpoints": {
             "business_context": {
@@ -138,6 +146,14 @@ async def root():
                 "results": "GET /api/v1/assessment/{session_id}/results",
                 "status": "GET /api/v1/assessment/{session_id}/status",
             },
+            "results_visualization": {
+                "generate": "POST /api/v1/results/generate",
+                "get": "GET /api/v1/results/{session_id}",
+                "profile": "GET /api/v1/results/{session_id}/profile",
+                "gaps": "GET /api/v1/results/{session_id}/gaps",
+                "radar": "GET /api/v1/results/{session_id}/radar",
+                "track": "POST /api/v1/results/{session_id}/track",
+            },
             "businessplan": "POST /api/businessplan/enhanced",
             "citations": "GET /api/citations",
             "health": "GET /api/health",
@@ -151,12 +167,13 @@ async def health():
     api_key_set = bool(os.getenv("ANTHROPIC_API_KEY"))
     return {
         "status": "ok",
-        "version": "2.0.0",
+        "version": "3.0.0",
         "api_key_set": api_key_set,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "components": {
             "business_context": "operational",
             "personality_scenarios": "operational",
+            "results_visualization": "operational",
             "legal_citations": "operational",
         }
     }
@@ -254,7 +271,7 @@ async def generate_enhanced_businessplan(request: EnhancedBusinessplanRequest):
             "legal_citations": legal_citations,
             "validations": validations,
             "gz_compliant": gz_compliant,
-            "generated_at": datetime.utcnow().isoformat(),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
             "metadata": {
                 "generator_version": "enhanced_with_legal_citations",
                 "citations_count": len(legal_citations),
@@ -367,7 +384,8 @@ async def startup_event():
     logger.info("🚀 GründerAI Backend Starting...")
     logger.info("")
     logger.info("📋 Business Context Capture: Available")
-    logger.info("🧠 Personality Scenarios: Available (NEW!)")
+    logger.info("🧠 Personality Scenarios: Available")
+    logger.info("📊 Results Visualization: Available (NEW!)")
     logger.info("📝 Enhanced Generator: Available")
     logger.info("🏛️  Legal Citations: 18+ official sources")
     logger.info("✅ Input Validations: Enabled")
@@ -387,6 +405,14 @@ async def startup_event():
     logger.info("  GET  /api/v1/assessment/{id}/scenario")
     logger.info("  POST /api/v1/assessment/{id}/respond")
     logger.info("  GET  /api/v1/assessment/{id}/results")
+    logger.info("")
+    logger.info("Day 3 Endpoints (Results Visualization):")
+    logger.info("  POST /api/v1/results/generate")
+    logger.info("  GET  /api/v1/results/{id}")
+    logger.info("  GET  /api/v1/results/{id}/profile")
+    logger.info("  GET  /api/v1/results/{id}/gaps")
+    logger.info("  GET  /api/v1/results/{id}/radar")
+    logger.info("  POST /api/v1/results/{id}/track")
     logger.info("")
     logger.info("Other Endpoints:")
     logger.info("  POST /api/businessplan/enhanced")

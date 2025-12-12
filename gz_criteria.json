@@ -1,0 +1,285 @@
+{
+  "version": "1.0.0",
+  "description": "Gründungszuschuss approval criteria and readiness components",
+  "readiness_components": {
+    "personality_assessment": {
+      "weight": 35,
+      "description": "Unternehmerische Persönlichkeitsanalyse",
+      "description_en": "Entrepreneurial personality assessment",
+      "module": 0,
+      "status_on_completion": "complete",
+      "icon": "user-check"
+    },
+    "executive_summary": {
+      "weight": 20,
+      "description": "Executive Summary / Geschäftsidee",
+      "description_en": "Executive summary and business idea",
+      "module": 1,
+      "status_on_completion": "missing",
+      "icon": "file-text",
+      "gz_requirement": "Kurze und prägnante Zusammenfassung des Vorhabens"
+    },
+    "market_analysis": {
+      "weight": 15,
+      "description": "Marktanalyse und Wettbewerb",
+      "description_en": "Market analysis and competition",
+      "module": 2,
+      "status_on_completion": "missing",
+      "icon": "trending-up",
+      "gz_requirement": "Nachweis der Marktchancen und Wettbewerbsposition"
+    },
+    "financial_plan": {
+      "weight": 15,
+      "description": "Finanzplan und Rentabilität",
+      "description_en": "Financial plan and profitability",
+      "module": 6,
+      "status_on_completion": "missing",
+      "icon": "euro",
+      "gz_requirement": "3-Jahres-Finanzprognose mit Rentabilitätsnachweis"
+    },
+    "operations_plan": {
+      "weight": 10,
+      "description": "Organisation und Betrieb",
+      "description_en": "Operations and organization plan",
+      "module": 5,
+      "status_on_completion": "missing",
+      "icon": "settings",
+      "gz_requirement": "Darstellung der betrieblichen Abläufe"
+    },
+    "risk_management": {
+      "weight": 5,
+      "description": "Risikomanagement",
+      "description_en": "Risk management",
+      "module": 7,
+      "status_on_completion": "missing",
+      "icon": "shield",
+      "gz_requirement": "Identifikation und Bewältigung von Risiken"
+    }
+  },
+  "gap_categories": {
+    "documentation": {
+      "name_de": "Dokumentation",
+      "name_en": "Documentation",
+      "description_de": "Fehlende oder unvollständige Unterlagen",
+      "priority": 1,
+      "gaps": [
+        {
+          "id": "missing_businessplan",
+          "name_de": "Businessplan fehlt",
+          "severity": "critical",
+          "impact": 30,
+          "covered_in_module": 1,
+          "recommendation_de": "Erstellen Sie einen vollständigen Businessplan mit allen erforderlichen Abschnitten"
+        },
+        {
+          "id": "incomplete_financials",
+          "name_de": "Unvollständiger Finanzplan",
+          "severity": "critical",
+          "impact": 25,
+          "covered_in_module": 6,
+          "recommendation_de": "Ergänzen Sie detaillierte 3-Jahres-Finanzprojektionen"
+        }
+      ]
+    },
+    "market_validation": {
+      "name_de": "Marktvalidierung",
+      "name_en": "Market Validation",
+      "description_de": "Fehlender Nachweis der Marktchancen",
+      "priority": 2,
+      "gaps": [
+        {
+          "id": "no_market_research",
+          "name_de": "Keine Marktanalyse",
+          "severity": "high",
+          "impact": 20,
+          "covered_in_module": 2,
+          "recommendation_de": "Führen Sie eine strukturierte Marktanalyse durch"
+        },
+        {
+          "id": "unclear_target_customer",
+          "name_de": "Zielkunde unklar",
+          "severity": "high",
+          "impact": 15,
+          "covered_in_module": 2,
+          "recommendation_de": "Definieren Sie Ihre Zielgruppe präzise"
+        },
+        {
+          "id": "no_competitor_analysis",
+          "name_de": "Keine Wettbewerbsanalyse",
+          "severity": "medium",
+          "impact": 10,
+          "covered_in_module": 3,
+          "recommendation_de": "Analysieren Sie Ihre Hauptwettbewerber"
+        }
+      ]
+    },
+    "financial_viability": {
+      "name_de": "Wirtschaftlichkeit",
+      "name_en": "Financial Viability",
+      "description_de": "Fehlender Nachweis der Tragfähigkeit",
+      "priority": 3,
+      "gaps": [
+        {
+          "id": "no_revenue_model",
+          "name_de": "Kein Erlösmodell",
+          "severity": "critical",
+          "impact": 25,
+          "covered_in_module": 4,
+          "recommendation_de": "Entwickeln Sie ein klares Erlösmodell"
+        },
+        {
+          "id": "unrealistic_projections",
+          "name_de": "Unrealistische Prognosen",
+          "severity": "high",
+          "impact": 20,
+          "covered_in_module": 6,
+          "recommendation_de": "Validieren Sie Ihre Finanzprognosen mit Marktdaten"
+        },
+        {
+          "id": "no_break_even",
+          "name_de": "Kein Break-Even-Plan",
+          "severity": "medium",
+          "impact": 15,
+          "covered_in_module": 6,
+          "recommendation_de": "Berechnen Sie Ihren Break-Even-Punkt"
+        }
+      ]
+    },
+    "personal_qualification": {
+      "name_de": "Persönliche Qualifikation",
+      "name_en": "Personal Qualification",
+      "description_de": "Nachweise der Gründungskompetenz",
+      "priority": 4,
+      "gaps": [
+        {
+          "id": "no_relevant_experience",
+          "name_de": "Keine relevante Erfahrung dokumentiert",
+          "severity": "medium",
+          "impact": 15,
+          "covered_in_module": 1,
+          "recommendation_de": "Dokumentieren Sie Ihre relevante Berufserfahrung"
+        },
+        {
+          "id": "missing_qualifications",
+          "name_de": "Qualifikationsnachweise fehlen",
+          "severity": "medium",
+          "impact": 10,
+          "covered_in_module": 1,
+          "recommendation_de": "Listen Sie relevante Qualifikationen und Zertifikate auf"
+        }
+      ]
+    },
+    "operational_readiness": {
+      "name_de": "Operative Bereitschaft",
+      "name_en": "Operational Readiness",
+      "description_de": "Betriebliche Vorbereitungen",
+      "priority": 5,
+      "gaps": [
+        {
+          "id": "no_launch_plan",
+          "name_de": "Kein Startplan",
+          "severity": "medium",
+          "impact": 10,
+          "covered_in_module": 5,
+          "recommendation_de": "Erstellen Sie einen detaillierten Startplan"
+        },
+        {
+          "id": "unclear_operations",
+          "name_de": "Unklare Betriebsabläufe",
+          "severity": "low",
+          "impact": 5,
+          "covered_in_module": 5,
+          "recommendation_de": "Beschreiben Sie Ihre betrieblichen Prozesse"
+        }
+      ]
+    }
+  },
+  "readiness_levels": {
+    "excellent": {
+      "min_score": 85,
+      "label_de": "Hervorragend vorbereitet",
+      "label_en": "Excellently prepared",
+      "description_de": "Ihre Unterlagen sind nahezu vollständig. Kleine Optimierungen können die Erfolgswahrscheinlichkeit weiter erhöhen.",
+      "color": "#22C55E"
+    },
+    "good": {
+      "min_score": 70,
+      "label_de": "Gut vorbereitet",
+      "label_en": "Well prepared",
+      "description_de": "Sie haben eine solide Grundlage. Einige Bereiche sollten noch ergänzt werden.",
+      "color": "#84CC16"
+    },
+    "moderate": {
+      "min_score": 50,
+      "label_de": "Auf gutem Weg",
+      "label_en": "On track",
+      "description_de": "Sie haben wichtige Schritte gemacht. Fokussieren Sie sich auf die kritischen Lücken.",
+      "color": "#EAB308"
+    },
+    "needs_work": {
+      "min_score": 35,
+      "label_de": "Grundlage geschaffen",
+      "label_en": "Foundation laid",
+      "description_de": "Die Persönlichkeitsanalyse ist abgeschlossen. Jetzt fehlt der Businessplan.",
+      "color": "#F97316"
+    },
+    "starting": {
+      "min_score": 0,
+      "label_de": "Am Anfang",
+      "label_en": "Just starting",
+      "description_de": "Beginnen Sie mit der Persönlichkeitsanalyse, um Ihre unternehmerischen Stärken zu entdecken.",
+      "color": "#EF4444"
+    }
+  },
+  "module_progression": {
+    "module_1": {
+      "name_de": "Executive Summary",
+      "readiness_boost": 20,
+      "new_total": 55,
+      "time_minutes": 25,
+      "deliverable_de": "Fertige Executive Summary (PDF)"
+    },
+    "module_2": {
+      "name_de": "Marktanalyse",
+      "readiness_boost": 10,
+      "new_total": 65,
+      "time_minutes": 30,
+      "deliverable_de": "Marktanalyse-Abschnitt"
+    },
+    "module_3": {
+      "name_de": "Wettbewerb",
+      "readiness_boost": 5,
+      "new_total": 70,
+      "time_minutes": 20,
+      "deliverable_de": "Wettbewerbsanalyse"
+    },
+    "module_4": {
+      "name_de": "Geschäftsmodell",
+      "readiness_boost": 5,
+      "new_total": 75,
+      "time_minutes": 25,
+      "deliverable_de": "Business Model Canvas"
+    },
+    "module_5": {
+      "name_de": "Organisation",
+      "readiness_boost": 5,
+      "new_total": 80,
+      "time_minutes": 20,
+      "deliverable_de": "Organisationsplan"
+    },
+    "module_6": {
+      "name_de": "Finanzplan",
+      "readiness_boost": 10,
+      "new_total": 90,
+      "time_minutes": 35,
+      "deliverable_de": "3-Jahres-Finanzplan (Excel)"
+    },
+    "module_7": {
+      "name_de": "Risiko & Abschluss",
+      "readiness_boost": 5,
+      "new_total": 95,
+      "time_minutes": 20,
+      "deliverable_de": "Kompletter Businessplan (PDF)"
+    }
+  }
+}

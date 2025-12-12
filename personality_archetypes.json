@@ -1,0 +1,327 @@
+{
+  "version": "1.0.0",
+  "description": "Entrepreneurial personality archetypes based on Howard's 7-dimension framework",
+  "archetypes": [
+    {
+      "id": "bold_innovator",
+      "name": "Bold Innovator",
+      "name_de": "Mutiger Innovator",
+      "prototype": [85, 75, 70, 80, 75, 65, 70],
+      "description": "You thrive on creating something new. Your combination of high innovativeness and risk tolerance means you see opportunities where others see obstacles.",
+      "description_de": "Sie leben davon, Neues zu schaffen. Ihre Kombination aus hoher Innovationskraft und Risikobereitschaft bedeutet, dass Sie Chancen sehen, wo andere Hindernisse sehen.",
+      "strengths": [
+        "Generates creative solutions to problems",
+        "Comfortable with uncertainty and change",
+        "Sees market gaps others miss",
+        "Willing to challenge industry norms"
+      ],
+      "strengths_de": [
+        "Entwickelt kreative Lösungen für Probleme",
+        "Komfortabel mit Unsicherheit und Veränderung",
+        "Erkennt Marktlücken, die andere übersehen",
+        "Bereit, Branchennormen herauszufordern"
+      ],
+      "watch_outs": [
+        "May underestimate implementation challenges",
+        "Can move too fast for stakeholders",
+        "Risk of over-innovating when simple works"
+      ],
+      "watch_outs_de": [
+        "Kann Umsetzungsherausforderungen unterschätzen",
+        "Kann zu schnell für Stakeholder sein",
+        "Risiko der Überinnovation, wenn einfach reicht"
+      ],
+      "ideal_businesses": ["saas", "creative", "services"],
+      "gz_tips_de": [
+        "Betonen Sie Ihr einzigartiges Wertversprechen",
+        "Zeigen Sie validierte Marktchancen",
+        "Dokumentieren Sie Ihre Innovationsmethodik"
+      ],
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "calculated_executor",
+      "name": "Calculated Executor",
+      "name_de": "Kalkulierter Umsetzer",
+      "prototype": [50, 40, 80, 60, 85, 80, 85],
+      "description": "You excel at turning plans into reality. Your systematic approach and strong execution skills mean you deliver consistent results.",
+      "description_de": "Sie glänzen darin, Pläne in die Realität umzusetzen. Ihr systematischer Ansatz und starke Umsetzungsfähigkeiten bedeuten, dass Sie konstante Ergebnisse liefern.",
+      "strengths": [
+        "Excellent at detailed planning",
+        "Reliable execution and follow-through",
+        "Strong process optimization",
+        "Risk-aware decision making"
+      ],
+      "strengths_de": [
+        "Exzellent in detaillierter Planung",
+        "Zuverlässige Umsetzung und Durchführung",
+        "Starke Prozessoptimierung",
+        "Risikobewusste Entscheidungsfindung"
+      ],
+      "watch_outs": [
+        "May miss innovative opportunities",
+        "Can be slow to adapt to changes",
+        "Might over-plan instead of acting"
+      ],
+      "watch_outs_de": [
+        "Kann innovative Chancen verpassen",
+        "Kann langsam bei Anpassungen sein",
+        "Könnte zu viel planen statt zu handeln"
+      ],
+      "ideal_businesses": ["consulting", "services", "ecommerce"],
+      "gz_tips_de": [
+        "Zeigen Sie Ihre detaillierten Finanzprojektionen",
+        "Betonen Sie Ihr bewährtes Geschäftsmodell",
+        "Dokumentieren Sie Ihre Risikomanagement-Strategie"
+      ],
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "ambitious_achiever",
+      "name": "Ambitious Achiever",
+      "name_de": "Ambitionierter Leistungsträger",
+      "prototype": [60, 65, 90, 70, 80, 75, 80],
+      "description": "You're driven by excellence and high standards. Your strong achievement orientation means you set ambitious goals and work tirelessly to reach them.",
+      "description_de": "Sie werden von Exzellenz und hohen Standards angetrieben. Ihre starke Leistungsorientierung bedeutet, dass Sie sich ehrgeizige Ziele setzen und unermüdlich daran arbeiten.",
+      "strengths": [
+        "Sets and achieves ambitious goals",
+        "High work ethic and persistence",
+        "Quality-focused delivery",
+        "Strong self-motivation"
+      ],
+      "strengths_de": [
+        "Setzt und erreicht ehrgeizige Ziele",
+        "Hohe Arbeitsmoral und Ausdauer",
+        "Qualitätsorientierte Lieferung",
+        "Starke Eigenmotivation"
+      ],
+      "watch_outs": [
+        "May set unrealistic expectations",
+        "Risk of burnout from overwork",
+        "Can be too demanding of others"
+      ],
+      "watch_outs_de": [
+        "Kann unrealistische Erwartungen setzen",
+        "Burnout-Risiko durch Überarbeitung",
+        "Kann zu fordernd gegenüber anderen sein"
+      ],
+      "ideal_businesses": ["consulting", "saas", "services"],
+      "gz_tips_de": [
+        "Zeigen Sie messbare Wachstumsziele",
+        "Betonen Sie Ihre Erfolgsbilanz",
+        "Dokumentieren Sie realistische Meilensteine"
+      ],
+      "color": "#FFE66D"
+    },
+    {
+      "id": "independent_pioneer",
+      "name": "Independent Pioneer",
+      "name_de": "Unabhängiger Pionier",
+      "prototype": [70, 70, 65, 90, 70, 70, 75],
+      "description": "You value autonomy and self-direction above all. Your independent spirit drives you to create your own path rather than follow others.",
+      "description_de": "Sie schätzen Autonomie und Selbstbestimmung über alles. Ihr unabhängiger Geist treibt Sie an, Ihren eigenen Weg zu gehen, anstatt anderen zu folgen.",
+      "strengths": [
+        "Strong self-direction",
+        "Independent decision making",
+        "Comfortable working alone",
+        "Authentic leadership style"
+      ],
+      "strengths_de": [
+        "Starke Selbststeuerung",
+        "Unabhängige Entscheidungsfindung",
+        "Komfortabel bei der Alleinarbeit",
+        "Authentischer Führungsstil"
+      ],
+      "watch_outs": [
+        "May resist helpful collaboration",
+        "Can struggle with delegation",
+        "Might miss team synergies"
+      ],
+      "watch_outs_de": [
+        "Kann hilfreiche Zusammenarbeit ablehnen",
+        "Kann mit Delegation kämpfen",
+        "Könnte Team-Synergien verpassen"
+      ],
+      "ideal_businesses": ["consulting", "creative", "services"],
+      "gz_tips_de": [
+        "Zeigen Sie, wie Ihre Unabhängigkeit Kunden nützt",
+        "Betonen Sie Ihre Expertise als Alleinstellungsmerkmal",
+        "Dokumentieren Sie Ihre Netzwerk-Strategie"
+      ],
+      "color": "#95E1D3"
+    },
+    {
+      "id": "proactive_driver",
+      "name": "Proactive Driver",
+      "name_de": "Proaktiver Antreiber",
+      "prototype": [65, 60, 75, 65, 90, 75, 80],
+      "description": "You make things happen. Your proactive nature means you're always looking ahead, anticipating market changes, and acting before others.",
+      "description_de": "Sie bringen Dinge in Bewegung. Ihre proaktive Natur bedeutet, dass Sie immer vorausschauen, Marktveränderungen antizipieren und vor anderen handeln.",
+      "strengths": [
+        "Anticipates market trends",
+        "Takes initiative without prompting",
+        "Creates opportunities proactively",
+        "Quick to act on insights"
+      ],
+      "strengths_de": [
+        "Antizipiert Markttrends",
+        "Ergreift Initiative ohne Aufforderung",
+        "Schafft Chancen proaktiv",
+        "Schnell beim Handeln auf Erkenntnisse"
+      ],
+      "watch_outs": [
+        "May act before full analysis",
+        "Can overcommit to opportunities",
+        "Might move too fast for team"
+      ],
+      "watch_outs_de": [
+        "Kann vor vollständiger Analyse handeln",
+        "Kann sich zu stark auf Chancen einlassen",
+        "Könnte zu schnell für das Team sein"
+      ],
+      "ideal_businesses": ["ecommerce", "saas", "services"],
+      "gz_tips_de": [
+        "Zeigen Sie Ihre Marktforschung und Trends",
+        "Betonen Sie erste Kundenanfragen oder -kontakte",
+        "Dokumentieren Sie Ihren Go-to-Market-Plan"
+      ],
+      "color": "#A8E6CF"
+    },
+    {
+      "id": "resilient_controller",
+      "name": "Resilient Controller",
+      "name_de": "Belastbarer Kontrolleur",
+      "prototype": [55, 50, 70, 60, 65, 90, 85],
+      "description": "You believe success comes from within. Your strong internal locus of control means you take full ownership of outcomes and rarely blame external factors.",
+      "description_de": "Sie glauben, dass Erfolg von innen kommt. Ihre starke internale Kontrollüberzeugung bedeutet, dass Sie volle Verantwortung für Ergebnisse übernehmen.",
+      "strengths": [
+        "Takes full ownership of results",
+        "Resilient in face of setbacks",
+        "Doesn't blame external factors",
+        "Strong personal accountability"
+      ],
+      "strengths_de": [
+        "Übernimmt volle Verantwortung für Ergebnisse",
+        "Belastbar bei Rückschlägen",
+        "Beschuldigt keine externen Faktoren",
+        "Starke persönliche Rechenschaftspflicht"
+      ],
+      "watch_outs": [
+        "May ignore valid external constraints",
+        "Can be too self-critical",
+        "Might not ask for help when needed"
+      ],
+      "watch_outs_de": [
+        "Kann gültige externe Einschränkungen ignorieren",
+        "Kann zu selbstkritisch sein",
+        "Könnte nicht um Hilfe bitten, wenn nötig"
+      ],
+      "ideal_businesses": ["consulting", "restaurant", "services"],
+      "gz_tips_de": [
+        "Zeigen Sie, wie Sie Hindernisse überwunden haben",
+        "Betonen Sie Ihre Anpassungsfähigkeit",
+        "Dokumentieren Sie Ihren Notfallplan"
+      ],
+      "color": "#DDA0DD"
+    },
+    {
+      "id": "confident_builder",
+      "name": "Confident Builder",
+      "name_de": "Selbstsicherer Aufbauer",
+      "prototype": [60, 55, 75, 65, 70, 70, 90],
+      "description": "You believe in your ability to succeed. Your high self-efficacy means you approach challenges with confidence and persistence.",
+      "description_de": "Sie glauben an Ihre Fähigkeit, erfolgreich zu sein. Ihre hohe Selbstwirksamkeit bedeutet, dass Sie Herausforderungen mit Zuversicht und Ausdauer angehen.",
+      "strengths": [
+        "Strong belief in own capabilities",
+        "Persistent through challenges",
+        "Confident decision making",
+        "Inspires confidence in others"
+      ],
+      "strengths_de": [
+        "Starker Glaube an eigene Fähigkeiten",
+        "Ausdauernd bei Herausforderungen",
+        "Selbstbewusste Entscheidungsfindung",
+        "Weckt Vertrauen bei anderen"
+      ],
+      "watch_outs": [
+        "May underestimate challenges",
+        "Can appear overconfident",
+        "Might not seek enough feedback"
+      ],
+      "watch_outs_de": [
+        "Kann Herausforderungen unterschätzen",
+        "Kann überheblich wirken",
+        "Könnte nicht genug Feedback einholen"
+      ],
+      "ideal_businesses": ["restaurant", "services", "ecommerce"],
+      "gz_tips_de": [
+        "Zeigen Sie Ihre relevante Erfahrung",
+        "Betonen Sie bisherige Erfolge",
+        "Dokumentieren Sie Ihre Qualifikationen"
+      ],
+      "color": "#F8B500"
+    },
+    {
+      "id": "balanced_entrepreneur",
+      "name": "Balanced Entrepreneur",
+      "name_de": "Ausgewogener Unternehmer",
+      "prototype": [65, 60, 70, 65, 70, 70, 70],
+      "description": "You have a well-rounded entrepreneurial profile. Your balanced approach means you adapt well to different situations and challenges.",
+      "description_de": "Sie haben ein ausgewogenes Unternehmerprofil. Ihr ausgewogener Ansatz bedeutet, dass Sie sich gut an verschiedene Situationen und Herausforderungen anpassen.",
+      "strengths": [
+        "Adaptable to different situations",
+        "Balanced risk assessment",
+        "Versatile skill set",
+        "Stable under pressure"
+      ],
+      "strengths_de": [
+        "Anpassungsfähig an verschiedene Situationen",
+        "Ausgewogene Risikobewertung",
+        "Vielseitige Fähigkeiten",
+        "Stabil unter Druck"
+      ],
+      "watch_outs": [
+        "May lack standout strengths",
+        "Can be indecisive sometimes",
+        "Might not stand out in crowded markets"
+      ],
+      "watch_outs_de": [
+        "Kann herausragende Stärken vermissen",
+        "Kann manchmal unentschlossen sein",
+        "Könnte in überfüllten Märkten nicht auffallen"
+      ],
+      "ideal_businesses": ["services", "consulting", "ecommerce"],
+      "gz_tips_de": [
+        "Betonen Sie Ihre Vielseitigkeit",
+        "Zeigen Sie Ihre Anpassungsfähigkeit",
+        "Dokumentieren Sie breite Marktchancen"
+      ],
+      "color": "#87CEEB"
+    }
+  ],
+  "dimension_order": [
+    "innovativeness",
+    "risk_taking",
+    "achievement_orientation",
+    "autonomy_orientation",
+    "proactiveness",
+    "locus_of_control",
+    "self_efficacy"
+  ],
+  "dimension_labels_de": {
+    "innovativeness": "Innovationsfreude",
+    "risk_taking": "Risikobereitschaft",
+    "achievement_orientation": "Leistungsorientierung",
+    "autonomy_orientation": "Autonomiestreben",
+    "proactiveness": "Proaktivität",
+    "locus_of_control": "Kontrollüberzeugung",
+    "self_efficacy": "Selbstwirksamkeit"
+  },
+  "level_thresholds": {
+    "very_high": 80,
+    "high": 65,
+    "medium": 40,
+    "low": 25,
+    "very_low": 0
+  }
+}

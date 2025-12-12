@@ -176,8 +176,9 @@ class ScenarioCATEngine:
     
     def _validate_business_context(self, context: Dict) -> bool:
         """Validate that business context has required fields."""
-        required = ['business_type']
-        return all(key in context for key in required)
+        # Accept either 'business_type' or 'category' (frontend compatibility)
+        has_business_type = 'business_type' in context or 'category' in context
+        return has_business_type
     
     # ========== Business Context Integration ==========
     
@@ -514,7 +515,7 @@ class ScenarioCATEngine:
             'summary': {
                 'total_scenarios': session.total_scenarios,
                 'session_duration': self._calculate_duration(session),
-                'business_type': session.business_context.get('business_type', 'unknown')
+                'business_type': session.business_context.get('business_type') or session.business_context.get('category') or 'unknown'
             }
         }
     
@@ -613,7 +614,7 @@ def db_record_to_session(record: Dict[str, Any]) -> AssessmentSession:
         current_phase=AssessmentPhase(record.get('current_phase', 'business_context')),
         status=SessionStatus(record.get('status', 'active')),
         business_context=business_context,
-        business_context_complete=bool(business_context.get('business_type')),
+        business_context_complete=bool(business_context.get('business_type') or business_context.get('category')),
         dimension_estimates=dimension_estimates,
         scenarios_seen=scenarios_seen,
         total_scenarios=record.get('total_scenarios', 0),

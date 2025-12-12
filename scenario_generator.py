@@ -141,8 +141,8 @@ class ScenarioGenerator:
             }
         }
         
-        # Get business type (default to 'other' if not specified)
-        business_type = context.get('business_type', 'other')
+        # Get business type (accept 'business_type' or 'category' for frontend compatibility)
+        business_type = context.get('business_type') or context.get('category') or 'other'
         
         # Get personalization values for this business type
         business_values = self.personalization_keys.get('business_type', {}).get(

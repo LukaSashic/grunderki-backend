@@ -105,8 +105,9 @@ async def start_assessment(
     """
     Start a new AI-powered assessment session.
     
-    OPTIMIZED: Pre-generates all 14 scenarios in parallel at session start.
-    Uses prompt caching for 90% cost reduction and 85% latency reduction.
+    ON-DEMAND: Generates first scenario immediately (~2-3s).
+    Subsequent scenarios generated per question for fast initial load.
+    Uses prompt caching for 90% cost reduction.
     """
     import uuid
     import time
@@ -121,18 +122,22 @@ async def start_assessment(
             business_type = 'services'
             request.business_context['business_type'] = business_type
         
-        # Create session WITH BATCH PRE-GENERATION
+        # Create session WITHOUT batch pre-generation (faster startup!)
+        # Scenarios will be generated on-demand for each question
         session_info = engine.create_session(
             session_id, 
             request.business_context,
-            use_batch_generation=True  # Enable batch generation!
+            use_batch_generation=False  # On-demand is faster for first response
         )
         
         creation_time = time.time() - start_time
-        logger.info(f"Session {session_id} created in {creation_time:.2f}s with {session_info['scenarios_ready']} scenarios")
+        logger.info(f"Session {session_id} created in {creation_time:.2f}s")
         
-        # Get first scenario (instant - already generated!)
+        # Get first scenario (generated on-demand, ~2-3s)
+        scenario_start = time.time()
         next_data = engine.get_next_scenario(session_id)
+        scenario_time = time.time() - scenario_start
+        logger.info(f"First scenario generated in {scenario_time:.2f}s")
         
         if not next_data:
             raise HTTPException(status_code=500, detail="Failed to generate first scenario")
@@ -156,7 +161,7 @@ async def start_assessment(
                 percentage=progress_data['percentage'],
                 dimensions_assessed=progress_data['dimensions_assessed']
             ),
-            message=f"AI-Powered Assessment gestartet ({session_info['scenarios_ready']} Szenarien vorgeladen)"
+            message="AI-Powered Assessment gestartet"
         )
         
     except Exception as e:
@@ -266,16 +271,17 @@ async def health_check():
     """Health check endpoint with optimization status"""
     return {
         "status": "healthy",
-        "version": "2.0.0",
+        "version": "2.1.0",
+        "mode": "on-demand",
         "optimizations": {
             "prompt_caching": True,
-            "batch_generation": True,
+            "on_demand_generation": True,
             "advanced_prompting": True,
             "dynamic_gaps": True
         },
         "expected_performance": {
-            "scenario_latency_ms": "<500 with cache",
-            "session_creation_s": "3-5 with batch",
+            "first_scenario_ms": "2000-3000",
+            "subsequent_scenario_ms": "1500-2500 (cached)",
             "cost_per_assessment_eur": "0.02"
         }
     }

@@ -55,6 +55,14 @@ try:
 except ImportError as e:
     logger.warning(f"⚠️ Results Visualization routes not loaded: {e}")
 
+# AI Routes (Claude Chat Integration)
+try:
+    from ai_routes import router as ai_router
+    app.include_router(ai_router)
+    logger.info("✅ AI routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ AI routes not loaded: {e}")
+
 # ============================================================================
 # CORS - Allow frontend origins
 # ============================================================================
@@ -128,6 +136,7 @@ async def root():
             "Business Context Capture (Day 1)",
             "Personality Scenarios (Day 2)",
             "Results Visualization (Day 3 - NEW!)",
+            "AI Chat Integration (Claude)",
             "Legal Citations (18+ official sources)",
             "GZ Compliance Checking",
             "Enhanced Businessplan Generator",
@@ -157,6 +166,11 @@ async def root():
             "businessplan": "POST /api/businessplan/enhanced",
             "citations": "GET /api/citations",
             "health": "GET /api/health",
+            "ai": {
+                "chat": "POST /api/v1/ai/chat",
+                "intake": "POST /api/v1/intake",
+                "health": "GET /api/v1/ai/health",
+            },
         },
     }
 
@@ -418,6 +432,11 @@ async def startup_event():
     logger.info("  POST /api/businessplan/enhanced")
     logger.info("  GET  /api/citations")
     logger.info("  GET  /api/health")
+    logger.info("")
+    logger.info("AI Endpoints:")
+    logger.info("  POST /api/v1/ai/chat")
+    logger.info("  POST /api/v1/intake")
+    logger.info("  GET  /api/v1/ai/health")
     logger.info("=" * 70)
 
 

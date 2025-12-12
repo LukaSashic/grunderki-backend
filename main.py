@@ -63,6 +63,14 @@ try:
 except ImportError as e:
     logger.warning(f"⚠️ AI routes not loaded: {e}")
 
+# AI Scenario Assessment Routes (Claude-powered personalized scenarios)
+try:
+    from ai_scenario_routes import router as ai_scenario_router
+    app.include_router(ai_scenario_router)
+    logger.info("✅ AI Scenario Assessment routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ AI Scenario routes not loaded: {e}")
+
 # ============================================================================
 # CORS - Allow frontend origins
 # ============================================================================

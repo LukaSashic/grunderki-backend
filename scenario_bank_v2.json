@@ -1,0 +1,569 @@
+{
+  "version": "2.0.0",
+  "description": "Truly personalized business scenarios - each business type has unique, context-specific situations",
+  "created": "2025-12-12",
+  "personalization_strategy": "Deep context integration - situations feel native to each business type",
+  
+  "personalization_keys": {
+    "restaurant": {
+      "business_label": "Restaurant",
+      "product_term": "Speisekarte",
+      "customer_term": "Gäste",
+      "revenue_term": "Umsatz",
+      "expansion_term": "zweiten Standort",
+      "competitor_term": "andere Restaurants",
+      "industry_term": "Gastronomie"
+    },
+    "saas": {
+      "business_label": "Software-Unternehmen",
+      "product_term": "Produkt",
+      "customer_term": "Nutzer",
+      "revenue_term": "MRR",
+      "expansion_term": "neuen Markt",
+      "competitor_term": "andere SaaS-Anbieter",
+      "industry_term": "Tech-Branche"
+    },
+    "consulting": {
+      "business_label": "Beratung",
+      "product_term": "Dienstleistung",
+      "customer_term": "Kunden",
+      "revenue_term": "Honorar",
+      "expansion_term": "neuen Geschäftsbereich",
+      "competitor_term": "andere Berater",
+      "industry_term": "Beratungsbranche"
+    },
+    "ecommerce": {
+      "business_label": "Online-Shop",
+      "product_term": "Sortiment",
+      "customer_term": "Käufer",
+      "revenue_term": "Umsatz",
+      "expansion_term": "internationale Märkte",
+      "competitor_term": "andere Online-Händler",
+      "industry_term": "E-Commerce"
+    },
+    "services": {
+      "business_label": "Dienstleistungsunternehmen",
+      "product_term": "Service",
+      "customer_term": "Kunden",
+      "revenue_term": "Einnahmen",
+      "expansion_term": "neuen Servicebereich",
+      "competitor_term": "Mitbewerber",
+      "industry_term": "Dienstleistungssektor"
+    },
+    "creative": {
+      "business_label": "Kreativagentur",
+      "product_term": "Kreativleistung",
+      "customer_term": "Auftraggeber",
+      "revenue_term": "Projekthonorar",
+      "expansion_term": "neuen Kreativbereich",
+      "competitor_term": "andere Agenturen",
+      "industry_term": "Kreativwirtschaft"
+    },
+    "health": {
+      "business_label": "Gesundheitspraxis",
+      "product_term": "Behandlung",
+      "customer_term": "Patienten",
+      "revenue_term": "Einnahmen",
+      "expansion_term": "neuen Standort",
+      "competitor_term": "andere Praxen",
+      "industry_term": "Gesundheitssektor"
+    }
+  },
+
+  "business_specific_scenarios": {
+    "restaurant": [
+      {
+        "scenario_id": "REST_INNOV_001",
+        "dimension": "innovativeness",
+        "difficulty": -0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein Stammgast beschwert sich, dass deine Speisekarte zu wenig vegetarische Optionen hat. Mehrere Gäste haben das bereits erwähnt. Dein Koch ist skeptisch gegenüber Änderungen.",
+          "question": "Wie gehst du vor?",
+          "options": [
+            {"id": "A", "text": "Das Konzept bleibt wie es ist - wer vegetarisch will, geht woanders hin.", "theta_value": -1.8, "psychological_mapping": "Sehr niedrige Innovativität"},
+            {"id": "B", "text": "Ich füge 1-2 vegetarische Gerichte hinzu, die der Koch eh schon kennt.", "theta_value": -0.3, "psychological_mapping": "Niedrige Innovativität"},
+            {"id": "C", "text": "Ich entwickle mit dem Koch eine neue vegetarische Linie, die zu unserem Konzept passt.", "theta_value": 0.8, "psychological_mapping": "Moderate Innovativität"},
+            {"id": "D", "text": "Ich sehe das als Chance für ein komplett neues Konzept - vielleicht eine Fusion-Küche?", "theta_value": 1.9, "psychological_mapping": "Hohe Innovativität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "REST_RISK_001",
+        "dimension": "risk_taking",
+        "difficulty": 0.0,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Ein Lieferant bietet dir exklusive Premium-Zutaten zu einem günstigen Preis. Aber: Du müsstest einen 12-Monats-Vertrag unterschreiben und 30% deines Budgets binden.",
+          "question": "Wie entscheidest du?",
+          "options": [
+            {"id": "A", "text": "Zu riskant - ich bleibe bei meinen bewährten Lieferanten.", "theta_value": -1.5, "psychological_mapping": "Niedrige Risikobereitschaft"},
+            {"id": "B", "text": "Nur wenn ich den Vertrag auf 3 Monate kürzen kann.", "theta_value": -0.4, "psychological_mapping": "Vorsichtige Risikobereitschaft"},
+            {"id": "C", "text": "Ich probiere es mit einem Teil des Sortiments aus.", "theta_value": 0.7, "psychological_mapping": "Moderate Risikobereitschaft"},
+            {"id": "D", "text": "Premium-Zutaten differenzieren mich - ich unterschreibe.", "theta_value": 1.8, "psychological_mapping": "Hohe Risikobereitschaft"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "REST_ACHIEV_001",
+        "dimension": "achievement_orientation",
+        "difficulty": 0.5,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Dein Restaurant läuft gut - 70% Auslastung, zufriedene Gäste, solide Bewertungen. Ein Bekannter fragt, ob du nicht zufrieden sein solltest.",
+          "question": "Was denkst du?",
+          "options": [
+            {"id": "A", "text": "Er hat recht - 70% ist gut, mehr brauche ich nicht.", "theta_value": -1.4, "psychological_mapping": "Niedrige Leistungsorientierung"},
+            {"id": "B", "text": "Ich bin zufrieden, aber 80% wäre schön.", "theta_value": 0.0, "psychological_mapping": "Moderate Leistungsorientierung"},
+            {"id": "C", "text": "70% ist ein Meilenstein, aber ich will mehr - Catering, Events, vielleicht ein zweites Lokal.", "theta_value": 1.0, "psychological_mapping": "Gute Leistungsorientierung"},
+            {"id": "D", "text": "Stillstand ist Rückschritt - ich will das beste Restaurant der Stadt werden.", "theta_value": 2.0, "psychological_mapping": "Hohe Leistungsorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "REST_AUTO_001",
+        "dimension": "autonomy_orientation",
+        "difficulty": 0.0,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Eine bekannte Restaurant-Kette bietet dir eine Franchise-Partnerschaft an. Du behältst den Namen, aber bekommst deren Rezepte, Marketing und Einkaufskonditionen.",
+          "question": "Wie reagierst du?",
+          "options": [
+            {"id": "A", "text": "Perfekt - weniger Risiko, bewährtes Konzept.", "theta_value": -1.6, "psychological_mapping": "Niedrige Autonomieorientierung"},
+            {"id": "B", "text": "Interessant, wenn ich eigene Gerichte behalten darf.", "theta_value": -0.3, "psychological_mapping": "Moderate Autonomieorientierung"},
+            {"id": "C", "text": "Ich nehme nur die Einkaufskonditionen, den Rest mache ich selbst.", "theta_value": 0.9, "psychological_mapping": "Gute Autonomieorientierung"},
+            {"id": "D", "text": "Nein danke - mein Restaurant, meine Regeln.", "theta_value": 2.0, "psychological_mapping": "Hohe Autonomieorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "REST_PROACT_001",
+        "dimension": "proactiveness",
+        "difficulty": 0.3,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Du hörst, dass in 6 Monaten ein neues Bürogebäude mit 500 Mitarbeitern in der Nähe eröffnet wird. Dein Restaurant ist eigentlich auf Abendgeschäft ausgerichtet.",
+          "question": "Was tust du?",
+          "options": [
+            {"id": "A", "text": "Abwarten - vielleicht kommen die ja auch abends.", "theta_value": -1.5, "psychological_mapping": "Niedrige Proaktivität"},
+            {"id": "B", "text": "Ich beobachte, was andere Restaurants machen.", "theta_value": -0.4, "psychological_mapping": "Reaktive Haltung"},
+            {"id": "C", "text": "Ich entwickle jetzt schon ein Mittagsmenü und kontaktiere das Gebäudemanagement.", "theta_value": 0.9, "psychological_mapping": "Moderate Proaktivität"},
+            {"id": "D", "text": "Ich sichere mir jetzt einen Catering-Vertrag für die Büros - first mover!", "theta_value": 1.9, "psychological_mapping": "Hohe Proaktivität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "REST_LOC_001",
+        "dimension": "locus_of_control",
+        "difficulty": 0.0,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Nach einer negativen Google-Bewertung sinkt deine Auslastung. Der Gast hatte sich über lange Wartezeiten an einem besonders vollen Abend beschwert.",
+          "question": "Wie siehst du die Situation?",
+          "options": [
+            {"id": "A", "text": "Unfair - an dem Abend war unvorhersehbar viel los.", "theta_value": -1.5, "psychological_mapping": "Externe Attribution"},
+            {"id": "B", "text": "Pech gehabt - manchmal läuft es halt nicht.", "theta_value": -0.5, "psychological_mapping": "Teilweise externe Attribution"},
+            {"id": "C", "text": "Wir hätten besser kommunizieren sollen. Ich führe jetzt ein Reservierungssystem ein.", "theta_value": 0.8, "psychological_mapping": "Interne Attribution"},
+            {"id": "D", "text": "Das ist ein Weckruf - ich optimiere alle Prozesse und antworte öffentlich.", "theta_value": 1.8, "psychological_mapping": "Hohe interne Kontrolle"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "REST_SELF_001",
+        "dimension": "self_efficacy",
+        "difficulty": 0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein bekannter Food-Blogger will über dein Restaurant schreiben. Er ist für kritische Bewertungen bekannt.",
+          "question": "Wie fühlst du dich dabei?",
+          "options": [
+            {"id": "A", "text": "Nervös - was wenn er uns schlecht bewertet?", "theta_value": -1.4, "psychological_mapping": "Niedrige Selbstwirksamkeit"},
+            {"id": "B", "text": "Unsicher - wir sind noch nicht perfekt.", "theta_value": -0.3, "psychological_mapping": "Moderate Selbstwirksamkeit"},
+            {"id": "C", "text": "Eine gute Chance - ich weiß, was wir können.", "theta_value": 0.8, "psychological_mapping": "Gute Selbstwirksamkeit"},
+            {"id": "D", "text": "Perfekt! Ich lade ihn ein und zeige ihm unsere beste Seite.", "theta_value": 1.9, "psychological_mapping": "Hohe Selbstwirksamkeit"}
+          ]
+        }
+      }
+    ],
+    
+    "consulting": [
+      {
+        "scenario_id": "CONS_INNOV_001",
+        "dimension": "innovativeness",
+        "difficulty": -0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein Kunde fragt nach einem Workshop-Format, das du noch nie durchgeführt hast. Du könntest einen bewährten Ansatz adaptieren oder etwas komplett Neues entwickeln.",
+          "question": "Wie gehst du vor?",
+          "options": [
+            {"id": "A", "text": "Ich lehne ab - ich biete nur an, was ich beherrsche.", "theta_value": -1.8, "psychological_mapping": "Sehr niedrige Innovativität"},
+            {"id": "B", "text": "Ich adaptiere meinen Standard-Workshop minimal.", "theta_value": -0.3, "psychological_mapping": "Niedrige Innovativität"},
+            {"id": "C", "text": "Ich entwickle ein neues Format, das auf meiner Erfahrung aufbaut.", "theta_value": 0.8, "psychological_mapping": "Moderate Innovativität"},
+            {"id": "D", "text": "Ich sehe das als Chance, einen innovativen Ansatz zu testen.", "theta_value": 1.9, "psychological_mapping": "Hohe Innovativität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "CONS_RISK_001",
+        "dimension": "risk_taking",
+        "difficulty": 0.0,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Ein Großunternehmen bietet dir einen 6-Monats-Vertrag an. Das Honorar ist gut, aber du müsstest alle anderen Kunden absagen und wärst komplett abhängig.",
+          "question": "Wie entscheidest du?",
+          "options": [
+            {"id": "A", "text": "Zu riskant - ein Kunde, 100% Abhängigkeit.", "theta_value": -1.5, "psychological_mapping": "Niedrige Risikobereitschaft"},
+            {"id": "B", "text": "Nur wenn ich parallel kleine Projekte behalten darf.", "theta_value": -0.4, "psychological_mapping": "Vorsichtige Risikobereitschaft"},
+            {"id": "C", "text": "Ich nehme an, aber sichere mir eine Verlängerungsoption.", "theta_value": 0.7, "psychological_mapping": "Moderate Risikobereitschaft"},
+            {"id": "D", "text": "Große Chance! Wenn ich dort überzeuge, öffnet das alle Türen.", "theta_value": 1.8, "psychological_mapping": "Hohe Risikobereitschaft"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "CONS_ACHIEV_001",
+        "dimension": "achievement_orientation",
+        "difficulty": 0.5,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Du hast ein Beratungsprojekt erfolgreich abgeschlossen. Der Kunde ist zufrieden und hat bezahlt. Dein Partner meint, du könntest dich jetzt entspannen.",
+          "question": "Was denkst du?",
+          "options": [
+            {"id": "A", "text": "Er hat recht - Zeit für eine Pause.", "theta_value": -1.4, "psychological_mapping": "Niedrige Leistungsorientierung"},
+            {"id": "B", "text": "Kurz durchatmen, dann weiter.", "theta_value": 0.0, "psychological_mapping": "Moderate Leistungsorientierung"},
+            {"id": "C", "text": "Nächstes Ziel: Folgeauftrag sichern und Netzwerk erweitern.", "theta_value": 1.0, "psychological_mapping": "Gute Leistungsorientierung"},
+            {"id": "D", "text": "Jetzt erst recht - ich will der Go-To Berater in meiner Nische werden.", "theta_value": 2.0, "psychological_mapping": "Hohe Leistungsorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "CONS_AUTO_001",
+        "dimension": "autonomy_orientation",
+        "difficulty": 0.0,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Eine etablierte Beratungsfirma bietet dir an, als Senior Consultant unter ihrer Marke zu arbeiten. Festes Gehalt, aber du müsstest deren Methoden nutzen.",
+          "question": "Wie reagierst du?",
+          "options": [
+            {"id": "A", "text": "Klingt gut - weniger Risiko, mehr Sicherheit.", "theta_value": -1.6, "psychological_mapping": "Niedrige Autonomieorientierung"},
+            {"id": "B", "text": "Interessant, wenn ich meine Spezialisierung behalten kann.", "theta_value": -0.3, "psychological_mapping": "Moderate Autonomieorientierung"},
+            {"id": "C", "text": "Vielleicht als Kooperation auf Projektbasis, nicht als Anstellung.", "theta_value": 0.9, "psychological_mapping": "Gute Autonomieorientierung"},
+            {"id": "D", "text": "Nein - ich habe mich selbstständig gemacht, um mein eigener Chef zu sein.", "theta_value": 2.0, "psychological_mapping": "Hohe Autonomieorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "CONS_PROACT_001",
+        "dimension": "proactiveness",
+        "difficulty": 0.3,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Du liest, dass ein neues Gesetz in 6 Monaten kommt, das viele Unternehmen betrifft. Das ist nicht dein Spezialgebiet, aber du siehst Beratungsbedarf.",
+          "question": "Was tust du?",
+          "options": [
+            {"id": "A", "text": "Nicht mein Thema - ich bleibe bei meiner Expertise.", "theta_value": -1.5, "psychological_mapping": "Niedrige Proaktivität"},
+            {"id": "B", "text": "Ich beobachte, was andere Berater machen.", "theta_value": -0.4, "psychological_mapping": "Reaktive Haltung"},
+            {"id": "C", "text": "Ich lese mich ein und entwickle ein passendes Angebot.", "theta_value": 0.9, "psychological_mapping": "Moderate Proaktivität"},
+            {"id": "D", "text": "Ich positioniere mich jetzt als Experte, bevor alle aufspringen.", "theta_value": 1.9, "psychological_mapping": "Hohe Proaktivität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "CONS_LOC_001",
+        "dimension": "locus_of_control",
+        "difficulty": 0.0,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Ein Beratungsprojekt scheitert, weil der Kunde die empfohlenen Maßnahmen nicht umgesetzt hat. Er beschwert sich über mangelnde Ergebnisse.",
+          "question": "Wie siehst du die Situation?",
+          "options": [
+            {"id": "A", "text": "Nicht meine Schuld - er hat ja nicht umgesetzt.", "theta_value": -1.5, "psychological_mapping": "Externe Attribution"},
+            {"id": "B", "text": "Schwierige Situation - manche Kunden sind halt so.", "theta_value": -0.5, "psychological_mapping": "Teilweise externe Attribution"},
+            {"id": "C", "text": "Ich hätte mehr begleiten müssen. Nächstes Mal biete ich Umsetzungscoaching an.", "theta_value": 0.8, "psychological_mapping": "Interne Attribution"},
+            {"id": "D", "text": "Meine Verantwortung - ich ändere mein Angebot zu 'Beratung + Umsetzung'.", "theta_value": 1.8, "psychological_mapping": "Hohe interne Kontrolle"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "CONS_SELF_001",
+        "dimension": "self_efficacy",
+        "difficulty": 0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein Fortune-500-Unternehmen fragt nach einem Angebot für ein komplexes Transformationsprojekt. Du hast so ein großes Projekt noch nie alleine gemacht.",
+          "question": "Wie fühlst du dich dabei?",
+          "options": [
+            {"id": "A", "text": "Überfordert - das ist zu groß für mich.", "theta_value": -1.4, "psychological_mapping": "Niedrige Selbstwirksamkeit"},
+            {"id": "B", "text": "Unsicher - aber vielleicht mit einem Partner?", "theta_value": -0.3, "psychological_mapping": "Moderate Selbstwirksamkeit"},
+            {"id": "C", "text": "Herausfordernd, aber ich kenne die Methodik.", "theta_value": 0.8, "psychological_mapping": "Gute Selbstwirksamkeit"},
+            {"id": "D", "text": "Endlich! Genau dafür habe ich mich selbstständig gemacht.", "theta_value": 1.9, "psychological_mapping": "Hohe Selbstwirksamkeit"}
+          ]
+        }
+      }
+    ],
+    
+    "saas": [
+      {
+        "scenario_id": "SAAS_INNOV_001",
+        "dimension": "innovativeness",
+        "difficulty": -0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Nutzer fordern ein Feature, das deine Konkurrenten alle haben. Du könntest es kopieren oder eine völlig neue Lösung für das zugrundeliegende Problem entwickeln.",
+          "question": "Wie gehst du vor?",
+          "options": [
+            {"id": "A", "text": "Ich baue genau das, was die Konkurrenz hat.", "theta_value": -1.8, "psychological_mapping": "Sehr niedrige Innovativität"},
+            {"id": "B", "text": "Ich orientiere mich am Marktstandard mit kleinen Verbesserungen.", "theta_value": -0.3, "psychological_mapping": "Niedrige Innovativität"},
+            {"id": "C", "text": "Ich analysiere das Problem und entwickle eine eigenständige Lösung.", "theta_value": 0.8, "psychological_mapping": "Moderate Innovativität"},
+            {"id": "D", "text": "Ich sehe eine Chance, das Problem komplett neu zu denken - disruptiv!", "theta_value": 1.9, "psychological_mapping": "Hohe Innovativität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "SAAS_RISK_001",
+        "dimension": "risk_taking",
+        "difficulty": 0.0,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Ein VC bietet dir €500.000 für 20% Anteile. Das Geld würde schnelles Wachstum ermöglichen, aber du verlierst Kontrolle und musst aggressive Ziele erfüllen.",
+          "question": "Wie entscheidest du?",
+          "options": [
+            {"id": "A", "text": "Zu riskant - ich wachse lieber organisch.", "theta_value": -1.5, "psychological_mapping": "Niedrige Risikobereitschaft"},
+            {"id": "B", "text": "Nur wenn die Ziele realistisch sind.", "theta_value": -0.4, "psychological_mapping": "Vorsichtige Risikobereitschaft"},
+            {"id": "C", "text": "Ich verhandle bessere Konditionen und nehme dann an.", "theta_value": 0.7, "psychological_mapping": "Moderate Risikobereitschaft"},
+            {"id": "D", "text": "Genau das, was ich brauche, um schnell zu skalieren!", "theta_value": 1.8, "psychological_mapping": "Hohe Risikobereitschaft"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "SAAS_ACHIEV_001",
+        "dimension": "achievement_orientation",
+        "difficulty": 0.5,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Dein SaaS hat 100 zahlende Kunden erreicht und ist profitabel. Ein Freund sagt, das sei doch ein schönes Lifestyle-Business.",
+          "question": "Was denkst du?",
+          "options": [
+            {"id": "A", "text": "Er hat recht - 100 Kunden reichen mir.", "theta_value": -1.4, "psychological_mapping": "Niedrige Leistungsorientierung"},
+            {"id": "B", "text": "Erstmal genießen, dann schauen wir weiter.", "theta_value": 0.0, "psychological_mapping": "Moderate Leistungsorientierung"},
+            {"id": "C", "text": "100 sind ein Meilenstein - jetzt kommen 1.000.", "theta_value": 1.0, "psychological_mapping": "Gute Leistungsorientierung"},
+            {"id": "D", "text": "100 ist erst der Anfang - ich will 10.000+ und Marktführer werden.", "theta_value": 2.0, "psychological_mapping": "Hohe Leistungsorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "SAAS_AUTO_001",
+        "dimension": "autonomy_orientation",
+        "difficulty": 0.0,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein großer Player will dein SaaS kaufen und dich als CTO anstellen. Gutes Gehalt, großes Team, aber du arbeitest nach deren Roadmap.",
+          "question": "Wie reagierst du?",
+          "options": [
+            {"id": "A", "text": "Tolles Angebot - sicheres Einkommen und Ressourcen.", "theta_value": -1.6, "psychological_mapping": "Niedrige Autonomieorientierung"},
+            {"id": "B", "text": "Interessant, wenn ich Product-Entscheidungen treffen darf.", "theta_value": -0.3, "psychological_mapping": "Moderate Autonomieorientierung"},
+            {"id": "C", "text": "Nur als strategische Partnerschaft, nicht als Übernahme.", "theta_value": 0.9, "psychological_mapping": "Gute Autonomieorientierung"},
+            {"id": "D", "text": "Nein - ich baue mein eigenes Unternehmen auf.", "theta_value": 2.0, "psychological_mapping": "Hohe Autonomieorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "SAAS_PROACT_001",
+        "dimension": "proactiveness",
+        "difficulty": 0.3,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Du siehst einen Trend zu KI-Integration in deiner Branche. Noch nutzt es niemand in deinem Segment, aber es könnte in 1-2 Jahren Standard werden.",
+          "question": "Was tust du?",
+          "options": [
+            {"id": "A", "text": "Abwarten - vielleicht ist es nur ein Hype.", "theta_value": -1.5, "psychological_mapping": "Niedrige Proaktivität"},
+            {"id": "B", "text": "Ich beobachte, was die Großen machen.", "theta_value": -0.4, "psychological_mapping": "Reaktive Haltung"},
+            {"id": "C", "text": "Ich starte jetzt ein KI-Experiment in meinem Produkt.", "theta_value": 0.9, "psychological_mapping": "Moderate Proaktivität"},
+            {"id": "D", "text": "Ich positioniere mich jetzt als 'AI-first' - first mover advantage!", "theta_value": 1.9, "psychological_mapping": "Hohe Proaktivität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "SAAS_LOC_001",
+        "dimension": "locus_of_control",
+        "difficulty": 0.0,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Dein größter Konkurrent hat gerade €10 Mio. Funding bekommen und greift deinen Markt an. Deine Churn-Rate steigt.",
+          "question": "Wie siehst du die Situation?",
+          "options": [
+            {"id": "A", "text": "Unfair - mit soviel Geld kann ich nicht konkurrieren.", "theta_value": -1.5, "psychological_mapping": "Externe Attribution"},
+            {"id": "B", "text": "Schwierige Marktlage - da kann man wenig machen.", "theta_value": -0.5, "psychological_mapping": "Teilweise externe Attribution"},
+            {"id": "C", "text": "Ich muss meine Differenzierung schärfen und Kunden besser binden.", "theta_value": 0.8, "psychological_mapping": "Interne Attribution"},
+            {"id": "D", "text": "Wettbewerb spornt an - ich fokussiere auf meine Stärken und gewinne.", "theta_value": 1.8, "psychological_mapping": "Hohe interne Kontrolle"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "SAAS_SELF_001",
+        "dimension": "self_efficacy",
+        "difficulty": 0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein Enterprise-Kunde fragt nach einem Proof-of-Concept. Die Anforderungen sind komplex und du hast nur 4 Wochen Zeit.",
+          "question": "Wie fühlst du dich dabei?",
+          "options": [
+            {"id": "A", "text": "Überfordert - das ist zu viel für mein kleines Team.", "theta_value": -1.4, "psychological_mapping": "Niedrige Selbstwirksamkeit"},
+            {"id": "B", "text": "Unsicher - aber vielleicht mit Overtime?", "theta_value": -0.3, "psychological_mapping": "Moderate Selbstwirksamkeit"},
+            {"id": "C", "text": "Herausfordernd, aber machbar mit klarem Fokus.", "theta_value": 0.8, "psychological_mapping": "Gute Selbstwirksamkeit"},
+            {"id": "D", "text": "Perfekt! Enterprise ist genau mein Ziel - ich werde liefern.", "theta_value": 1.9, "psychological_mapping": "Hohe Selbstwirksamkeit"}
+          ]
+        }
+      }
+    ],
+    
+    "ecommerce": [
+      {
+        "scenario_id": "ECOM_INNOV_001",
+        "dimension": "innovativeness",
+        "difficulty": -0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein Lieferant bietet ein neues Produkt an, das es noch nicht auf dem deutschen Markt gibt. Das Risiko ist höher, aber du könntest First Mover sein.",
+          "question": "Wie gehst du vor?",
+          "options": [
+            {"id": "A", "text": "Zu riskant - ich verkaufe nur bewährte Produkte.", "theta_value": -1.8, "psychological_mapping": "Sehr niedrige Innovativität"},
+            {"id": "B", "text": "Ich warte, bis andere es testen.", "theta_value": -0.3, "psychological_mapping": "Niedrige Innovativität"},
+            {"id": "C", "text": "Ich teste es mit einer kleinen Menge.", "theta_value": 0.8, "psychological_mapping": "Moderate Innovativität"},
+            {"id": "D", "text": "First Mover Advantage! Ich sichere mir Exklusivrechte.", "theta_value": 1.9, "psychological_mapping": "Hohe Innovativität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "ECOM_RISK_001",
+        "dimension": "risk_taking",
+        "difficulty": 0.0,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Ein Großhändler bietet dir 50% Rabatt, wenn du 10x deine normale Bestellmenge abnimmst. Das bindet dein gesamtes Kapital.",
+          "question": "Wie entscheidest du?",
+          "options": [
+            {"id": "A", "text": "Zu riskant - was wenn ich das nicht verkaufe?", "theta_value": -1.5, "psychological_mapping": "Niedrige Risikobereitschaft"},
+            {"id": "B", "text": "Nur wenn ich eine Rückgabemöglichkeit habe.", "theta_value": -0.4, "psychological_mapping": "Vorsichtige Risikobereitschaft"},
+            {"id": "C", "text": "Ich nehme die Hälfte - 5x statt 10x.", "theta_value": 0.7, "psychological_mapping": "Moderate Risikobereitschaft"},
+            {"id": "D", "text": "50% Marge mehr! Ich nehme alles.", "theta_value": 1.8, "psychological_mapping": "Hohe Risikobereitschaft"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "ECOM_ACHIEV_001",
+        "dimension": "achievement_orientation",
+        "difficulty": 0.5,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Dein Shop macht €5.000 Umsatz pro Monat mit guter Marge. Ein Bekannter sagt, das sei doch ein nettes Nebeneinkommen.",
+          "question": "Was denkst du?",
+          "options": [
+            {"id": "A", "text": "Er hat recht - als Nebeneinkommen perfekt.", "theta_value": -1.4, "psychological_mapping": "Niedrige Leistungsorientierung"},
+            {"id": "B", "text": "Für den Anfang okay, mal schauen.", "theta_value": 0.0, "psychological_mapping": "Moderate Leistungsorientierung"},
+            {"id": "C", "text": "€5k sind ein Start - Ziel sind €20k/Monat.", "theta_value": 1.0, "psychological_mapping": "Gute Leistungsorientierung"},
+            {"id": "D", "text": "Ich will die #1 in meiner Nische werden.", "theta_value": 2.0, "psychological_mapping": "Hohe Leistungsorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "ECOM_AUTO_001",
+        "dimension": "autonomy_orientation",
+        "difficulty": 0.0,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Amazon bietet dir an, deine Produkte unter deren Eigenmarke zu verkaufen. Mehr Volumen, aber Amazon bestimmt Preise und Branding.",
+          "question": "Wie reagierst du?",
+          "options": [
+            {"id": "A", "text": "Tolles Volumen - ich mache mit.", "theta_value": -1.6, "psychological_mapping": "Niedrige Autonomieorientierung"},
+            {"id": "B", "text": "Interessant für Teilsortiment, nicht alles.", "theta_value": -0.3, "psychological_mapping": "Moderate Autonomieorientierung"},
+            {"id": "C", "text": "Nur wenn ich meine Marke parallel behalten kann.", "theta_value": 0.9, "psychological_mapping": "Gute Autonomieorientierung"},
+            {"id": "D", "text": "Nein - ich baue meine eigene Marke auf.", "theta_value": 2.0, "psychological_mapping": "Hohe Autonomieorientierung"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "ECOM_PROACT_001",
+        "dimension": "proactiveness",
+        "difficulty": 0.3,
+        "discrimination": 1.7,
+        "template": {
+          "situation": "Du siehst, dass ein neuer Social-Media-Kanal bei deiner Zielgruppe wächst. Noch nutzen wenige Shops diesen Kanal für Werbung.",
+          "question": "Was tust du?",
+          "options": [
+            {"id": "A", "text": "Abwarten - ich bleibe bei bewährten Kanälen.", "theta_value": -1.5, "psychological_mapping": "Niedrige Proaktivität"},
+            {"id": "B", "text": "Ich beobachte, was andere Shops machen.", "theta_value": -0.4, "psychological_mapping": "Reaktive Haltung"},
+            {"id": "C", "text": "Ich teste mit kleinem Budget.", "theta_value": 0.9, "psychological_mapping": "Moderate Proaktivität"},
+            {"id": "D", "text": "Ich sichere mir jetzt günstige Werbeplätze - Early Adopter!", "theta_value": 1.9, "psychological_mapping": "Hohe Proaktivität"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "ECOM_LOC_001",
+        "dimension": "locus_of_control",
+        "difficulty": 0.0,
+        "discrimination": 1.5,
+        "template": {
+          "situation": "Die Versandkosten steigen um 15% durch Lieferengpässe. Deine Marge sinkt spürbar.",
+          "question": "Wie siehst du die Situation?",
+          "options": [
+            {"id": "A", "text": "Pech - dagegen kann ich nichts machen.", "theta_value": -1.5, "psychological_mapping": "Externe Attribution"},
+            {"id": "B", "text": "Schwierige Zeiten - betrifft ja alle.", "theta_value": -0.5, "psychological_mapping": "Teilweise externe Attribution"},
+            {"id": "C", "text": "Ich optimiere Verpackung und suche alternative Versender.", "theta_value": 0.8, "psychological_mapping": "Interne Attribution"},
+            {"id": "D", "text": "Ich nutze das als Anlass, mein ganzes Fulfillment zu überdenken.", "theta_value": 1.8, "psychological_mapping": "Hohe interne Kontrolle"}
+          ]
+        }
+      },
+      {
+        "scenario_id": "ECOM_SELF_001",
+        "dimension": "self_efficacy",
+        "difficulty": 0.5,
+        "discrimination": 1.6,
+        "template": {
+          "situation": "Ein Influencer mit 500k Followern will eine Kooperation. Du müsstest schnell 1.000 Einheiten liefern - 10x dein normales Volumen.",
+          "question": "Wie fühlst du dich dabei?",
+          "options": [
+            {"id": "A", "text": "Überfordert - das ist zu groß für mich.", "theta_value": -1.4, "psychological_mapping": "Niedrige Selbstwirksamkeit"},
+            {"id": "B", "text": "Unsicher - kann ich das schaffen?", "theta_value": -0.3, "psychological_mapping": "Moderate Selbstwirksamkeit"},
+            {"id": "C", "text": "Herausfordernd, aber ich organisiere das.", "theta_value": 0.8, "psychological_mapping": "Gute Selbstwirksamkeit"},
+            {"id": "D", "text": "Der Durchbruch! Ich schaffe das auf jeden Fall.", "theta_value": 1.9, "psychological_mapping": "Hohe Selbstwirksamkeit"}
+          ]
+        }
+      }
+    ]
+  },
+
+  "generic_fallback_scenarios": [
+    {
+      "scenario_id": "GEN_INNOV_001",
+      "dimension": "innovativeness",
+      "difficulty": -0.5,
+      "discrimination": 1.6,
+      "template": {
+        "situation": "Dein {{business_label}} startet in einem Markt mit etablierten {{competitor_term}}. Du musst dein {{product_term}} positionieren.",
+        "question": "Wie gehst du vor?",
+        "options": [
+          {"id": "A", "text": "Ich kopiere das bewährte Konzept der Marktführer.", "theta_value": -1.8, "psychological_mapping": "Sehr niedrige Innovativität"},
+          {"id": "B", "text": "Ich mache das Gleiche, aber besser oder günstiger.", "theta_value": -0.3, "psychological_mapping": "Niedrige Innovativität"},
+          {"id": "C", "text": "Ich kombiniere bewährte Elemente neu mit eigenen Ideen.", "theta_value": 0.8, "psychological_mapping": "Moderate Innovativität"},
+          {"id": "D", "text": "Ich entwickle etwas völlig Neues.", "theta_value": 1.9, "psychological_mapping": "Hohe Innovativität"}
+        ]
+      }
+    },
+    {
+      "scenario_id": "GEN_RISK_001",
+      "dimension": "risk_taking",
+      "difficulty": 0.0,
+      "discrimination": 1.7,
+      "template": {
+        "situation": "Ein großer Kunde bietet dir einen lukrativen Auftrag, der 60% deiner Kapazität binden würde.",
+        "question": "Wie entscheidest du?",
+        "options": [
+          {"id": "A", "text": "Zu riskant - Abhängigkeit von einem Kunden.", "theta_value": -1.5, "psychological_mapping": "Niedrige Risikobereitschaft"},
+          {"id": "B", "text": "Nur mit Garantien und langer Laufzeit.", "theta_value": -0.4, "psychological_mapping": "Vorsichtige Risikobereitschaft"},
+          {"id": "C", "text": "Ich nehme an, behalte aber andere Kunden.", "theta_value": 0.7, "psychological_mapping": "Moderate Risikobereitschaft"},
+          {"id": "D", "text": "Große Chance - ich wachse mit dem Auftrag!", "theta_value": 1.8, "psychological_mapping": "Hohe Risikobereitschaft"}
+        ]
+      }
+    }
+  ]
+}

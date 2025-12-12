@@ -14,7 +14,12 @@ from pathlib import Path
 from enum import Enum
 from dataclasses import dataclass, field, asdict
 
-from scenario_generator import ScenarioGenerator
+# Try to import enhanced generator first, fallback to original
+try:
+    from scenario_generator_v2 import EnhancedScenarioGenerator as ScenarioGenerator
+except ImportError:
+    from scenario_generator import ScenarioGenerator
+
 from scenario_mapper import ScenarioMapper, DimensionEstimate
 
 
@@ -441,10 +446,14 @@ class ScenarioCATEngine:
             estimated_total = max(self.STOPPING_CRITERIA['min_items'], 
                                 min(self.STOPPING_CRITERIA['max_items'], estimated_total))
         
+        # current_item is the question being shown (1-indexed for display)
+        # After answering, completed_items increases, so current_item shows next question
+        current_question = completed_items + 1
+        
         percentage = int((completed_items / estimated_total) * 100)
         
         return {
-            'current_item': completed_items,
+            'current_item': current_question,  # 1-indexed: "Frage 1 von 12" when showing first question
             'estimated_total': estimated_total,
             'percentage': min(99, percentage),  # Never show 100% until complete
             'dimensions_assessed': sum(

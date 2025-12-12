@@ -100,6 +100,7 @@ class ScenarioResponse(BaseModel):
 
 class AssessmentResponse(BaseModel):
     """Standard assessment response."""
+    session_id: Optional[str] = None  # Added for frontend compatibility
     complete: bool
     phase: str
     scenario: Optional[ScenarioResponse] = None
@@ -172,6 +173,7 @@ async def start_assessment(
         if session.business_context_complete:
             response = engine.start_scenarios(session.session_id)
             return AssessmentResponse(
+                session_id=session.session_id,
                 complete=response.get('complete', False),
                 phase=response.get('phase', AssessmentPhase.PERSONALITY_SCENARIOS.value),
                 scenario=_format_scenario(response.get('scenario')),
@@ -181,6 +183,7 @@ async def start_assessment(
         
         # Otherwise, return instructions for business context
         return AssessmentResponse(
+            session_id=session.session_id,
             complete=False,
             phase=AssessmentPhase.BUSINESS_CONTEXT.value,
             message=f"Session {session.session_id} created. Please provide business context.",
@@ -216,6 +219,7 @@ async def set_business_context(
         response = engine.set_business_context(session_id, business_context)
         
         return AssessmentResponse(
+            session_id=session_id,
             complete=response.get('complete', False),
             phase=response.get('phase', AssessmentPhase.PERSONALITY_SCENARIOS.value),
             scenario=_format_scenario(response.get('scenario')),
@@ -315,6 +319,7 @@ async def submit_response(
         )
         
         result = AssessmentResponse(
+            session_id=session_id,
             complete=response.get('complete', False),
             phase=response.get('phase'),
             scenario=_format_scenario(response.get('scenario')),
@@ -533,5 +538,160 @@ async def get_next_item(
         # Otherwise, get current scenario
         return await get_current_scenario(session_id, engine)
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ========== Frontend Compatibility Endpoint ==========
+
+@router.get("/{session_id}/next")
+async def get_next_question(
+    session_id: str,
+    engine: ScenarioCATEngine = Depends(get_cat_engine)
+):
+    """
+    Get next question - Frontend compatibility endpoint.
+    
+    Returns data in format expected by React frontend:
+    - 'question' instead of 'scenario'
+    - 'is_complete' instead of 'complete'
+    """
+    try:
+        session = engine.get_session(session_id)
+        if not session:
+            raise HTTPException(status_code=404, detail="Session not found")
+        
+        # If not business context complete, return instructions
+        if not session.business_context_complete:
+            return {
+                "session_id": session_id,
+                "question": None,
+                "progress": {
+                    "items_completed": 0,
+                    "estimated_remaining": 12,
+                    "percentage": 0
+                },
+                "is_complete": False,
+                "phase": "business_context",
+                "message": "Please provide business context first"
+            }
+        
+        # If completed, return results
+        if session.status == SessionStatus.COMPLETED:
+            return {
+                "session_id": session_id,
+                "question": None,
+                "is_complete": True,
+                "phase": "completed",
+                "results": session.final_results
+            }
+        
+        # Get current/next scenario
+        if session.current_scenario_id:
+            scenario_data = engine._get_scenario_by_id(session.current_scenario_id)
+            personalized = engine.scenario_generator._personalize_scenario(
+                scenario_data, 
+                session.business_context
+            )
+            formatted = engine.scenario_generator.format_for_frontend(
+                personalized, 
+                include_metadata=True
+            )
+        else:
+            # Generate first scenario
+            response = engine.start_scenarios(session_id)
+            formatted = response.get('scenario')
+        
+        # Map to frontend format
+        question = None
+        if formatted:
+            question = {
+                "id": formatted.get("scenario_id"),
+                "text_de": formatted.get("situation", "") + " " + formatted.get("question", ""),
+                "dimension": formatted.get("dimension"),
+                "options": formatted.get("options", [])
+            }
+        
+        progress = engine._calculate_progress(session)
+        
+        return {
+            "session_id": session_id,
+            "question": question,
+            "progress": {
+                "items_completed": progress.get("current_item", 0),
+                "estimated_remaining": progress.get("estimated_total", 12) - progress.get("current_item", 0),
+                "percentage": progress.get("percentage", 0)
+            },
+            "is_complete": False,
+            "phase": "assessment"
+        }
+        
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class FrontendRespondRequest(BaseModel):
+    """Frontend-compatible respond request."""
+    session_id: str
+    question_id: str
+    response_value: int  # 1-5 scale from frontend
+    response_time_ms: Optional[int] = None
+
+
+@router.post("/respond")
+async def frontend_submit_response(
+    request: FrontendRespondRequest,
+    engine: ScenarioCATEngine = Depends(get_cat_engine)
+):
+    """
+    Submit response - Frontend compatibility endpoint.
+    
+    Accepts frontend format and maps to backend format:
+    - question_id -> scenario_id
+    - response_value (1-5) -> selected_option (A-D)
+    """
+    try:
+        # Map response_value (1-5) to option letter (A-D)
+        # 1=strongly disagree -> A, 5=strongly agree -> D
+        option_map = {1: "A", 2: "B", 3: "C", 4: "D", 5: "D"}
+        selected_option = option_map.get(request.response_value, "B")
+        
+        # Call the actual respond endpoint
+        response = engine.submit_scenario_response(
+            session_id=request.session_id,
+            scenario_id=request.question_id,
+            selected_option=selected_option
+        )
+        
+        # Format response for frontend
+        question = None
+        scenario = response.get('scenario')
+        if scenario:
+            question = {
+                "id": scenario.get("scenario_id"),
+                "text_de": scenario.get("situation", "") + " " + scenario.get("question", ""),
+                "dimension": scenario.get("dimension"),
+                "options": scenario.get("options", [])
+            }
+        
+        progress_data = response.get('progress', {})
+        
+        return {
+            "session_id": request.session_id,
+            "question": question,
+            "progress": {
+                "items_completed": progress_data.get("current_item", 0),
+                "estimated_remaining": progress_data.get("estimated_total", 12) - progress_data.get("current_item", 0),
+                "percentage": progress_data.get("percentage", 0)
+            },
+            "is_complete": response.get('complete', False),
+            "insights": [response.get('micro_insight')] if response.get('micro_insight') else [],
+            "results": response.get('results')
+        }
+        
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -785,16 +785,35 @@ def pre_generate_all_scenarios_sync(
     business_context: Dict[str, Any],
     session_id: str
 ) -> List[GeneratedScenario]:
-    """Synchronous wrapper for batch pre-generation"""
-    try:
-        loop = asyncio.get_event_loop()
-    except RuntimeError:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
+    """Synchronous batch pre-generation (generates sequentially for reliability)"""
     
-    return loop.run_until_complete(
-        pre_generate_all_scenarios_async(business_context, session_id)
-    )
+    logger.info(f"🚀 Starting sync batch generation for session {session_id}")
+    start_time = time.time()
+    
+    scenarios = []
+    
+    # Generate 2 scenarios per dimension (14 total)
+    for dimension in DIMENSIONS.keys():
+        for i, difficulty in enumerate([0.0, 0.5]):
+            try:
+                scenario = generate_scenario_sync(
+                    dimension=dimension,
+                    target_difficulty=difficulty,
+                    business_context=business_context,
+                    previously_seen_themes=[s.theme for s in scenarios],
+                    session_id=f"{session_id}_{dimension}_{i+1}"
+                )
+                scenarios.append(scenario)
+            except Exception as e:
+                logger.error(f"❌ Error generating {dimension} scenario {i+1}: {e}")
+    
+    total_time = time.time() - start_time
+    cache_hits = sum(1 for s in scenarios if s.cached)
+    
+    logger.info(f"✅ Generated {len(scenarios)} scenarios in {total_time:.2f}s")
+    logger.info(f"   Cache hits: {cache_hits}/{len(scenarios)}")
+    
+    return scenarios
 
 # ============================================================================
 # GAP ANALYSIS
